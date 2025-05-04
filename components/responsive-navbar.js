@@ -11,28 +11,41 @@ import {
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export function NavbarDemo() {
+  const router = useRouter();
   const navItems = [
     {
       name: "About",
-      link: "#features",
+      link: "/About",
     },
     {
       name: "Projects",
-      link: "#pricing",
+      link: "/Project",
     },
     {
       name: "My Work",
-      link: "#contact",
+      link: "/MyWork",
     },
     {
-      name: "Contact Me",
-      link: "#contact",
+      name: "Achievements",
+      link: "/Achievements",
     },
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleBlogClick = () => {
+    router.push('/Blog');
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleContactClick = () => {
+    router.push('/ContactMe');
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <div className="relative w-full">
@@ -42,8 +55,8 @@ export function NavbarDemo() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="dark">Login</NavbarButton>
-            <NavbarButton variant="primary">Book a call</NavbarButton>
+            <NavbarButton variant="dark" onClick={handleBlogClick}>Blog</NavbarButton>
+            <NavbarButton variant="primary" onClick={handleContactClick}>Contact me</NavbarButton>
           </div>
         </NavBody>
 
@@ -58,36 +71,31 @@ export function NavbarDemo() {
 
           <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
             {navItems.map((item, idx) => (
-              <a
+              <Link
                 key={`mobile-link-${idx}`}
                 href={item.link}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="relative text-white dark:text-neutral-500">
                 <span className="block">{item.name}</span>
-              </a>
+              </Link>
             ))}
             <div className="flex w-full flex-col gap-4">
               <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={handleBlogClick}
                 variant="primary"
                 className="w-full">
-                Login
+                Blog
               </NavbarButton>
               <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={handleContactClick}
                 variant="primary"
                 className="w-full">
-                Book a call
+                Contact me
               </NavbarButton>
             </div>
           </MobileNavMenu>
         </MobileNav>
       </Navbar>
-      
-      {/* Navbar */}
     </div>
   );
 }
-
-
-

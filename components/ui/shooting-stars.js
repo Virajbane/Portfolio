@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import React, { useEffect, useState, useRef } from "react";
 
 const getRandomStartPoint = () => {
-  const side = Math.floor(Math.random() * 4);
+  const side = Math.floor(Math.random() * 8);
   const offset = Math.random() * window.innerWidth;
 
   switch (side) {
@@ -21,13 +21,13 @@ const getRandomStartPoint = () => {
 };
 export const ShootingStars = ({
   minSpeed = 10,
-  maxSpeed = 30,
+  maxSpeed = 20,
   minDelay = 1200,
   maxDelay = 4200,
   starColor = "#9E00FF",
   trailColor = "#2EB9DF",
-  starWidth = 10,
-  starHeight = 1,
+  starWidth = 20,
+  starHeight = 4,
   className,
 }) => {
   const [star, setStar] = useState(null);

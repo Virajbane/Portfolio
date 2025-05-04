@@ -10,15 +10,16 @@ const ProjectCard = ({ project }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
-    <div 
-      className="group relative w-full h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl"
+    <a 
+      href={project.link}
+      className="group relative w-2xl h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Full background image with zoom effect */}
       <div 
-        className={`absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-700 ${
-          isHovered ? 'scale-110 filter-none' : 'scale-100 '
+        className={`absolute inset-0  w-full h-full bg-cover bg-center transition-all duration-700 ${
+          isHovered ? ' scale-110 filter-none ' : 'scale-100 '
         }`}
         style={{ 
           backgroundImage: `url(${project.image})`,
@@ -32,7 +33,7 @@ const ProjectCard = ({ project }) => {
       }`} />
       
       {/* Content container */}
-      <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
+      <div className="absolute  inset-0 flex flex-col justify-end p-6 z-10 ">
         {/* Title - simplified with no blue underline */}
         <h3 className="text-2xl font-bold text-white mb-2 font-sans">
           {project.title}
@@ -54,8 +55,7 @@ const ProjectCard = ({ project }) => {
         <div className={`mt-6 transition-all duration-500 ${
           isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}>
-          <a 
-            href="#" 
+          <span 
             className="inline-flex items-center text-white hover:text-gray-300 pb-1 transition-all font-medium"
             aria-label={`View ${project.title} project`}
           >
@@ -63,33 +63,35 @@ const ProjectCard = ({ project }) => {
             <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
             </svg>
-          </a>
+          </span>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 
-export default function ProjectsSection() {
+export default function WorksSection() {
   const projects = [
     {
-      title: 'HealthAI',
-      technologies: ['Next.js', 'Tailwind', 'TypeScript'],
-      description: 'Experience the future of healthcare with personalized AI diagnosis, real-time monitoring, and instant access to medical professionals.',
-      image: '/app1.png', 
+      title: 'EduTech',
+      technologies: ['Next.js','Python', 'Tailwind', 'TypeScript'],
+      description: 'AI to personalize learning. It offers tools for students to get tailored content and study plans, while teachers manage classes, quizzes, and track student performance. copy.',
+      image: '/App11.png',
+      link: 'https://github.com/Mohammed6903/mumbaihacks',
     },
     {
       title: 'ATS Rankify',
       technologies: ['Next.js', 'Python', 'TypeScript', 'Tailwind'],
-      description: 'Full-Stack web application for creating and sharing quizzes with others. (Czech)',
+      description: 'Let AI analyze and rank your resume based on job descriptions, skills, and experience requirements to maximize your chances of getting noticed.',
       image: '/app2.png',
+      link: 'https://github.com/MohammedYaseenRon/COHERENCE-25_CodeWizard_AIML',
     },
   ];
 
   return (
     <section className="py-2 bg-transparent">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center justify-center gap-8">
+        <div className="flex flex-col items-center justify-center gap-4">
           {projects.map((project, index) => (
             <div 
               key={index}
