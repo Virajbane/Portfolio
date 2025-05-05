@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function ResumeTimeline() {
-  // Add the starry background effect
-  
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState(0);
   const timelineRef = useRef(null);
@@ -77,32 +75,32 @@ export default function ResumeTimeline() {
   }, []);
   
   return (
-    <div className="bg-transparent text-white min-h-screen" ref={timelineRef}>
-      <div className="max-w-5xl mx-auto px-6 py-20">
-        <h1 className="text-5xl font-bold mb-24 text-center">My Journey</h1>
+    <div className="bg-transparent text-white" ref={timelineRef}>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 sm:mb-24 text-center">My Journey</h1>
         
         {/* Timeline */}
         <div className="relative">
           {/* Section 1: Diploma Education */}
-          <div className="timeline-section mb-32 relative">
-            <div className="flex">
+          <div className="timeline-section mb-16 sm:mb-32 relative">
+            <div className="flex flex-col md:flex-row">
               {/* Content */}
-              <div className="w-7/12 pr-12">
-                <h2 className="text-3xl font-bold mb-6">Diploma Education</h2>
-                <p className="text-lg font-semibold mb-2">Diploma in Computer Engineering</p>
+              <div className="w-full md:w-7/12 md:pr-12 mb-8 md:mb-0">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Diploma Education</h2>
+                <p className="text-base sm:text-lg font-semibold mb-2">Diploma in Computer Engineering</p>
                 <p className="mb-1">Vidyvardhini's College of Engineering And Technology</p>
-                <p className="text-gray-400 mb-6">2020 - 2023</p>
+                <p className="text-gray-400 mb-4 sm:mb-6">2020 - 2023</p>
                 
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Built a strong foundation in computer engineering principles and practices.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Developed technical skills and problem-solving abilities through coursework and projects.
                 </p>
               </div>
               
-              {/* Timeline element */}
-              <div className="w-5/12 relative">
+              {/* Timeline element - Now visible on all screens */}
+              <div className="w-full md:w-5/12 relative">
                 {/* Horizontal line */}
                 <div className="absolute top-10 left-0 w-full h-1 bg-gray-800"></div>
                 
@@ -143,28 +141,28 @@ export default function ResumeTimeline() {
           </div>
           
           {/* Section 2: Engineering Education */}
-          <div className="timeline-section mb-32 relative">
-            <div className="flex flex-row-reverse">
+          <div className="timeline-section mb-16 sm:mb-32 relative">
+            <div className="flex flex-col md:flex-row-reverse">
               {/* Content */}
-              <div className="w-7/12 pl-12">
-                <h2 className="text-3xl font-bold mb-6">Engineering Education</h2>
-                <p className="text-lg font-semibold mb-2">Bachelor of Engineering</p>
+              <div className="w-full md:w-7/12 md:pl-12 mb-8 md:mb-0">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Engineering Education</h2>
+                <p className="text-base sm:text-lg font-semibold mb-2">Bachelor of Engineering</p>
                 <p className="mb-1">Viva Institute of Technology</p>
-                <p className="text-gray-400 mb-6">Expected 2026</p>
+                <p className="text-gray-400 mb-4 sm:mb-6">Expected 2026</p>
                 
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Advancing knowledge in computer science and engineering concepts.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Participating in technical events and competitions to enhance practical skills.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Exploring specializations in software development and emerging technologies.
                 </p>
               </div>
               
-              {/* Timeline element */}
-              <div className="w-5/12 relative">
+              {/* Timeline element - Now visible on all screens */}
+              <div className="w-full md:w-5/12 relative">
                 {/* Horizontal line */}
                 <div className="absolute top-10 right-0 w-full h-1 bg-gray-800"></div>
                 
@@ -179,7 +177,7 @@ export default function ResumeTimeline() {
                 ></div>
                 
                 {/* Circle marker */}
-                <div className="absolute z-10  top-8 left-0 transform -translate-x-1/2">
+                <div className="absolute z-10 top-8 left-0 transform -translate-x-1/2">
                   <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center z-10 ${
                     activeSection === 1 ? 'border-blue-500 bg-black' : 'border-gray-600 bg-black'
                   }`}>
@@ -205,38 +203,39 @@ export default function ResumeTimeline() {
           </div>
           
           {/* Section 3: Web Development Foundations */}
-          <div className="timeline-section mb-32 relative">
-            <div className="flex">
+          <div className="timeline-section mb-16 sm:mb-32 relative">
+            <div className="flex flex-col md:flex-row">
               {/* Content */}
-              <div className="w-7/12 pr-12">
-                <h2 className="text-3xl font-bold mb-6">Web Development Foundations</h2>
-                <p className="mb-4">
+              <div className="w-full md:w-7/12 md:pr-12 mb-8 md:mb-0">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Web Development Foundations</h2>
+                <p className="mb-4 text-sm sm:text-base">
                   Started learning HTML and CSS fundamentals, laying the groundwork for frontend development.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Discovered the power of creating interactive interfaces and responsive designs for the web.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Explored the connection between visual design and code structure for building effective user experiences.
                 </p>
               </div>
               
-              {/* Timeline element */}
-              <div className="w-5/12 relative">
+              {/* Timeline element - Now visible on all screens */}
+              <div className="w-full md:w-5/12 relative">
                 {/* Horizontal line */}
-                <div className="absolute top-10 left-0 w-full h-0.5 bg-gray-800"></div>
+                <div className="absolute top-10 left-0 w-full h-1 bg-gray-800"></div>
                 
                 {/* Gradient animation */}
                 <div 
-                  className="absolute top-10 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                  className="absolute top-10 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500"
                   style={{ 
                     width: activeSection >= 2 ? '100%' : '0%',
-                    transition: 'width 0.5s ease-out' 
+                    transition: 'width 0.8s ease-out',
+                    boxShadow: activeSection === 2 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
                 
                 {/* Circle marker */}
-                <div className="absolute z-10  top-8 right-0 transform translate-x-1/2">
+                <div className="absolute z-10 top-8 right-0 transform translate-x-1/2">
                   <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center z-10 ${
                     activeSection === 2 ? 'border-blue-500 bg-black' : 'border-gray-600 bg-black'
                   }`}>
@@ -245,15 +244,16 @@ export default function ResumeTimeline() {
                 </div>
                 
                 {/* Vertical line to next section */}
-                <div className="absolute top-10 right-0 transform translate-x-1/2 w-0.5 h-full bg-gray-800"></div>
+                <div className="absolute top-10 right-0 transform translate-x-1/2 w-1 h-full bg-gray-800"></div>
                 
                 {/* Vertical gradient line */}
                 <div 
-                  className="absolute top-10 right-0 transform translate-x-1/2 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"
+                  className="absolute top-10 right-0 transform translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
                   style={{ 
                     height: activeSection >= 2 ? '100%' : '0%',
-                    transition: 'height 0.5s ease-out',
-                    opacity: activeSection >= 3 ? 1 : 0
+                    transition: 'height 0.8s ease-out',
+                    opacity: activeSection >= 3 ? 1 : 0,
+                    boxShadow: activeSection === 2 || activeSection === 3 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
               </div>
@@ -261,41 +261,42 @@ export default function ResumeTimeline() {
           </div>
           
           {/* Section 4: Advanced Development */}
-          <div className="timeline-section mb-32 relative">
-            <div className="flex flex-row-reverse">
+          <div className="timeline-section mb-16 sm:mb-32 relative">
+            <div className="flex flex-col md:flex-row-reverse">
               {/* Content */}
-              <div className="w-7/12 pl-12">
-                <h2 className="text-3xl font-bold mb-6">Advanced Development</h2>
-                <p className="mb-4">
+              <div className="w-full md:w-7/12 md:pl-12 mb-8 md:mb-0">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Advanced Development</h2>
+                <p className="mb-4 text-sm sm:text-base">
                   Mastered JavaScript fundamentals and expanded into React, Next.js, and Tailwind CSS.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Developed full-stack capabilities with Node.js, Express, and MySQL.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Explored Python development during internship at Branding Catalyst (Jun-Aug 2022).
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 text-sm sm:text-base">
                   Continuously expanding knowledge in various programming languages and frameworks to build comprehensive solutions.
                 </p>
               </div>
               
-              {/* Timeline element */}
-              <div className="w-5/12 relative">
+              {/* Timeline element - Now visible on all screens */}
+              <div className="w-full md:w-5/12 relative">
                 {/* Horizontal line */}
-                <div className="absolute top-10 right-0 w-full h-0.5 bg-gray-800"></div>
+                <div className="absolute top-10 right-0 w-full h-1 bg-gray-800"></div>
                 
                 {/* Gradient animation */}
                 <div 
-                  className="absolute top-10 right-0 h-0.5 bg-gradient-to-l from-blue-500 to-purple-500"
+                  className="absolute top-10 right-0 h-1 bg-gradient-to-l from-blue-500 to-purple-500"
                   style={{ 
                     width: activeSection >= 3 ? '100%' : '0%',
-                    transition: 'width 0.5s ease-out' 
+                    transition: 'width 0.8s ease-out',
+                    boxShadow: activeSection === 3 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
                 
                 {/* Circle marker */}
-                <div className="absolute z-10  top-8 left-0 transform -translate-x-1/2">
+                <div className="absolute z-10 top-8 left-0 transform -translate-x-1/2">
                   <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center z-10 ${
                     activeSection === 3 ? 'border-blue-500 bg-black' : 'border-gray-600 bg-black'
                   }`}>
@@ -304,15 +305,16 @@ export default function ResumeTimeline() {
                 </div>
                 
                 {/* Vertical line to next section */}
-                <div className="absolute top-10 left-0 transform -translate-x-1/2 w-0.5 h-full bg-gray-800"></div>
+                <div className="absolute top-10 left-0 transform -translate-x-1/2 w-1 h-full bg-gray-800"></div>
                 
                 {/* Vertical gradient line */}
                 <div 
-                  className="absolute top-10 left-0 transform -translate-x-1/2 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"
+                  className="absolute top-10 left-0 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
                   style={{ 
                     height: activeSection >= 3 ? '100%' : '0%',
-                    transition: 'height 0.5s ease-out',
-                    opacity: activeSection >= 4 ? 1 : 0
+                    transition: 'height 0.8s ease-out',
+                    opacity: activeSection >= 4 ? 1 : 0,
+                    boxShadow: activeSection === 3 || activeSection === 4 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
               </div>
@@ -320,43 +322,44 @@ export default function ResumeTimeline() {
           </div>
           
           {/* Section 5: Projects */}
-          <div className="timeline-section mb-32 relative">
-            <div className="flex">
+          <div className="timeline-section mb-16 sm:mb-32 relative">
+            <div className="flex flex-col md:flex-row">
               {/* Content */}
-              <div className="w-7/12 pr-12">
-                <h2 className="text-3xl font-bold mb-6">Key Projects</h2>
+              <div className="w-full md:w-7/12 md:pr-12 mb-8 md:mb-0">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Key Projects</h2>
                 
                 <div className="mb-6">
-                  <h3 className="text-xl font-bold mb-2">EDU.AI: Classroom Diversity AI Solution</h3>
-                  <p className="mb-4">
+                  <h3 className="text-lg sm:text-xl font-bold mb-2">EDU.AI: Classroom Diversity AI Solution</h3>
+                  <p className="mb-4 text-sm sm:text-base">
                     Developed an AI-powered platform to bridge the gap between teaching at scale and individual needs. Integrated personalized learning tools, quizzes, and real-time analytics. Successfully demonstrated the project at the world's largest hackathon.
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Move On: Ride-Hailing Application</h3>
-                  <p>
+                  <h3 className="text-lg sm:text-xl font-bold mb-2">Move On: Ride-Hailing Application</h3>
+                  <p className="text-sm sm:text-base">
                     Designed and developed a web application similar to Uber, enabling seamless ride-hailing services. Utilized ReactJS and Tailwind CSS to create an intuitive user interface. Ensured data security and user authentication features using modern development tools.
                   </p>
                 </div>
               </div>
               
-              {/* Timeline element */}
-              <div className="w-5/12 relative">
+              {/* Timeline element - Now visible on all screens */}
+              <div className="w-full md:w-5/12 relative">
                 {/* Horizontal line */}
-                <div className="absolute top-10 left-0 w-full h-0.5 bg-gray-800"></div>
+                <div className="absolute top-10 left-0 w-full h-1 bg-gray-800"></div>
                 
                 {/* Gradient animation */}
                 <div 
-                  className="absolute top-10 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                  className="absolute top-10 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500"
                   style={{ 
                     width: activeSection >= 4 ? '100%' : '0%',
-                    transition: 'width 0.5s ease-out' 
+                    transition: 'width 0.8s ease-out',
+                    boxShadow: activeSection === 4 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
                 
                 {/* Circle marker */}
-                <div className="absolute z-10  top-8 right-0 transform translate-x-1/2">
+                <div className="absolute z-10 top-8 right-0 transform translate-x-1/2">
                   <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center z-10 ${
                     activeSection === 4 ? 'border-blue-500 bg-black' : 'border-gray-600 bg-black'
                   }`}>
@@ -365,15 +368,16 @@ export default function ResumeTimeline() {
                 </div>
                 
                 {/* Vertical line to next section */}
-                <div className="absolute top-10 right-0 transform translate-x-1/2 w-0.5 h-full bg-gray-800"></div>
+                <div className="absolute top-10 right-0 transform translate-x-1/2 w-1 h-full bg-gray-800"></div>
                 
                 {/* Vertical gradient line */}
                 <div 
-                  className="absolute top-10 right-0 transform translate-x-1/2 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"
+                  className="absolute top-10 right-0 transform translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
                   style={{ 
                     height: activeSection >= 4 ? '100%' : '0%',
-                    transition: 'height 0.5s ease-out',
-                    opacity: activeSection >= 5 ? 1 : 0
+                    transition: 'height 0.8s ease-out',
+                    opacity: activeSection >= 5 ? 1 : 0,
+                    boxShadow: activeSection === 4 || activeSection === 5 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
               </div>
@@ -382,46 +386,47 @@ export default function ResumeTimeline() {
           
           {/* Section 6: Achievements */}
           <div className="timeline-section relative">
-            <div className="flex flex-row-reverse">
+            <div className="flex flex-col md:flex-row-reverse">
               {/* Content */}
-              <div className="w-7/12 pl-12">
-                <h2 className="text-3xl font-bold mb-6">Achievements & Activities</h2>
+              <div className="w-full md:w-7/12 md:pl-12 mb-8 md:mb-0">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Achievements & Activities</h2>
                 
                 <div className="mb-6">
-                  <p className="text-lg font-bold mb-2">INGENIOUS 2025: Present. Innovate. Dominate.</p>
-                  <p className="mb-2">Organized by Viva Institute of Technology — A platform for creators, coders, and designers.</p>
-                  <ul className="list-disc pl-5 mb-4">
+                  <p className="text-base sm:text-lg font-bold mb-2">INGENIOUS 2025: Present. Innovate. Dominate.</p>
+                  <p className="mb-2 text-sm sm:text-base">Organized by Viva Institute of Technology — A platform for creators, coders, and designers.</p>
+                  <ul className="list-disc pl-5 mb-4 text-sm sm:text-base">
                     <li className="mb-1">3rd Place – Poster Presentation Competition</li>
                     <li className="mb-1">3rd Place – Video Editing Competition</li>
                   </ul>
                 </div>
                 
-                <p className="mb-4">Participated in the world's largest hackathon and received a Guinness World Record certificate for participation.</p>
+                <p className="mb-4 text-sm sm:text-base">Participated in the world's largest hackathon and received a Guinness World Record certificate for participation.</p>
                 
                 <div className="mb-4">
-                  <p className="font-semibold mb-2">Technical Skills</p>
-                  <p>ReactJS, Next.js, Tailwind CSS, JavaScript, Java, Python, Express, MySQL, Node.js</p>
+                  <p className="font-semibold mb-2 text-sm sm:text-base">Technical Skills</p>
+                  <p className="text-sm sm:text-base">ReactJS, Next.js, Tailwind CSS, JavaScript, Java, Python, Express, MySQL, Node.js</p>
                 </div>
                 
-                <p>Head of Editing and Photography in college, passionate about traveling, creating reels, and video editing.</p>
+                <p className="text-sm sm:text-base">Head of Editing and Photography in college, passionate about traveling, creating reels, and video editing.</p>
               </div>
               
-              {/* Timeline element */}
-              <div className="w-5/12 relative">
+              {/* Timeline element - Now visible on all screens */}
+              <div className="w-full md:w-5/12 relative">
                 {/* Horizontal line */}
-                <div className="absolute top-10 right-0 w-full h-0.5 bg-gray-800"></div>
+                <div className="absolute top-10 right-0 w-full h-1 bg-gray-800"></div>
                 
                 {/* Gradient animation */}
                 <div 
-                  className="absolute top-10 right-0 h-0.5 bg-gradient-to-l from-blue-500 to-purple-500"
+                  className="absolute top-10 right-0 h-1 bg-gradient-to-l from-blue-500 to-purple-500"
                   style={{ 
                     width: activeSection >= 5 ? '100%' : '0%',
-                    transition: 'width 0.5s ease-out' 
+                    transition: 'width 0.8s ease-out',
+                    boxShadow: activeSection === 5 ? '0 0 8px #3b82f6' : 'none'
                   }}
                 ></div>
                 
                 {/* Circle marker */}
-                <div className="absolute z-10  top-8 left-0 transform -translate-x-1/2">
+                <div className="absolute z-10 top-8 left-0 transform -translate-x-1/2">
                   <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center z-10 ${
                     activeSection === 5 ? 'border-blue-500 bg-black' : 'border-gray-600 bg-black'
                   }`}>

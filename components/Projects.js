@@ -14,7 +14,7 @@ const ProjectCard = ({ project }) => {
   return (
     <a
       href={project.link}
-      className="group relative w-full h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl block"
+      className="group relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -35,22 +35,22 @@ const ProjectCard = ({ project }) => {
       }`} />
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
-        <h3 className="text-2xl font-bold text-white mb-2 font-sans">
+      <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5 md:p-6 z-10">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2 font-sans line-clamp-2">
           {project.title}
         </h3>
-        <p className="text-gray-300 mb-4 font-light">{project.description}</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="text-gray-300 mb-2 sm:mb-4 font-light text-sm sm:text-base line-clamp-3">{project.description}</p>
+        <div className="flex flex-wrap gap-1 sm:gap-2">
           {project.technologies.map((tech, index) => (
             <TechBadge key={index} name={tech} />
           ))}
         </div>
-        <div className={`mt-6 transition-all duration-500 ${
+        <div className={`mt-3 sm:mt-6 transition-all duration-500 ${
           isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}>
-          <span className="inline-flex items-center text-white hover:text-gray-300 pb-1 transition-all font-medium">
+          <span className="inline-flex items-center text-white hover:text-gray-300 pb-1 transition-all font-medium text-sm sm:text-base">
             View Project
-            <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
             </svg>
           </span>
@@ -106,20 +106,23 @@ export default function ProjectsSection({ showAll = false }) {
   return (
     <section className="py-2 bg-transparent">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center justify-center gap-8">
-          {visibleProjects.map((project, index) => (
-            <div
-              key={index}
-              className="transform transition-all duration-500 hover:-translate-y-2 w-full max-w-2xl"
-            >
-              <ProjectCard project={project} />
-            </div>
-          ))}
+        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 md:gap-8">
+          {/* Full width on mobile, grid on larger screens */}
+          <div className="w-full grid grid-rows-1 lg:grid-rows-2 gap-4 sm:gap-6 md:gap-8">
+            {visibleProjects.map((project, index) => (
+              <div
+                key={index}
+                className="transform transition-all duration-500 hover:-translate-y-2 w-full"
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
 
           {!showAll && (
             <button
               onClick={() => router.push('/Project')}
-              className="mt-4 px-6 py-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all font-medium"
+              className="mt-2 sm:mt-4 px-4 sm:px-6 py-2 text-white bg-black rounded-full hover:bg-gray-800 transition-all font-medium text-sm sm:text-base"
             >
               View More Projects
             </button>

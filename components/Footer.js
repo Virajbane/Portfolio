@@ -27,14 +27,15 @@ export default function AnimatedFooter() {
   return (
     <footer
       id="contact"
-      className={`py-4 border-t border-zinc-800 text-sm relative z-10 bg-black transition-opacity duration-700 ease-in-out ${
+      className={`py-3 sm:py-4 border-t border-zinc-800 text-xs sm:text-sm relative z-10 bg-black transition-opacity duration-700 ease-in-out ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center space-y-2">
-          <div className="flex items-center space-x-4">
-            <h3 className="text-zinc-200 font-medium">
+          {/* Make the top row responsive - stack on very small screens */}
+          <div className="flex flex-col xs:flex-row items-center justify-center xs:space-x-4 space-y-2 xs:space-y-0 w-full">
+            <h3 className="text-zinc-200 font-medium text-center xs:text-left">
               Viraj Bane
             </h3>
             <div className="flex space-x-3 text-zinc-400">
@@ -57,9 +58,10 @@ export default function AnimatedFooter() {
             </div>
           </div>
           
-          <p className="flex items-center justify-center text-zinc-400 text-xs">
-            © {new Date().getFullYear()} Viraj Bane 
-            <span className="inline-flex items-center mx-1">
+          <p className="flex items-center justify-center text-zinc-400 text-xs flex-wrap px-2">
+            <span className="whitespace-nowrap">© {new Date().getFullYear()} Viraj Bane</span> 
+            <span className="inline-flex items-center mx-1 whitespace-nowrap">
+              <span className="hidden xs:inline mx-1">-</span>
               Built with 
               <Heart 
                 className={`w-3 h-3 text-red-500 mx-1 ${hover ? 'animate-pulse' : ''}`} 

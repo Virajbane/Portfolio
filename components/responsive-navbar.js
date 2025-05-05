@@ -56,7 +56,7 @@ export function NavbarDemo() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             <NavbarButton variant="dark" onClick={handleBlogClick}>Blog</NavbarButton>
-            <NavbarButton variant="primary" onClick={handleContactClick}>Contact me</NavbarButton>
+            <NavbarButton variant="primary" onClick={handleContactClick}>Contact</NavbarButton>
           </div>
         </NavBody>
 
@@ -90,7 +90,7 @@ export function NavbarDemo() {
                 onClick={handleContactClick}
                 variant="primary"
                 className="w-full">
-                Contact me
+                Contact
               </NavbarButton>
             </div>
           </MobileNavMenu>
