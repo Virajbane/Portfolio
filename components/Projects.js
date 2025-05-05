@@ -14,7 +14,7 @@ const ProjectCard = ({ project }) => {
   return (
     <a
       href={project.link}
-      className="group relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl block"
+      className="group relative w-full h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl block mb-6 sm:mb-8"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -95,20 +95,20 @@ export default function ProjectsSection({ showAll = false }) {
     {
       title: 'Amazon Landing page',
       technologies: ['HTML', 'CSS', 'JavaScript'],
-      description: ' E-Commerce Website Inspired by Amazon with Creative Touches (HTML, CSS, JavaScript)',
+      description: 'E-Commerce Website Inspired by Amazon with Creative Touches (HTML, CSS, JavaScript)',
       image: '/App9.png',
       link: 'https://github.com/Virajbane/VIRRMART.com',
     },
   ];
 
-  const visibleProjects = showAll ? projects : projects.slice(0, 2);
+  const visibleProjects = showAll ? projects : projects.slice(0, 3);
 
   return (
     <section className="py-2 bg-transparent">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 md:gap-8">
-          {/* Full width on mobile, grid on larger screens */}
-          <div className="w-full grid grid-rows-1 lg:grid-rows-2 gap-4 sm:gap-6 md:gap-8">
+          {/* Single column layout for all screen sizes */}
+          <div className="w-full flex flex-col gap-4 sm:gap-6 md:gap-8">
             {visibleProjects.map((project, index) => (
               <div
                 key={index}
