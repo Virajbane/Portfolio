@@ -66,8 +66,6 @@ export default function Start() {
     },
   ];
 
-  // Personal projects data
-
   // Blog posts data
   const blogPosts = [
     {
@@ -89,28 +87,28 @@ export default function Start() {
   ];
 
   return (
-    <div className="min-h-screen text-white bg-transparent ">
+    <div className="min-h-screen text-white bg-transparent">
       <Head>
         <title>viraj bane | Full-Stack Web Developer</title>
         <meta
           name="description"
-          content="Portfolio of Jakub Žitník, a Full-Stack Web Developer"
+          content="Portfolio of Viraj Bane, a Full-Stack Web Developer"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Animated stars background */}
+      {/* Animated stars background stays as is */}
 
-      <main className="container w-4xl mx-auto px-4 pb-16">
-        {/* Hero Section */}
-        <section id="about" className="py-16  mt-20 max-w-4xl mx-auto">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        {/* Hero Section - Made responsive with padding adjustments */}
+        <section id="about" className="py-8 sm:py-12 md:py-16 mt-16 sm:mt-20 max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="bg-transparent border border-zinc-800 rounded-lg p-8"
+            className="bg-transparent border border-zinc-800 rounded-lg p-4 sm:p-6 md:p-8"
           >
-            <h1 className="text-4xl font-bold mb-4 text-white">Viraj Bane</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white">Viraj Bane</h1>
             <p className="text-zinc-400 mb-4">
               <span className="inline-flex items-center">
                 <svg
@@ -136,7 +134,7 @@ export default function Start() {
                 Virar, Maharashtra
               </span>
             </p>
-            <p className="text-lg mb-6">
+            <p className="text-base sm:text-lg mb-6">
               I'm 20-year-old Aspiring Web Developer. I thrive on learning new
               technologies and pushing the boundaries of what's possible on the
               web.
@@ -145,7 +143,7 @@ export default function Start() {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href="mailto:your-email@example.com"
+                href="mailto:your-virajbane2004@gmail.com"
                 className="bg-zinc-800 p-2 rounded-full"
               >
                 <FaEnvelope className="w-5 h-5 text-white" />
@@ -153,7 +151,7 @@ export default function Start() {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://github.com/jzitnik-dev"
+                href="https://github.com/Virajbane"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-zinc-800 p-2 rounded-full"
@@ -163,7 +161,7 @@ export default function Start() {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href="https://instagram.com/your-username"
+                href="https://www.instagram.com/_.virajbane._/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-zinc-800 p-2 rounded-full"
@@ -180,14 +178,14 @@ export default function Start() {
         {/* Experience section */}
         <ExperienceTimeline />
 
-        {/* My work section */}
-        <section id="projects" className="py-12">
+        {/* My work section - Adjusted spacing */}
+        <section id="projects" className="py-8 sm:py-12">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-3xl  font-bold mb-8 text-center"
+            className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center"
           >
             My work
           </motion.h2>
@@ -195,14 +193,14 @@ export default function Start() {
           <WorksSection />
         </section>
 
-        {/* My personal projects */}
-        <section className="py-12">
+        {/* My personal projects - Adjusted spacing */}
+        <section className="py-8 sm:py-12">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-3xl font-bold mb-8 text-center"
+            className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center"
           >
             My personal projects
           </motion.h2>
@@ -210,20 +208,13 @@ export default function Start() {
           <ProjectsSection showAll={false} />
         </section>
 
-        {/* Latest blog posts */}
-        <section id="posts" className="py-12">
-          
-        <BlogInsights isHomePage={true} />
-
-          
-
-          
+        {/* Latest blog posts - Adjusted spacing */}
+        <section id="posts" className="py-8 sm:py-12">
+          <BlogInsights isHomePage={true} />
         </section>
       </main>
 
-      <AnimatedFooter/>
+      <AnimatedFooter />
     </div>
   );
 }
-
-// Technology logo component

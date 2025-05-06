@@ -191,13 +191,13 @@ export default function TechStackSlideshow() {
   const handleMouseLeave = () => setAnimationPaused(false);
 
   return (
-    <div className="bg-black text-white px-6 py-8 w-full font-sans">
-      <h2 className="text-4xl font-bold mb-8">What I work with</h2>
+    <div className="bg-black text-white px-6 py-8 font-sans mx-auto max-w-5xl">
+      <h2 className="text-4xl font-bold mb-8 text-center">What I work with</h2>
 
       {/* First row - continuous scrolling */}
-      <div className="relative overflow-hidden w-full mb-4">
+      <div className="relative overflow-hidden w-full mb-6">
         <div 
-          className={`flex transition-all duration-300 ${animationPaused ? '' : ''}`}
+          className={`flex justify-center transition-all duration-300`}
           style={{
             animation: animationPaused ? 'none' : 'scrollLeft 30s linear infinite',
           }}
@@ -207,9 +207,9 @@ export default function TechStackSlideshow() {
           {allFirstRowTech.map((tech, index) => (
             <div 
               key={`tech1-${index}`} 
-              className="flex items-center mx-2 shrink-0"
+              className="flex items-center mx-4 shrink-0"
             >
-              <div className="bg-gray-900 w-10 h-10 rounded flex items-center justify-center mr-2">
+              <div className="bg-gray-900 w-12 h-12 rounded-lg flex items-center justify-center mr-2">
                 {tech.logo}
               </div>
               <span className="text-sm text-gray-300 font-medium whitespace-nowrap">{tech.name}</span>
@@ -221,7 +221,7 @@ export default function TechStackSlideshow() {
       {/* Second row - continuous scrolling in opposite direction */}
       <div className="relative overflow-hidden w-full">
         <div 
-          className={`flex transition-all duration-300 ${animationPaused ? '' : ''}`}
+          className={`flex justify-center transition-all duration-300`}
           style={{
             animation: animationPaused ? 'none' : 'scrollRight 35s linear infinite',
           }}
@@ -231,9 +231,9 @@ export default function TechStackSlideshow() {
           {allSecondRowTech.map((tech, index) => (
             <div 
               key={`tech2-${index}`} 
-              className="flex items-center mx-2 shrink-0"
+              className="flex items-center mx-4 shrink-0"
             >
-              <div className="bg-gray-900 w-10 h-10 rounded flex items-center justify-center mr-2">
+              <div className="bg-gray-900 w-12 h-12 rounded-lg flex items-center justify-center mr-2">
                 {tech.logo}
               </div>
               <span className="text-sm text-gray-300 font-medium whitespace-nowrap">{tech.name}</span>
