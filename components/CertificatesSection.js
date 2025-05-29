@@ -41,7 +41,7 @@ const certificates = [
     date: 'March 2025',
     image: '/Certificate8.png',
     linkedIn: 'https://linkedin.com/in/yourprofile',
-    description: 'Attended an intensive UI/UX Design Workshop at the Design Summit, focusing on user research methodologies, wireframing techniques, and prototyping tools. Created a comprehensive design system for a mobile application aimed at improving mental wellness through guided meditation and activity tracking.'
+    description: 'COHERENCE 25 is an intercollegiate or institutional hackathon organized under the Microsoft Learn Students Club in partnership with the Department of Computer and AI-DS at VCET.'
   },
   {
     id: 5,
