@@ -117,7 +117,7 @@ export default function BlogReviews() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
           {reviews.map((review, index) => (
             <div
-              key={review.id || index}
+              key={`review-${review.id ?? `fallback-${index}`}`}
               className="opacity-0 animate-slideUp"
               style={{ animationDelay: `${index * 0.15}s` }}
             >
