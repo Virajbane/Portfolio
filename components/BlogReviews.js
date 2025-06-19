@@ -42,7 +42,12 @@ export default function BlogReviews() {
       if (error) {
         console.error("Error fetching reviews:", error);
       } else {
-        setReviews((prev) => [...prev, ...(data || [])]);
+        // Optional: remove reviews already added with same ID
+        setReviews((prev) => {
+          const existingIds = new Set(prev.map((r) => r.id));
+          const newUnique = (data || []).filter((r) => !existingIds.has(r.id));
+          return [...prev, ...newUnique];
+        });
       }
     };
 
