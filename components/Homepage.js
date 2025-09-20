@@ -135,7 +135,7 @@ export default function Start() {
               </span>
             </p>
             <p className="text-base sm:text-lg mb-6">
-              I'm 20-year-old Aspiring Web Developer. I thrive on learning new
+              I'm 21-year-old Aspiring Web Developer. I thrive on learning new
               technologies and pushing the boundaries of what's possible on the
               web.
             </p>
