@@ -62,7 +62,38 @@ const certificates = [
     image: '/Certificates5.png',
     linkedIn: 'https://www.linkedin.com/in/virubane/recent-activity/all/',
     description: 'This certificate acknowledges participation in a Guinness World Records™ attempt for "The most participants in a generative AI hackathon."'
-  }
+  },
+  {
+  id: 7,
+  type: 'Participation',
+  title: '20th Aavishkar Research Convention (Zonal Round)',
+  issuer: 'University of Mumbai',
+  date: 'December 2025',
+  image: '/1736625196035-85498598-694d-4993-84b7-52d395f215da__community_file_page-0001.jpg',
+  linkedIn: 'https://www.linkedin.com/in/virubane/overlay/1766411447717/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
+  description: 'Participated and presented a research project titled "Eyes.AI – A Multimodal AI Framework for Assistive Cross-Application Workflow and Desktop Interaction" at the 20th Aavishkar Inter-Collegiate Research Convention (Zonal Round). The project focused on accessibility-driven AI solutions aimed at empowering visually impaired users through intelligent desktop interaction.'
+},
+{
+  id: 8,
+  type: 'Professional',
+  title: 'Deep Learning Certification',
+  issuer: 'IIT Ropar (NPTEL)',
+  date: 'July 2025 – October 2025',
+  image: '/Deep Learning - IIT Ropar_page-0001.jpg',
+  linkedIn: 'https://www.linkedin.com/in/virubane/overlay/1766411186006/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
+  description: 'Successfully completed a 12-week NPTEL-certified Deep Learning course offered by IIT Ropar. Gained strong theoretical and practical knowledge in neural networks, backpropagation, CNNs, RNNs, and deep learning optimization techniques. Earned Elite certification by completing proctored examination and graded assignments.'
+},
+{
+  id: 9,
+  type: 'Professional',
+  title: 'Cyber Security Certification',
+  issuer: 'Atos Prayas Foundation',
+  date: 'July 2025 – August 2025',
+  image: '/G4570-VIVA_Institute_of_Technology[1] (1)_page-0001.jpg',
+  linkedIn: 'https://www.linkedin.com/in/virubane/details/certifications/1766411347168/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
+  description: 'Completed a Cyber Security training program under the Atos Prayas Foundation Youth Empowerment Initiative. Acquired foundational knowledge of cyber threats, network security, ethical practices, and security risk mitigation. Awarded Grade B for successful completion of assessments and hands-on learning.'
+}
+
 ];
 
 export default function Achievements() {
