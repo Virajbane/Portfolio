@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ChevronRight, Plus, ArrowRight, Zap } from 'lucide-react';
+import { ChevronRight, Plus, ArrowRight, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const TechBadge = ({ name }) => (
@@ -82,6 +82,14 @@ export default function ProjectsSection({ showAll = false }) {
 
   const projects = [
     {
+      title: "AI DB Agent",
+      technologies: ["Next.js", "Ollama", "Python", "Multi-DB"],
+      description:
+        "Talk to your databases in plain English, Hindi, or Marathi — no SQL required. Supports MongoDB, PostgreSQL, MySQL, Redis, and Supabase.",
+      image: "/ai-db-agent.png",
+      link: "https://github.com/Virajbane/ai-db-agent",
+    },
+    {
       title: "HealthAI",
       technologies: ["Next.js", "Tailwind", "TypeScript"],
       description:
@@ -138,8 +146,6 @@ export default function ProjectsSection({ showAll = false }) {
               </div>
             ))}
           </div>
-
-          
 
           {!showAll && (
             <div className="flex justify-center mt-8 mb-24">
@@ -202,31 +208,38 @@ export default function ProjectsSection({ showAll = false }) {
 
             @keyframes glitch {
               0% {
-                text-shadow: 0.05em 0 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  0.05em 0 0 rgba(255, 255, 255, 0.75),
                   -0.05em -0.025em 0 rgba(255, 255, 255, 0.75);
               }
               14% {
-                text-shadow: 0.05em 0 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  0.05em 0 0 rgba(255, 255, 255, 0.75),
                   -0.05em -0.025em 0 rgba(255, 255, 255, 0.75);
               }
               15% {
-                text-shadow: -0.05em -0.025em 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  -0.05em -0.025em 0 rgba(255, 255, 255, 0.75),
                   0.025em 0.025em 0 rgba(255, 255, 255, 0.75);
               }
               49% {
-                text-shadow: -0.05em -0.025em 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  -0.05em -0.025em 0 rgba(255, 255, 255, 0.75),
                   0.025em 0.025em 0 rgba(255, 255, 255, 0.75);
               }
               50% {
-                text-shadow: 0.025em 0.05em 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  0.025em 0.05em 0 rgba(255, 255, 255, 0.75),
                   0.05em 0 0 rgba(255, 255, 255, 0.75);
               }
               99% {
-                text-shadow: 0.025em 0.05em 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  0.025em 0.05em 0 rgba(255, 255, 255, 0.75),
                   0.05em 0 0 rgba(255, 255, 255, 0.75);
               }
               100% {
-                text-shadow: -0.025em 0 0 rgba(255, 255, 255, 0.75),
+                text-shadow:
+                  -0.025em 0 0 rgba(255, 255, 255, 0.75),
                   -0.025em -0.025em 0 rgba(255, 255, 255, 0.75);
               }
             }
