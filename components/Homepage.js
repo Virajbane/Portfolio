@@ -101,14 +101,19 @@ export default function Start() {
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Hero Section - Made responsive with padding adjustments */}
-        <section id="about" className="py-8 sm:py-12 md:py-16 mt-16 sm:mt-20 max-w-4xl mx-auto">
+        <section
+          id="about"
+          className="py-8 sm:py-12 md:py-16 mt-16 sm:mt-20 max-w-4xl mx-auto"
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             className="bg-transparent border border-zinc-800 rounded-lg p-4 sm:p-6 md:p-8"
           >
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white">Viraj Bane</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+              Viraj Bane
+            </h1>
             <p className="text-zinc-400 mb-4">
               <span className="inline-flex items-center">
                 <svg
@@ -135,9 +140,10 @@ export default function Start() {
               </span>
             </p>
             <p className="text-base sm:text-lg mb-6">
-              I'm 21-year-old Aspiring Web Developer. I thrive on learning new
-              technologies and pushing the boundaries of what's possible on the
-              web.
+              Motivated and fast-learning AI Engineer eager to apply and
+              continuously grow skills in machine learning, full-stack
+              development, and problem solving to build impactful, real-world AI
+              solutions
             </p>
             <div className="flex space-x-4">
               <motion.a

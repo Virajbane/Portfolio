@@ -13,7 +13,7 @@ export default function TimelineItem({
   const marginClass = !isMobile ? (position === 'right' ? 'mr-8' : 'ml-8') : 'ml-8';
 
   return (
-    <div className={`flex items-center mb-12 md:mb-24 relative ${flexDirection}`}>
+    <div className={`flex items-center mb-12 md:mb-8 relative ${flexDirection}`}>
       {/* Content box */}
       <div 
         className={`w-full md:w-5/12 p-4 md:p-6 bg-black rounded-lg border border-gray-800 transition-all duration-500 ${marginClass}`}

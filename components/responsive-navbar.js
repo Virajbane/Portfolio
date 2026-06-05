@@ -30,6 +30,11 @@ export function NavbarDemo() {
       link: "/MyWork",
     },
     {
+      name: "Models",
+      link: "/Models",
+      
+    },
+    {
       name: "Achievements",
       link: "/Achievements",
     },

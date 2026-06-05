@@ -1,3 +1,4 @@
+//components/Projects.js
 "use client";
 import { useState } from "react";
 import { ChevronRight, Plus, ArrowRight, Zap } from "lucide-react";

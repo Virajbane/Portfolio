@@ -33,7 +33,7 @@ function page() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container max-w-4xl mx-auto px-4 py-8 relative z-10">
+      <main className="container max-w-4xl mx-auto px-4 py-14 relative z-10">
         {/* Hero Section with enhanced animations */}
         <section id="about" className="py-6 mb-8">
           <motion.div
