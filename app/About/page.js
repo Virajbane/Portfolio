@@ -224,19 +224,6 @@ function page() {
           from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
         }
-
-        html { font-size: 14px; }
-
-        @media (min-width: 640px) { html { font-size: 16px; } }
-        @media (min-width: 768px) { html { font-size: 16px; } }
-        @media (min-width: 1024px) { html { font-size: 18px; } }
-
-        @media (max-width: 640px) {
-          .leading-relaxed { line-height: 1.6; font-size: 0.875rem; }
-          h1 { line-height: 1.2; font-size: 1.5rem; }
-          h2 { font-size: 1.25rem; }
-          h3 { font-size: 1.1rem; }
-        }
       `}</style>
     </div>
   );

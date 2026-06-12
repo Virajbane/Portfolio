@@ -1,76 +1,555 @@
-//components/Projects.js
+// components/Projects.js
 "use client";
-import { useState } from "react";
-import { ChevronRight, Plus, ArrowRight, Zap } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const TechBadge = ({ name }) => (
-  <span className="px-3 py-1 text-xs font-medium bg-black/70 text-white border border-gray-700 rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white/30">
-    {name}
-  </span>
-);
+/* ─── Project Data ─────────────────────────────────────────── */
+const projects = [
+  {
+    title: "AI DB Agent",
+    subtitle: "Natural language database interface",
+    category: "AI / Dev Tool",
+    accentColor: "#4a9eff",
+    glowColor: "rgba(74, 158, 255, 0.15)",
+    glowRGB: "74, 158, 255",
+    gradientBg: "radial-gradient(ellipse at 30% 60%, rgba(74,158,255,0.12) 0%, transparent 65%)",
+    image: "/ai-db-agent.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9eff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
+        <path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6" />
+      </svg>
+    ),
+    problem: "Developers and non-technical users waste hours writing SQL queries — a steep barrier when working across multiple DB types simultaneously.",
+    solution: "A multi-DB agent that translates plain English, Hindi, or Marathi into queries across MongoDB, PostgreSQL, MySQL, Redis, and Supabase.",
+    technologies: ["Next.js", "Ollama", "Python", "Multi-DB"],
+    link: "https://github.com/Virajbane/ai-db-agent",
+    featured: true,
+  },
+  {
+    title: "Move On",
+    subtitle: "Smart travel companion app",
+    category: "Travel",
+    accentColor: "#5dcaa5",
+    glowColor: "rgba(93, 202, 165, 0.15)",
+    glowRGB: "93, 202, 165",
+    gradientBg: "radial-gradient(ellipse at 70% 30%, rgba(93,202,165,0.12) 0%, transparent 65%)",
+    image: "/app6.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5dcaa5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+        <circle cx="12" cy="9" r="2.5" />
+      </svg>
+    ),
+    problem: "Travelers struggle to coordinate seamlessly across locations, losing time to fragmented, disconnected tools with no unified experience.",
+    solution: "A travel platform enabling effortless connections between commuters and explorers — route-aware, real-time, confidence-first design.",
+    technologies: ["Next.js", "TypeScript", "Tailwind"],
+    link: "https://github.com/Virajbane/Move-on",
+    featured: false,
+  },
+  {
+    title: "To-Do List App",
+    subtitle: "Real-time collaboration tool",
+    category: "Productivity",
+    accentColor: "#9f77dd",
+    glowColor: "rgba(159, 119, 221, 0.15)",
+    glowRGB: "159, 119, 221",
+    gradientBg: "radial-gradient(ellipse at 30% 70%, rgba(159,119,221,0.12) 0%, transparent 65%)",
+    image: "/App7.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9f77dd" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 11l3 3L22 4" />
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+      </svg>
+    ),
+    problem: "Students and developers lack a lightweight, real-time collaboration tool that syncs tasks without friction across devices and teams.",
+    solution: "A Firebase-backed task manager with real-time sync, team collaboration, and a clean UI built for solo focus and group projects alike.",
+    technologies: ["React", "Firebase", "Tailwind"],
+    link: "https://github.com/Virajbane/To-do-list",
+    featured: false,
+  },
+  {
+    title: "Agro-Farm",
+    subtitle: "Digital platform for farmers",
+    category: "AgriTech",
+    accentColor: "#97c459",
+    glowColor: "rgba(151, 196, 89, 0.15)",
+    glowRGB: "151, 196, 89",
+    gradientBg: "radial-gradient(ellipse at 60% 60%, rgba(151,196,89,0.12) 0%, transparent 65%)",
+    image: "/App10.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97c459" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22V12" />
+        <path d="M12 12C12 12 7 10 5 6c4 0 7 2 7 6z" />
+        <path d="M12 12C12 12 17 10 19 6c-4 0-7 2-7 6z" />
+        <path d="M5 22h14" />
+      </svg>
+    ),
+    problem: "Farmers have no accessible digital space to troubleshoot crop issues, get expert advice, or sell crops directly — leaving them dependent on middlemen.",
+    solution: "A platform where farmers post daily issues, receive community solutions, and list crops for direct sale — cutting out the middleman entirely.",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    link: "https://github.com/Virajbane/Agro-Farm",
+    featured: false,
+  },
+  {
+    title: "VIRRMART",
+    subtitle: "Amazon-inspired storefront clone",
+    category: "E-Commerce",
+    accentColor: "#ef9f27",
+    glowColor: "rgba(239, 159, 39, 0.15)",
+    glowRGB: "239, 159, 39",
+    gradientBg: "radial-gradient(ellipse at 70% 40%, rgba(239,159,39,0.12) 0%, transparent 65%)",
+    image: "/App9.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef9f27" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="9" cy="21" r="1" />
+        <circle cx="20" cy="21" r="1" />
+        <path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6" />
+      </svg>
+    ),
+    problem: "Learning e-commerce UI from scratch is overwhelming without a real-world reference to reverse-engineer how the big platforms are truly built.",
+    solution: "A fully hand-crafted Amazon-inspired storefront with product listings, nav, and cart UI — built purely in vanilla HTML, CSS, and JavaScript.",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    link: "https://github.com/Virajbane/VIRRMART.com",
+    featured: false,
+  },
+];
 
-const ProjectCard = ({ project }) => {
-  const [isHovered, setIsHovered] = useState(false);
+/* ─── Animated entrance hook ───────────────────────────────── */
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+/* ─── Global Spotlight (from MagicBento) ──────────────────── */
+const GlobalSpotlight = ({ sectionRef }) => {
+  useEffect(() => {
+    if (!sectionRef?.current) return;
+
+    const spotlight = document.createElement("div");
+    spotlight.style.cssText = `
+      position: fixed;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle,
+        rgba(120, 160, 255, 0.10) 0%,
+        rgba(120, 160, 255, 0.05) 20%,
+        rgba(120, 160, 255, 0.02) 40%,
+        transparent 65%
+      );
+      z-index: 0;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      transition: opacity 0.3s ease;
+      will-change: left, top, opacity;
+    `;
+    document.body.appendChild(spotlight);
+
+    const handleMouseMove = (e) => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (!inside) {
+        spotlight.style.opacity = "0";
+        return;
+      }
+
+      spotlight.style.left = `${e.clientX}px`;
+      spotlight.style.top = `${e.clientY}px`;
+      spotlight.style.opacity = "1";
+
+      const cards = section.querySelectorAll(".project-glow-card");
+      cards.forEach((card) => {
+        const cardRect = card.getBoundingClientRect();
+        const relX = ((e.clientX - cardRect.left) / cardRect.width) * 100;
+        const relY = ((e.clientY - cardRect.top) / cardRect.height) * 100;
+        const centerX = cardRect.left + cardRect.width / 2;
+        const centerY = cardRect.top + cardRect.height / 2;
+        const distance = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+        const proximity = 280;
+        const fadeDistance = 480;
+
+        let intensity = 0;
+        if (distance <= proximity) {
+          intensity = 1;
+        } else if (distance <= fadeDistance) {
+          intensity = (fadeDistance - distance) / (fadeDistance - proximity);
+        }
+
+        card.style.setProperty("--glow-x", `${relX}%`);
+        card.style.setProperty("--glow-y", `${relY}%`);
+        card.style.setProperty("--glow-intensity", intensity.toString());
+      });
+    };
+
+    const handleMouseLeave = () => {
+      spotlight.style.opacity = "0";
+      sectionRef.current?.querySelectorAll(".project-glow-card").forEach((card) => {
+        card.style.setProperty("--glow-intensity", "0");
+      });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      spotlight.parentNode?.removeChild(spotlight);
+    };
+  }, [sectionRef]);
+
+  return null;
+};
+
+/* ─── Single Project Card ──────────────────────────────────── */
+const ProjectCard = ({ project, index, delay = 0 }) => {
+  const [hovered, setHovered] = useState(false);
+  const [cardRef, visible] = useInView(0.1);
+
+  const cardStyle = {
+    position: "relative",
+    display: "block",
+    background: hovered
+      ? "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)"
+      : "rgba(255,255,255,0.02)",
+    borderRadius: "16px",
+    overflow: "hidden",
+    textDecoration: "none",
+    cursor: "pointer",
+    transform: visible
+      ? hovered ? "translateY(-6px) scale(1.01)" : "translateY(0) scale(1)"
+      : "translateY(30px)",
+    opacity: visible ? 1 : 0,
+    transition: `opacity 0.6s ease ${delay}ms, transform 0.5s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease`,
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+    "--glow-x": "50%",
+    "--glow-y": "50%",
+    "--glow-intensity": "0",
+    "--glow-color": project.glowRGB,
+    border: `1px solid ${hovered ? project.accentColor + "44" : "rgba(255,255,255,0.07)"}`,
+  };
 
   return (
     <a
+      ref={cardRef}
       href={project.link}
-      className="group relative w-full h-64 sm:h-72 md:h-80 lg:h-96 overflow-hidden rounded-lg transition-all duration-700 shadow-xl block mb-6 sm:mb-8"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="project-glow-card"
+      style={cardStyle}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      {/* Background Image */}
-      <div
-        className={`absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-700 ${
-          isHovered ? "scale-110 filter-none" : "scale-100"
-        }`}
-        style={{
-          backgroundImage: `url(${project.image})`,
-          backgroundPosition: "center",
-        }}
-      />
+      <style>{`
+        .project-glow-card {
+          --glow-radius: 220px;
+        }
+        .project-glow-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: 1px;
+          background: radial-gradient(
+            var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+            rgba(var(--glow-color), calc(var(--glow-intensity) * 0.9)) 0%,
+            rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 35%,
+            transparent 60%
+          );
+          border-radius: 16px;
+          -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          pointer-events: none;
+          z-index: 10;
+          transition: opacity 0.3s ease;
+        }
+      `}</style>
 
-      {/* Overlay */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-500 ${
-          isHovered ? "opacity-90" : "opacity-70"
-        }`}
-      />
+      {/* Glow orb on hover */}
+      <div style={{
+        position: "absolute",
+        top: "-40px",
+        right: "-40px",
+        width: "180px",
+        height: "180px",
+        borderRadius: "50%",
+        background: project.glowColor,
+        filter: "blur(40px)",
+        opacity: hovered ? 1 : 0,
+        transition: "opacity 0.5s ease",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
 
-      {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5 md:p-6 z-10">
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2 font-sans line-clamp-2">
-          {project.title}
-        </h3>
-        <p className="text-gray-300 mb-2 sm:mb-4 font-light text-sm sm:text-base line-clamp-3">
-          {project.description}
+      {/* Image / gradient area */}
+      <div style={{
+        position: "relative",
+        width: "100%",
+        height: project.featured ? "200px" : "150px",
+        backgroundImage: project.image ? "none" : project.gradientBg,
+        backgroundColor: "#0a0a0a",
+        overflow: "hidden",
+        transition: "height 0.4s ease",
+      }}>
+        {/* Project screenshot */}
+        {project.image && (
+          <img
+            src={project.image}
+            alt={project.title}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "top",
+              opacity: hovered ? 1 : 0.85,
+              transform: hovered ? "scale(1.05)" : "scale(1)",
+              transition: "all 0.4s ease",
+              zIndex: 0,
+            }}
+          />
+        )}
+
+        {/* Animated grid lines */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: "40px 40px",
+          opacity: hovered ? 1 : 0.4,
+          transition: "opacity 0.4s ease",
+        }} />
+
+        {/* Bottom fade */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(to bottom, transparent 40%, #080808)",
+        }} />
+
+        {/* Category tag */}
+        <div style={{
+          position: "absolute",
+          top: "14px",
+          left: "14px",
+          display: "flex",
+          alignItems: "center",
+          gap: "6px",
+          padding: "5px 12px",
+          borderRadius: "9999px",
+          background: "rgba(0,0,0,0.6)",
+          border: `1px solid ${project.accentColor}44`,
+          fontSize: "11px",
+          fontWeight: 500,
+          color: "#fff",
+          letterSpacing: "0.02em",
+          zIndex: 2,
+          backdropFilter: "blur(8px)",
+        }}>
+          <span style={{
+            width: "6px",
+            height: "6px",
+            borderRadius: "50%",
+            background: project.accentColor,
+            boxShadow: `0 0 6px ${project.accentColor}`,
+            display: "inline-block",
+            animation: "pulse-dot 2s ease-in-out infinite",
+          }} />
+          {project.category}
+        </div>
+
+        {/* Icon badge */}
+        <div style={{
+          position: "absolute",
+          top: "14px",
+          right: "14px",
+          width: "42px",
+          height: "42px",
+          borderRadius: "10px",
+          background: "rgba(0,0,0,0.6)",
+          border: `1px solid ${project.accentColor}33`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 2,
+          backdropFilter: "blur(8px)",
+          transform: hovered ? "rotate(5deg) scale(1.1)" : "rotate(0) scale(1)",
+          transition: "transform 0.4s cubic-bezier(0.34,1.56,0.64,1)",
+        }}>
+          {project.icon}
+        </div>
+
+        {/* Index watermark */}
+        <div style={{
+          position: "absolute",
+          bottom: "10px",
+          right: "14px",
+          fontSize: "48px",
+          fontWeight: 700,
+          color: "rgba(255,255,255,0.04)",
+          lineHeight: 1,
+          letterSpacing: "-2px",
+          userSelect: "none",
+          zIndex: 1,
+        }}>
+          {String(index + 1).padStart(2, "0")}
+        </div>
+      </div>
+
+      {/* Card body */}
+      <div style={{ padding: "18px 20px 20px", position: "relative", zIndex: 1 }}>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "4px" }}>
+          <p style={{
+            fontSize: project.featured ? "19px" : "16px",
+            fontWeight: 600,
+            color: "#fff",
+            margin: 0,
+            letterSpacing: "-0.3px",
+          }}>
+            {project.title}
+          </p>
+          <ExternalLink
+            size={14}
+            style={{
+              color: project.accentColor,
+              opacity: hovered ? 1 : 0,
+              transform: hovered ? "translate(0, 0)" : "translate(-4px, 4px)",
+              transition: "all 0.3s ease",
+              flexShrink: 0,
+              marginTop: "3px",
+            }}
+          />
+        </div>
+
+        <p style={{ fontSize: "12px", color: "#555", marginBottom: "14px", margin: "0 0 14px" }}>
+          {project.subtitle}
         </p>
-        <div className="flex flex-wrap gap-1 sm:gap-2">
-          {project.technologies.map((tech, index) => (
-            <TechBadge key={index} name={tech} />
+
+        <div style={{
+          height: "1px",
+          background: `linear-gradient(90deg, ${project.accentColor}44, transparent)`,
+          marginBottom: "14px",
+          opacity: hovered ? 1 : 0.4,
+          transition: "opacity 0.3s",
+        }} />
+
+        <p style={{
+          fontSize: "10px",
+          fontWeight: 600,
+          color: "#444",
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
+          margin: "0 0 5px",
+        }}>
+          Problem
+        </p>
+        <p style={{
+          fontSize: "12.5px",
+          color: "#777",
+          lineHeight: 1.6,
+          margin: "0 0 12px",
+        }}>
+          {project.problem}
+        </p>
+
+        <p style={{
+          fontSize: "10px",
+          fontWeight: 600,
+          color: project.accentColor,
+          textTransform: "uppercase",
+          letterSpacing: "0.1em",
+          margin: "0 0 5px",
+          opacity: 0.9,
+        }}>
+          What we built
+        </p>
+        <p style={{
+          fontSize: "12.5px",
+          color: "#bbb",
+          lineHeight: 1.6,
+          margin: "0 0 14px",
+        }}>
+          {project.solution}
+        </p>
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "14px" }}>
+          {project.technologies.map((tech, i) => (
+            <span key={i} style={{
+              fontSize: "10px",
+              fontWeight: 500,
+              padding: "3px 9px",
+              borderRadius: "9999px",
+              background: hovered ? `${project.accentColor}14` : "rgba(255,255,255,0.04)",
+              border: `1px solid ${hovered ? project.accentColor + "44" : "rgba(255,255,255,0.1)"}`,
+              color: hovered ? project.accentColor : "#666",
+              transition: "all 0.3s ease",
+              transitionDelay: `${i * 30}ms`,
+            }}>
+              {tech}
+            </span>
           ))}
         </div>
-        <div
-          className={`mt-3 sm:mt-6 transition-all duration-500 ${
-            isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <span className="inline-flex items-center text-white hover:text-gray-300 pb-1 transition-all font-medium text-sm sm:text-base">
-            View Project
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              ></path>
-            </svg>
+
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingTop: "12px",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          <span style={{
+            fontSize: "12px",
+            color: hovered ? project.accentColor : "#555",
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+            transition: "color 0.3s, gap 0.3s",
+            fontWeight: 500,
+          }}>
+            View on GitHub
+            <ArrowRight
+              size={13}
+              style={{
+                transform: hovered ? "translateX(3px)" : "translateX(0)",
+                transition: "transform 0.3s ease",
+              }}
+            />
+          </span>
+          <span style={{ fontSize: "11px", color: "#2a2a2a", fontWeight: 600 }}>
+            {String(index + 1).padStart(2, "0")}
           </span>
         </div>
       </div>
@@ -78,223 +557,118 @@ const ProjectCard = ({ project }) => {
   );
 };
 
+/* ─── Section Header ───────────────────────────────────────── */
+
+
+/* ─── Main Export ──────────────────────────────────────────── */
 export default function ProjectsSection({ showAll = false }) {
   const router = useRouter();
+  const [btnHovered, setBtnHovered] = useState(false);
+  const sectionRef = useRef(null);
 
-  const projects = [
-    {
-      title: "AI DB Agent",
-      technologies: ["Next.js", "Ollama", "Python", "Multi-DB"],
-      description:
-        "Talk to your databases in plain English, Hindi, or Marathi — no SQL required. Supports MongoDB, PostgreSQL, MySQL, Redis, and Supabase.",
-      image: "/ai-db-agent.png",
-      link: "https://github.com/Virajbane/ai-db-agent",
-    },
-    {
-      title: "HealthAI",
-      technologies: ["Next.js", "Tailwind", "TypeScript"],
-      description:
-        "Experience the future of healthcare with personalized AI diagnosis, real-time monitoring, and instant access to medical professionals.",
-      image: "/app1.png",
-      link: "https://github.com/Virajbane/Ai.healthcare",
-    },
-    {
-      title: "Move on",
-      technologies: ["Next.js", "TypeScript", "Tailwind"],
-      description:
-        "Empower your travel. Connect effortlessly, explore freely, and move on with confidence.",
-      image: "/App13.png",
-      link: "https://github.com/Virajbane/Move-on",
-    },
-    {
-      title: "To do list App",
-      technologies: ["React", "Firebase", "Tailwind"],
-      description: "Next-gen collaboration tool for students and developers.",
-      image: "/App7.png",
-      link: "https://github.com/Virajbane/To-do-list",
-    },
-    {
-      title: "Agro-Farm",
-      technologies: ["HTML", "CSS", "JavaScript"],
-      description: "Platform for farmers to solve daily issues and sell crops.",
-      image: "/App10.png",
-      link: "https://github.com/Virajbane/Agro-Farm",
-    },
-    {
-      title: "Amazon Landing page",
-      technologies: ["HTML", "CSS", "JavaScript"],
-      description:
-        "E-Commerce Website Inspired by Amazon with Creative Touches (HTML, CSS, JavaScript)",
-      image: "/App9.png",
-      link: "https://github.com/Virajbane/VIRRMART.com",
-    },
-  ];
-
-  const visibleProjects = showAll ? projects : projects.slice(0, 2);
+  const visibleProjects = showAll ? projects : projects.slice(0, 3);
+  const featuredProject = visibleProjects[0];
+  const restProjects = visibleProjects.slice(1);
 
   return (
-    <section className="py-2 bg-transparent">
-      <div className="container max-w-4xl mx-auto px-4">
-        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 md:gap-8">
-          {/* Single column layout for all screen sizes */}
-          <div className="w-full flex flex-col gap-4 sm:gap-6 md:gap-8">
-            {visibleProjects.map((project, index) => (
-              <div
-                key={index}
-                className="transform transition-all duration-500 hover:-translate-y-2 w-full"
-              >
-                <ProjectCard project={project} />
-              </div>
-            ))}
+    <section
+      ref={sectionRef}
+      style={{ padding: "80px 0 40px", background: "transparent", position: "relative" }}
+    >
+      <GlobalSpotlight sectionRef={sectionRef} />
+
+      <div style={{
+        position: "absolute",
+        top: "10%",
+        left: "5%",
+        width: "400px",
+        height: "400px",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(74,158,255,0.05) 0%, transparent 70%)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+      <div style={{
+        position: "absolute",
+        bottom: "20%",
+        right: "5%",
+        width: "300px",
+        height: "300px",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(159,119,221,0.05) 0%, transparent 70%)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+
+      <div style={{
+        maxWidth: "960px",
+        margin: "0 auto",
+        padding: "0 1.25rem",
+        position: "relative",
+        zIndex: 1,
+      }}>
+        
+
+        {featuredProject && (
+          <div style={{ marginBottom: "16px" }}>
+            <ProjectCard project={featuredProject} index={0} delay={0} />
           </div>
+        )}
 
-          {!showAll && (
-            <div className="flex justify-center mt-8 mb-24">
-              <button
-                onClick={() => router.push("/Project")}
-                className="px-8 py-4 bg-gradient-to-r from-black to-gray-900 rounded-full transition-all duration-500 group flex items-center border-x border-white border-opacity-10 hover:shadow-white hover:shadow-inner electric-btn animate-fadeIn"
-              >
-                <span className="mr-3 glitch-text">
-                  <span className="glitch-span">View More Projects</span>
-                </span>
-                <ArrowRight
-                  size={16}
-                  className="transition-all duration-300 group-hover:translate-x-1"
-                />
-              </button>
-            </div>
-          )}
-
-          <style jsx global>{`
-            @keyframes fadeIn {
-              from {
-                opacity: 0;
-              }
-              to {
-                opacity: 1;
-              }
-            }
-
-            @keyframes slideUp {
-              from {
-                opacity: 0;
-                transform: translateY(30px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-
-            @keyframes electricPulse {
-              0% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
-              }
-              20% {
-                box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-              }
-              40% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.2);
-              }
-              60% {
-                box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.1);
-              }
-              80% {
-                box-shadow: 0 0 0 3px rgba(255, 255, 255, 0);
-              }
-              100% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-              }
-            }
-
-            @keyframes glitch {
-              0% {
-                text-shadow:
-                  0.05em 0 0 rgba(255, 255, 255, 0.75),
-                  -0.05em -0.025em 0 rgba(255, 255, 255, 0.75);
-              }
-              14% {
-                text-shadow:
-                  0.05em 0 0 rgba(255, 255, 255, 0.75),
-                  -0.05em -0.025em 0 rgba(255, 255, 255, 0.75);
-              }
-              15% {
-                text-shadow:
-                  -0.05em -0.025em 0 rgba(255, 255, 255, 0.75),
-                  0.025em 0.025em 0 rgba(255, 255, 255, 0.75);
-              }
-              49% {
-                text-shadow:
-                  -0.05em -0.025em 0 rgba(255, 255, 255, 0.75),
-                  0.025em 0.025em 0 rgba(255, 255, 255, 0.75);
-              }
-              50% {
-                text-shadow:
-                  0.025em 0.05em 0 rgba(255, 255, 255, 0.75),
-                  0.05em 0 0 rgba(255, 255, 255, 0.75);
-              }
-              99% {
-                text-shadow:
-                  0.025em 0.05em 0 rgba(255, 255, 255, 0.75),
-                  0.05em 0 0 rgba(255, 255, 255, 0.75);
-              }
-              100% {
-                text-shadow:
-                  -0.025em 0 0 rgba(255, 255, 255, 0.75),
-                  -0.025em -0.025em 0 rgba(255, 255, 255, 0.75);
-              }
-            }
-
-            .animate-fadeIn {
-              animation: fadeIn 1s ease-out forwards;
-            }
-
-            .animate-slideUp {
-              animation: slideUp 0.8s ease-out forwards;
-            }
-
-            .electric-btn {
-              animation: electricPulse 3s infinite;
-              position: relative;
-            }
-
-            .electric-btn:after {
-              content: "";
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              border-radius: 9999px;
-              background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent
-              );
-              background-size: 200% 100%;
-              animation: shine 3s infinite;
-            }
-
-            @keyframes shine {
-              0% {
-                background-position: 200% 0;
-              }
-              100% {
-                background-position: -200% 0;
-              }
-            }
-
-            .glitch-text {
-              position: relative;
-            }
-
-            .glitch-text .glitch-span {
-              animation: glitch 5s infinite;
-            }
-          `}</style>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "16px",
+        }}>
+          {restProjects.map((project, i) => (
+            <ProjectCard key={i} project={project} index={i + 1} delay={(i + 1) * 80} />
+          ))}
         </div>
+
+        {!showAll && (
+          <div style={{ display: "flex", justifyContent: "center", marginTop: "52px", marginBottom: "80px" }}>
+            <button
+              onClick={() => router.push("/Project")}
+              onMouseEnter={() => setBtnHovered(true)}
+              onMouseLeave={() => setBtnHovered(false)}
+              style={{
+                padding: "13px 32px",
+                background: btnHovered
+                  ? "rgba(74,158,255,0.1)"
+                  : "rgba(255,255,255,0.03)",
+                border: `1px solid ${btnHovered ? "rgba(74,158,255,0.5)" : "rgba(255,255,255,0.12)"}`,
+                borderRadius: "9999px",
+                color: btnHovered ? "#4a9eff" : "#aaa",
+                fontSize: "13px",
+                fontWeight: 500,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                transition: "all 0.3s ease",
+                backdropFilter: "blur(8px)",
+                boxShadow: btnHovered ? "0 0 24px rgba(74,158,255,0.15)" : "none",
+              }}
+            >
+              View More Projects
+              <ArrowRight
+                size={14}
+                style={{
+                  transform: btnHovered ? "translateX(4px)" : "translateX(0)",
+                  transition: "transform 0.3s ease",
+                }}
+              />
+            </button>
+          </div>
+        )}
       </div>
+
+      <style>{`
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(0.8); }
+        }
+      `}</style>
     </section>
   );
 }

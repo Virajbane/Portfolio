@@ -1,6 +1,6 @@
 "use client";
 // pages/index.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -16,6 +16,21 @@ import ProjectsSection from "./Projects";
 import AnimatedFooter from "./Footer";
 import BlogInsights from "./BlogInsight";
 
+function useInView(threshold = 0.1) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, visible];
+}
 export default function Start() {
   // State for animation of stars
   const [stars, setStars] = useState([]);
@@ -65,6 +80,51 @@ export default function Start() {
       description: "Various activities in Python development",
     },
   ];
+  const SectionHeader = () => {
+  const [ref, visible] = useInView(0.2);
+  return (
+    <div
+      ref={ref}
+      style={{
+        textAlign: "center",
+        marginBottom: "56px",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: "opacity 0.7s ease, transform 0.7s ease",
+      }}
+    >
+      <p style={{
+        fontSize: "11px",
+        fontWeight: 600,
+        color: "#4a9eff",
+        textTransform: "uppercase",
+        letterSpacing: "0.15em",
+        marginBottom: "12px",
+      }}>
+        Featured Work
+      </p>
+      <h2 style={{
+        fontSize: "clamp(32px, 5vw, 52px)",
+        fontWeight: 700,
+        color: "#fff",
+        margin: "0 0 16px",
+        letterSpacing: "-1.5px",
+        lineHeight: 1.05,
+      }}>
+        My Personal Projects
+      </h2>
+      <p style={{
+        fontSize: "15px",
+        color: "#555",
+        maxWidth: "400px",
+        margin: "0 auto",
+        lineHeight: 1.6,
+      }}>
+        These are my projects on which I try to work actively.
+      </p>
+    </div>
+  );
+};
 
   // Blog posts data
   const blogPosts = [
@@ -200,22 +260,14 @@ export default function Start() {
         </section>
 
         {/* My personal projects - Adjusted spacing */}
-        <section className="py-8 sm:py-12">
-          <motion.h2
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center"
-          >
-            My personal projects
-          </motion.h2>
+        <section className="py-4 sm:py-1">
+          <SectionHeader />
 
           <ProjectsSection showAll={false} />
         </section>
 
         {/* Latest blog posts - Adjusted spacing */}
-        <section id="posts" className="py-8 sm:py-12">
+        <section id="posts" className="py-2 sm:py-1">
           <BlogInsights isHomePage={true} />
         </section>
       </main>
