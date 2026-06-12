@@ -9,12 +9,12 @@ const models = [
     title: "Twitter Sentiment Analysis",
     subtitle: "DistilBERT fine-tuned on Sentiment140",
     type: "Text Classification",
-    downloads: "67M",
+    modelSize: "67M params",
     badge: "NLP",
     badgeColor: "#6366f1",
     accent: "#818cf8",
     description:
-      "End-to-end sentiment classifier fine-tuned on 1.6M real tweets. Classifies any text as Positive or Negative with 89% accuracy. Supports real-time inference via Hugging Face pipeline.",
+      "End-to-end sentiment classifier fine-tuned on a subset of the Sentiment140 dataset (~10K tweets). Classifies any text as Positive or Negative with 89% accuracy. Supports real-time inference via Hugging Face pipeline.",
     pipeline: "text-classification",
     baseModel: "distilbert-base-uncased",
     tags: ["PyTorch", "Transformers", "DistilBERT", "NLP", "Fine-Tuning"],
@@ -22,7 +22,7 @@ const models = [
       { label: "Accuracy", value: "89%" },
       { label: "Base Model", value: "DistilBERT" },
       { label: "Dataset", value: "Sentiment140" },
-      { label: "Downloads", value: "67M+" },
+      { label: "Model Size", value: "67M params" },
     ],
     architecture: [
       "Twitter Dataset",
@@ -54,12 +54,12 @@ result = classifier("I love this project!")
     title: "Resume–Job Matcher",
     subtitle: "BERT fine-tuned for semantic resume ranking",
     type: "Text Classification",
-    downloads: "0.1B",
+    modelSize: "110M params",
     badge: "NLP · Hiring AI",
     badgeColor: "#0ea5e9",
     accent: "#38bdf8",
     description:
-      "Fine-tuned BERT model that semantically compares a resume and a job description, outputting a match probability. Goes beyond keyword matching — understands that 'REST APIs' means 'Backend Development'.",
+      "Fine-tuned BERT model that semantically compares a resume and job description, outputting a match probability. Goes beyond keyword matching — understands that 'REST APIs' means 'Backend Development'.",
     pipeline: "text-classification",
     baseModel: "bert-base-uncased",
     tags: ["PyTorch", "BERT", "Transfer Learning", "Recruitment AI", "Semantic Search"],
@@ -67,7 +67,7 @@ result = classifier("I love this project!")
       { label: "Task", value: "Match Score" },
       { label: "Base Model", value: "BERT" },
       { label: "Loss Fn", value: "Cross Entropy" },
-      { label: "Output", value: "0–100%" },
+      { label: "Model Size", value: "110M params" },
     ],
     architecture: [
       "Resume + JD",
@@ -289,7 +289,7 @@ function ModelCard({ model, index }) {
         {tab === "demo" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <p style={{ color: "#475569", fontSize: "12px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>
-              Sample inference outputs:
+              Sample inference outputs (illustrative):
             </p>
             {model.demo.map((d, i) => (
               <div key={i} style={{
