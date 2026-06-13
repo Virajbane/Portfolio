@@ -1,215 +1,200 @@
+// ContactSection.js
 "use client"
 import { useState, useEffect } from 'react';
-import { Mail, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Linkedin, Github, Instagram } from 'lucide-react';
+import { useAnimate } from 'framer-motion';
 import AnimatedFooter from './Footer';
 
+// ─── Clip-path constants ───────────────────────────────────────────────────
+const NO_CLIP          = "polygon(0 0, 100% 0, 100% 100%, 0% 100%)";
+const BOTTOM_RIGHT_CLIP = "polygon(0 0, 100% 0, 0 0, 0% 100%)";
+const TOP_RIGHT_CLIP   = "polygon(0 0, 0 100%, 100% 100%, 0% 100%)";
+const BOTTOM_LEFT_CLIP = "polygon(100% 100%, 100% 0, 100% 100%, 0 100%)";
+const TOP_LEFT_CLIP    = "polygon(0 0, 100% 0, 100% 100%, 100% 0)";
+
+const ENTRANCE_KEYFRAMES = {
+  left:   [BOTTOM_RIGHT_CLIP, NO_CLIP],
+  bottom: [BOTTOM_RIGHT_CLIP, NO_CLIP],
+  top:    [BOTTOM_RIGHT_CLIP, NO_CLIP],
+  right:  [TOP_LEFT_CLIP,     NO_CLIP],
+};
+
+const EXIT_KEYFRAMES = {
+  left:   [NO_CLIP, TOP_RIGHT_CLIP],
+  bottom: [NO_CLIP, TOP_RIGHT_CLIP],
+  top:    [NO_CLIP, TOP_RIGHT_CLIP],
+  right:  [NO_CLIP, BOTTOM_LEFT_CLIP],
+};
+
+// ─── HuggingFace SVG icon ──────────────────────────────────────────────────
+const HuggingFaceIcon = ({ className }) => (
+  <svg viewBox="0 0 95 88" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M47.5 0C21.3 0 0 19.7 0 44c0 24.3 21.3 44 47.5 44S95 68.3 95 44C95 19.7 73.7 0 47.5 0z" fill="currentColor" opacity="0.15"/>
+    <text x="50%" y="62" textAnchor="middle" fontSize="52" fontFamily="Arial">🤗</text>
+  </svg>
+);
+
+// ─── LinkBox component ─────────────────────────────────────────────────────
+const LinkBox = ({ Icon, href, label, imgSrc, imgClassName }) => {
+  const [scope, animate] = useAnimate();
+
+  const getNearestSide = (e) => {
+    const box = e.currentTarget.getBoundingClientRect();
+    return [
+      { proximity: Math.abs(box.left   - e.clientX), side: "left"   },
+      { proximity: Math.abs(box.right  - e.clientX), side: "right"  },
+      { proximity: Math.abs(box.top    - e.clientY), side: "top"    },
+      { proximity: Math.abs(box.bottom - e.clientY), side: "bottom" },
+    ].sort((a, b) => a.proximity - b.proximity)[0].side;
+  };
+
+  const handleMouseEnter = (e) => {
+    animate(scope.current, { clipPath: ENTRANCE_KEYFRAMES[getNearestSide(e)] });
+  };
+  const handleMouseLeave = (e) => {
+    animate(scope.current, { clipPath: EXIT_KEYFRAMES[getNearestSide(e)] });
+  };
+
+  const Content = ({ inverted }) => (
+    <div className="flex flex-col items-center gap-1.5">
+      {imgSrc ? (
+        <img
+          src={imgSrc}
+          alt={label}
+          className={`${imgClassName ?? 'h-8 w-auto object-contain'} ${inverted ? 'brightness-0 invert' : ''}`}
+        />
+      ) : (
+        Icon && (
+          <Icon
+            size={32}
+            className={inverted ? 'text-black' : 'text-white'}
+          />
+        )
+      )}
+      {label && (
+        <span className={`text-[11px] font-mono tracking-wide ${inverted ? 'text-black/70' : 'text-white/50'}`}>
+          {label}
+        </span>
+      )}
+    </div>
+  );
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative grid h-24 sm:h-32 md:h-36 w-full place-content-center bg-black overflow-hidden"
+    >
+      <Content inverted={false} />
+      <div
+        ref={scope}
+        style={{ clipPath: BOTTOM_RIGHT_CLIP }}
+        className="absolute inset-0 grid place-content-center bg-white"
+      >
+        <Content inverted={true} />
+      </div>
+    </a>
+  );
+};
+
+// ─── ClipPathLinks grid ────────────────────────────────────────────────────
+const ClipPathLinks = () => (
+  <div className="divide-y divide-white/10 border border-white/10 rounded-xl overflow-hidden">
+    {/* Row 1: Email + LinkedIn */}
+    <div className="grid grid-cols-2 divide-x divide-white/10">
+      <LinkBox Icon={Mail}     href="https://mail.google.com/mail/?view=cm&to=virajbane2004@gmail.com"          label="Email"    />
+      <LinkBox Icon={Linkedin} href="https://www.linkedin.com/in/virubane/"   label="LinkedIn" />
+    </div>
+
+    {/* Row 2: GitHub + Instagram */}
+    <div className="grid grid-cols-2 divide-x divide-white/10">
+      <LinkBox Icon={Github}    href="https://github.com/Virajbane"                label="GitHub"    />
+      <LinkBox Icon={Instagram} href="https://www.instagram.com/_.virajbane._/"    label="Instagram" />
+    </div>
+
+    {/* Row 3: Hugging Face full width */}
+    <div className="grid grid-cols-1">
+      <LinkBox
+        href="https://huggingface.co/Virajbane"
+        imgSrc="https://huggingface.co/front/assets/huggingface_logo-noborder.svg"
+        label="Hugging Face"
+        imgClassName="h-8 w-auto object-contain"
+      />
+    </div>
+  </div>
+);
+
+// ─── Main ContactMeComponent ───────────────────────────────────────────────
 export default function ContactMeComponent() {
-  // Animation states
-  const [isVisible, setIsVisible] = useState(false);
-  
-  // Text animation states
-  const [titleVisible, setTitleVisible] = useState(false);
-  const [subtitleVisible, setSubtitleVisible] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState(false);
-  
-  // Hover states for card animations
-  const [hoverStates, setHoverStates] = useState({
-    linkedin: false,
-    email: false,
-    instagram: false
-  });
+  const [isVisible,      setIsVisible]      = useState(false);
+  const [titleVisible,   setTitleVisible]   = useState(false);
+  const [subtitleVisible,setSubtitleVisible]= useState(false);
+  const [cardsVisible,   setCardsVisible]   = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
-    
-    // Stagger animations
-    const titleTimer = setTimeout(() => setTitleVisible(true), 300);
-    const subtitleTimer = setTimeout(() => setSubtitleVisible(true), 600);
-    const cardsTimer = setTimeout(() => setCardsVisible(true), 900);
-    
-    return () => {
-      clearTimeout(titleTimer);
-      clearTimeout(subtitleTimer);
-      clearTimeout(cardsTimer);
-    };
+    const t1 = setTimeout(() => setTitleVisible(true),    300);
+    const t2 = setTimeout(() => setSubtitleVisible(true), 600);
+    const t3 = setTimeout(() => setCardsVisible(true),    900);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
-
-  // Update hover state for specific card
-  const handleMouseEnter = (card) => {
-    setHoverStates(prev => ({ ...prev, [card]: true }));
-  };
-
-  const handleMouseLeave = (card) => {
-    setHoverStates(prev => ({ ...prev, [card]: false }));
-  };
 
   return (
     <div className={`w-full max-w-6xl mt-20 mx-auto p-8 transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="relative rounded-2xl overflow-hidden p-8 bg-transparent border border-gray-800 shadow-2xl">
-        {/* Enhanced background effects */}
-        
-        
+
         {/* Animated mesh gradient background */}
-        <div className="absolute inset-0 overflow-hidden opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/30 to-transparent animate-float"></div>
-          <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-to-tl from-blue-500/30 to-transparent animate-float-delayed"></div>
+        <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/30 to-transparent animate-float" />
+          <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-to-tl from-blue-500/30 to-transparent animate-float-delayed" />
         </div>
-        
+
         <div className="relative z-10">
-          {/* Title with enhanced animation */}
-          <h2 
-            className={`text-4xl font-bold text-white mb-3 transition-all duration-700 
-              ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-          >
+          {/* Title */}
+          <h2 className={`text-4xl font-bold text-white mb-3 transition-all duration-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <span className="inline-block animate-shimmer bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
               Contact me
             </span>
           </h2>
-          
-          {/* Subtitle with enhanced animation */}
-          <p 
-            className={`text-gray-300 mb-10 transition-all duration-700 delay-200 
-              ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-          >
-            You can contact me via Email, LinkedIn or Instagram. I usually respond within a day.
+
+          {/* Subtitle */}
+          <p className={`text-gray-300 mb-10 transition-all duration-700 delay-200 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            You can reach me via Email, LinkedIn, GitHub, Instagram or Hugging Face. I usually respond within a day.
           </p>
-          
-          {/* Contact cards with enhanced animations */}
-          <div 
-            className={`flex flex-col md:flex-row gap-6 transition-all duration-700 delay-300 
-              ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-          >
-            {/* LinkedIn Card */}
-            <a 
-              href="https://www.linkedin.com/in/virubane/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group relative flex-1 bg-gradient-to-r from-black to-gray-900 p-6 rounded-xl border border-gray-800 hover:border-blue-500/50 transition-all duration-300 flex flex-col items-center text-center hover:shadow-lg hover:shadow-blue-500/10"
-              onMouseEnter={() => handleMouseEnter('linkedin')}
-              onMouseLeave={() => handleMouseLeave('linkedin')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-blue-500/5 rounded-xl opacity-0 group-hover:opacity-100 animate-gradient-shift"></div>
-              <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-black to-gray-900 rounded-full mb-4 group-hover:from-blue-900 group-hover:to-purple-900 transition-all duration-500 p-0.5">
-                <div className="w-full h-full rounded-full flex items-center justify-center bg-black overflow-hidden">
-                  <Linkedin 
-                    size={28} 
-                    className={`text-gray-400 group-hover:text-white transition-all duration-500 ${hoverStates.linkedin ? 'animate-pulse-slow' : ''}`} 
-                  />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-200 transition-colors">LinkedIn</h3>
-              <p className="text-gray-400 font-mono group-hover:text-blue-300 transition-colors">virubane</p>
-            </a>
-            
-            {/* Email Card */}
-            <a 
-              href="mailto:virajbane2004@gmail.com"
-              className="group relative flex-1 bg-gradient-to-r from-black to-gray-900 p-6 rounded-xl border border-gray-800 hover:border-purple-500/50 transition-all duration-300 flex flex-col items-center text-center hover:shadow-lg hover:shadow-purple-500/10"
-              onMouseEnter={() => handleMouseEnter('email')}
-              onMouseLeave={() => handleMouseLeave('email')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 animate-gradient-shift-reverse"></div>
-              <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-black to-gray-900 rounded-full mb-4 group-hover:from-purple-900 group-hover:to-blue-900 transition-all duration-500 p-0.5">
-                <div className="w-full h-full rounded-full flex items-center justify-center bg-black overflow-hidden">
-                  <Mail 
-                    size={28} 
-                    className={`text-gray-400 group-hover:text-white transition-all duration-500 ${hoverStates.email ? 'animate-pulse-slow' : ''}`} 
-                  />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-purple-200 transition-colors">Email</h3>
-              <p className="text-gray-400 font-mono group-hover:text-purple-300 transition-colors">virajbane2004@gmail.com</p>
-            </a>
-            
-            {/* Instagram Card */}
-            <a 
-              href="https://www.instagram.com/_.virajbane._/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group relative flex-1 bg-gradient-to-r from-black to-gray-900 p-6 rounded-xl border border-gray-800 hover:border-pink-500/50 transition-all duration-300 flex flex-col items-center text-center hover:shadow-lg hover:shadow-pink-500/10"
-              onMouseEnter={() => handleMouseEnter('instagram')}
-              onMouseLeave={() => handleMouseLeave('instagram')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-500"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-purple-500/5 to-pink-500/5 rounded-xl opacity-0 group-hover:opacity-100 animate-gradient-shift"></div>
-              <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-black to-gray-900 rounded-full mb-4 group-hover:from-pink-900 group-hover:to-purple-900 transition-all duration-500 p-0.5">
-                <div className="w-full h-full rounded-full flex items-center justify-center bg-black overflow-hidden">
-                  <Instagram 
-                    size={28} 
-                    className={`text-gray-400 group-hover:text-white transition-all duration-500 ${hoverStates.instagram ? 'animate-pulse-slow' : ''}`} 
-                  />
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-pink-200 transition-colors">Instagram</h3>
-              <p className="text-gray-400 font-mono group-hover:text-pink-300 transition-colors">_.virajbane_.</p>
-            </a>
+
+          {/* Clip-path link grid */}
+          <div className={`transition-all duration-700 delay-300 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <ClipPathLinks />
           </div>
         </div>
-        
       </div>
-      
-      
-      {/* Add global animations */}
+
+      {/* Global animations */}
       <style jsx global>{`
         @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
+          0%   { background-position: -200% center; }
+          100% { background-position:  200% center; }
         }
-        
         @keyframes float {
-          0% { transform: translateY(0) translateX(0); }
-          50% { transform: translateY(-10px) translateX(10px); }
-          100% { transform: translateY(0) translateX(0); }
+          0%,100% { transform: translateY(0)    translateX(0);   }
+          50%     { transform: translateY(-10px) translateX(10px);}
         }
-        
         @keyframes float-delayed {
-          0% { transform: translateY(0) translateX(0); }
-          50% { transform: translateY(10px) translateX(-10px); }
-          100% { transform: translateY(0) translateX(0); }
+          0%,100% { transform: translateY(0)   translateX(0);    }
+          50%     { transform: translateY(10px) translateX(-10px);}
         }
-        
-        @keyframes gradient-shift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes pulse-slow {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-        
         .animate-shimmer {
           background-size: 200% auto;
           animation: shimmer 3s linear infinite;
         }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
-        }
-        
-        .animate-gradient-shift {
-          background-size: 400% 400%;
-          animation: gradient-shift 6s ease infinite;
-        }
-        
-        .animate-gradient-shift-reverse {
-          background-size: 400% 400%;
-          animation: gradient-shift 6s ease-in-out infinite reverse;
-        }
-        
-        .animate-pulse-slow {
-          animation: pulse-slow 2s ease-in-out infinite;
-        }
+        .animate-float         { animation: float          6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed  8s ease-in-out infinite; }
       `}</style>
-      <AnimatedFooter/>
+
+      <AnimatedFooter />
     </div>
   );
 }

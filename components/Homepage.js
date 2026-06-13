@@ -127,24 +127,6 @@ export default function Start() {
 };
 
   // Blog posts data
-  const blogPosts = [
-    {
-      date: "24.12.2024",
-      title: "Contributing less to opensource",
-      description: "I contribute less to opensource. Why?",
-    },
-    {
-      date: "17.11.2024",
-      title: "Why this site will not be open source?",
-      description:
-        "Will this site ever be open-source? And why is it not open-source now.",
-    },
-    {
-      date: "5.10.2024",
-      title: "My opinion on Hugo",
-      description: "Is Hugo a good static site generator? Should I use it?",
-    },
-  ];
 
   return (
     <div className="min-h-screen text-white bg-transparent">
