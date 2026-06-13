@@ -1,249 +1,235 @@
-import { useState } from 'react';
+'use client';
+import { useEffect, useRef } from 'react';
 
-export default function TechStackSlideshow() {
-  const [animationPaused, setAnimationPaused] = useState(false);
-  
-  // First row technologies with actual logos
-  const firstRowTech = [
-  {
-    name: 'React',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/react-2.svg"
-        alt="React"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'Next.js',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg"
-        alt="Next.js"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'Vite',
-    logo: (
-      <img
-        src="https://vitejs.dev/logo.svg"
-        alt="Vite"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'HTML',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/html-1.svg"
-        alt="HTML"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'CSS',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/css-3.svg"
-        alt="CSS"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'Tailwind',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/tailwindcss.svg"
-        alt="Tailwind CSS"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'JavaScript',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/logo-javascript.svg"
-        alt="JavaScript"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'TypeScript',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/typescript.svg"
-        alt="TypeScript"
-        className="w-6 h-6"
-      />
-    ),
-  },
+const row1 = [
+  { name: 'Python',      src: 'https://cdn.worldvectorlogo.com/logos/python-5.svg' },
+  { name: 'JavaScript', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'Java',        src: 'https://cdn.worldvectorlogo.com/logos/java-4.svg' },
+ { name: 'SQL', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg' },
+  { name: 'React.js',    src: 'https://cdn.worldvectorlogo.com/logos/react-2.svg' },
+  { name: 'Next.js',     src: 'https://cdn.worldvectorlogo.com/logos/nextjs-2.svg' },
+  { name: 'Node.js',     src: 'https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg' },
+  { name: 'Tailwind CSS',src: 'https://cdn.worldvectorlogo.com/logos/tailwindcss.svg' },
 ];
 
-  // Second row technologies with actual logos
-  const secondRowTech = [
-  {
-    name: 'Node.js',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg"
-        alt="Node.js"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'Express.js',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/express-109.svg"
-        alt="Express.js"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'GitHub',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/github-icon-1.svg"
-        alt="GitHub"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'Java',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/java-4.svg"
-        alt="Java"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  
-  {
-    name: 'Python',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/python-5.svg"
-        alt="Python"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'MongoDB',
-    logo: (
-      <img
-        src="https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg"
-        alt="MongoDB"
-        className="w-6 h-6"
-      />
-    ),
-  },
-  {
-    name: 'Canva',
-    logo: (
-      <img
-  src="https://vectorlogo.zone/logos/canva/canva-icon.svg"
-  alt="Canva"
-  className="w-6 h-6"
-/>
-    ),
-  },
+const row2 = [
+  { name: 'PyTorch',          src: 'https://upload.wikimedia.org/wikipedia/commons/1/10/PyTorch_logo_icon.svg' },
+  { name: 'Scikit-learn',     src: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg' },
+  { name: 'Pandas',           src: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Pandas_logo.svg' },
+  { name: 'NumPy',            src: 'https://upload.wikimedia.org/wikipedia/commons/3/31/NumPy_logo_2020.svg' },
+  { name: 'HuggingFace',      src: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg' },
+  { name: 'BERT',             src: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg' },
+  { name: 'NLP',              src: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg' },
+  { name: 'Transformer Models',src: 'https://huggingface.co/front/assets/huggingface_logo-noborder.svg' },
 ];
 
+const row3 = [
+  { name: 'MongoDB',   src: 'https://cdn.worldvectorlogo.com/logos/mongodb-icon-1.svg' },
+  { name: 'MySQL',      src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+  { name: 'Supabase',   src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg' },
+  { name: 'Git',       src: 'https://cdn.worldvectorlogo.com/logos/git-icon.svg' },
+  { name: 'GitHub',    src: 'https://cdn.worldvectorlogo.com/logos/github-icon-1.svg' },
+  { name: 'Vercel',    src: 'https://cdn.worldvectorlogo.com/logos/vercel.svg' },
+  { name: 'Netlify',   src: 'https://cdn.worldvectorlogo.com/logos/netlify.svg' },
+  { name: 'Ollama',    src: 'https://ollama.com/public/ollama.png' },
+];
 
+const SMOOTH_TAU = 0.18;
+const BG = 'transparent';
 
-  // Duplicate arrays to create seamless loops
-  const allFirstRowTech = [...firstRowTech, ...firstRowTech];
-  const allSecondRowTech = [...secondRowTech, ...secondRowTech];
+const styles = {
+  wrapper: {
+    backgroundColor: BG,
+    padding: '40px 24px',
+    maxWidth: '1024px',
+    margin: '0 auto',
+    fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+  },
+  heading: {
+    textAlign: 'center',
+    fontSize: '2rem',
+    fontWeight: 700,
+    color: '#f1f5f9',
+    marginBottom: '28px',
+  },
+  rowWrap: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    marginBottom: '16px',
+  },
+  fadeLeft: {
+    position: 'absolute',
+    top: 0, bottom: 0, left: 0,
+    width: '80px',
+    pointerEvents: 'none',
+    zIndex: 10,
+    background: `linear-gradient(to right, ${BG} 0%, transparent 100%)`,
+  },
+  fadeRight: {
+    position: 'absolute',
+    top: 0, bottom: 0, right: 0,
+    width: '80px',
+    pointerEvents: 'none',
+    zIndex: 10,
+    background: `linear-gradient(to left, ${BG} 0%, transparent 100%)`,
+  },
+  track: {
+    display: 'flex',
+    width: 'max-content',
+    willChange: 'transform',
+    userSelect: 'none',
+  },
+};
 
-  // Handle mouse interactions
-  const handleMouseEnter = () => setAnimationPaused(true);
-  const handleMouseLeave = () => setAnimationPaused(false);
+function useLoopAnimation(trackRef, items, speed, direction) {
+  const hoveredRef = useRef(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const targetVel = direction === 'left' ? speed : -speed;
+    let seqW = 0;
+    let offset = 0;
+    let vel = 0;
+    let raf = null;
+    let last = null;
+
+    function buildList() {
+      const ul = document.createElement('ul');
+      Object.assign(ul.style, {
+        display: 'flex',
+        alignItems: 'center',
+        listStyle: 'none',
+        margin: '0',
+        padding: '0',
+      });
+
+      items.forEach(t => {
+        const li = document.createElement('li');
+        Object.assign(li.style, {
+          flexShrink: '0',
+          marginRight: '40px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+        });
+
+        const box = document.createElement('div');
+        Object.assign(box.style, {
+          width: '52px',
+          height: '52px',
+          borderRadius: '10px',
+          background: '#111827',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: '0',
+        });
+
+        const img = document.createElement('img');
+        Object.assign(img.style, {
+          width: '28px',
+          height: '28px',
+          objectFit: 'contain',
+          pointerEvents: 'none',
+          WebkitUserDrag: 'none',
+        });
+        img.src = t.src;
+        img.alt = t.name;
+        img.loading = 'lazy';
+
+        const span = document.createElement('span');
+        Object.assign(span.style, {
+          fontSize: '13px',
+          color: '#cbd5e1',
+          fontWeight: '500',
+          whiteSpace: 'nowrap',
+          fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+        });
+        span.textContent = t.name;
+
+        box.appendChild(img);
+        li.appendChild(box);
+        li.appendChild(span);
+        ul.appendChild(li);
+      });
+
+      return ul;
+    }
+
+    function populate() {
+      track.innerHTML = '';
+      const seq = buildList();
+      track.appendChild(seq);
+
+      requestAnimationFrame(() => {
+        seqW = seq.scrollWidth;
+        const containerW = track.parentElement?.clientWidth ?? 800;
+        const copies = Math.ceil(containerW / seqW) + 3;
+        for (let i = 1; i < copies; i++) track.appendChild(buildList());
+        startAnim();
+      });
+    }
+
+    function startAnim() {
+      if (raf) cancelAnimationFrame(raf);
+      function frame(ts) {
+        if (!last) last = ts;
+        const dt = Math.min((ts - last) / 1000, 0.05);
+        last = ts;
+        const target = hoveredRef.current ? 0 : targetVel;
+        const ease = 1 - Math.exp(-dt / SMOOTH_TAU);
+        vel += (target - vel) * ease;
+        if (seqW > 0) {
+          let next = offset + vel * dt;
+          next = ((next % seqW) + seqW) % seqW;
+          offset = next;
+          track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      raf = requestAnimationFrame(frame);
+    }
+
+    const onEnter = () => { hoveredRef.current = true; };
+    const onLeave = () => { hoveredRef.current = false; };
+    track.addEventListener('mouseenter', onEnter);
+    track.addEventListener('mouseleave', onLeave);
+
+    populate();
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      track.removeEventListener('mouseenter', onEnter);
+      track.removeEventListener('mouseleave', onLeave);
+    };
+  }, [trackRef, items, speed, direction]);
+}
+
+function LoopRow({ items, speed, direction }) {
+  const trackRef = useRef(null);
+  useLoopAnimation(trackRef, items, speed, direction);
 
   return (
-    <div className="bg-black text-white px-6 py-8 font-sans mx-auto max-w-5xl">
-      <h2 className="text-4xl font-bold mb-8 text-center">What I work with</h2>
-
-      {/* First row - continuous scrolling */}
-      <div className="relative overflow-hidden w-full mb-6">
-        <div 
-          className={`flex justify-center transition-all duration-300`}
-          style={{
-            animation: animationPaused ? 'none' : 'scrollLeft 30s linear infinite',
-          }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {allFirstRowTech.map((tech, index) => (
-            <div 
-              key={`tech1-${index}`} 
-              className="flex items-center mx-4 shrink-0"
-            >
-              <div className="bg-gray-900 w-12 h-12 rounded-lg flex items-center justify-center mr-2">
-                {tech.logo}
-              </div>
-              <span className="text-sm text-gray-300 font-medium whitespace-nowrap">{tech.name}</span>
-            </div>
-          ))}
-        </div>
+    <div style={styles.rowWrap}>
+      <div style={styles.fadeLeft} />
+      <div style={styles.fadeRight} />
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
+        <div ref={trackRef} style={styles.track} />
       </div>
+    </div>
+  );
+}
 
-      {/* Second row - continuous scrolling in opposite direction */}
-      <div className="relative overflow-hidden w-full">
-        <div 
-          className={`flex justify-center transition-all duration-300`}
-          style={{
-            animation: animationPaused ? 'none' : 'scrollRight 35s linear infinite',
-          }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {allSecondRowTech.map((tech, index) => (
-            <div 
-              key={`tech2-${index}`} 
-              className="flex items-center mx-4 shrink-0"
-            >
-              <div className="bg-gray-900 w-12 h-12 rounded-lg flex items-center justify-center mr-2">
-                {tech.logo}
-              </div>
-              <span className="text-sm text-gray-300 font-medium whitespace-nowrap">{tech.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Embedded styles for animations */}
-      <style jsx>{`
-        @keyframes scrollLeft {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        @keyframes scrollRight {
-          0% {
-            transform: translateX(-50%);
-          }
-          100% {
-            transform: translateX(0);
-          }
-        }
-      `}</style>
+export default function TechStackSlideshow() {
+  return (
+    <div style={styles.wrapper}>
+      <h2 style={styles.heading}>What I work with</h2>
+      <LoopRow items={row1} speed={55} direction="left" />
+      <LoopRow items={row2} speed={45} direction="right" />
+      <LoopRow items={row3} speed={60} direction="left" />
     </div>
   );
 }

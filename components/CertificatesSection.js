@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+'use client';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 
-// Enhanced certificate data with detailed descriptions
 const certificates = [
   {
     id: 1,
@@ -11,7 +11,7 @@ const certificates = [
     date: 'April 2025',
     image: '/Certificates1.png',
     linkedIn: 'https://www.linkedin.com/in/virubane/recent-activity/all/',
-    description: 'Won 3rd place in the Video Editing Competition during INGENIOUS 2025. Created an impactful video highlighting the key features and real-world relevance of our project "Eyes.AI." The video demonstrated accessibility-focused tech innovations aimed at empowering the blind community.'
+    description: 'Won 3rd place in the Video Editing Competition during INGENIOUS 2025. Created an impactful video highlighting the key features and real-world relevance of our project "Eyes.AI." The video demonstrated accessibility-focused tech innovations aimed at empowering the blind community.',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const certificates = [
     date: 'April 2025',
     image: '/Certificates2.png',
     linkedIn: 'https://linkedin.com/in/yourprofile',
-    description: 'Secured 3rd place in the Poster Presentation Competition at INGENIOUS 2025, hosted by Viva Institute of Technology. Designed a visually compelling and informative poster to communicate the concept and social impact of our project "Eyes.AI," a voice-driven AI solution for the visually impaired.'
+    description: 'Secured 3rd place in the Poster Presentation Competition at INGENIOUS 2025. Designed a visually compelling poster to communicate the concept and social impact of "Eyes.AI," a voice-driven AI solution for the visually impaired.',
   },
   {
     id: 3,
@@ -31,493 +31,333 @@ const certificates = [
     date: 'August 2024',
     image: '/Certificates6.png',
     linkedIn: 'https://www.linkedin.com/in/virubane/recent-activity/all/',
-    description: 'ALGORITHM 9.0, a national-level hackathon that spanned 32 hours. This intense coding and problem-solving event brought together tech enthusiasts from across the country, providing a platform to innovate, build, and compete in software development.'
+    description: 'ALGORITHM 9.0, a national-level 32-hour hackathon bringing together tech enthusiasts from across the country to innovate, build, and compete in software development.',
   },
   {
     id: 4,
     type: 'Participation',
     title: 'COHERENCE 25',
-    issuer: 'Vidyavardhini College of Engineering and Technology (VCET)',
+    issuer: 'Vidyavardhini College of Engineering and Technology',
     date: 'March 2025',
     image: '/Certificate8.png',
     linkedIn: 'https://linkedin.com/in/yourprofile',
-    description: 'COHERENCE 25 is an intercollegiate or institutional hackathon organized under the Microsoft Learn Students Club in partnership with the Department of Computer and AI-DS at VCET.'
+    description: 'Intercollegiate hackathon organized under the Microsoft Learn Students Club in partnership with the Department of Computer and AI-DS at VCET.',
   },
   {
     id: 5,
     type: 'Professional',
     title: 'Python Internship',
     issuer: 'Branding Catalyst',
-    date: 'July 2022 - August 2022',
+    date: 'July 2022 – August 2022',
     image: '/Certificates3.png',
     linkedIn: 'https://www.linkedin.com/in/virubane/details/certifications/1715165301281/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
-    description: 'Completed a 6-week internship where I worked on Python-based automation scripts and backend utilities. Demonstrated a strong ability to grasp core development tasks, debug logic, and write maintainable code. Gained exposure to real-world projects under the guidance of experienced mentors. Commended for being inquisitive, hardworking, and contributing actively to business-oriented development goals.'
+    description: 'Completed a 6-week internship working on Python-based automation scripts and backend utilities. Commended for being inquisitive, hardworking, and contributing actively to business-oriented development goals.',
   },
   {
     id: 6,
     type: 'Participation',
-    title: 'Mumbai Hacks-World largest hackathon',
+    title: "Mumbai Hacks – World's Largest Hackathon",
     issuer: 'Guinness World Records',
     date: 'November 2024',
     image: '/Certificates5.png',
     linkedIn: 'https://www.linkedin.com/in/virubane/recent-activity/all/',
-    description: 'This certificate acknowledges participation in a Guinness World Records™ attempt for "The most participants in a generative AI hackathon."'
+    description: 'Guinness World Records™ attempt for "The most participants in a generative AI hackathon," organized by Tech Entrepreneurs Association of Mumbai.',
   },
   {
-  id: 7,
-  type: 'Participation',
-  title: '20th Aavishkar Research Convention (Zonal Round)',
-  issuer: 'University of Mumbai',
-  date: 'December 2025',
-  image: '/1736625196035-85498598-694d-4993-84b7-52d395f215da__community_file_page-0001.jpg',
-  linkedIn: 'https://www.linkedin.com/in/virubane/overlay/1766411447717/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
-  description: 'Participated and presented a research project titled "Eyes.AI – A Multimodal AI Framework for Assistive Cross-Application Workflow and Desktop Interaction" at the 20th Aavishkar Inter-Collegiate Research Convention (Zonal Round). The project focused on accessibility-driven AI solutions aimed at empowering visually impaired users through intelligent desktop interaction.'
-},
-{
-  id: 8,
-  type: 'Professional',
-  title: 'Deep Learning Certification',
-  issuer: 'IIT Ropar (NPTEL)',
-  date: 'July 2025 – October 2025',
-  image: '/Deep Learning - IIT Ropar_page-0001.jpg',
-  linkedIn: 'https://www.linkedin.com/in/virubane/overlay/1766411186006/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
-  description: 'Successfully completed a 12-week NPTEL-certified Deep Learning course offered by IIT Ropar. Gained strong theoretical and practical knowledge in neural networks, backpropagation, CNNs, RNNs, and deep learning optimization techniques. Earned Elite certification by completing proctored examination and graded assignments.'
-},
-{
-  id: 9,
-  type: 'Professional',
-  title: 'Cyber Security Certification',
-  issuer: 'Atos Prayas Foundation',
-  date: 'July 2025 – August 2025',
-  image: '/G4570-VIVA_Institute_of_Technology[1] (1)_page-0001.jpg',
-  linkedIn: 'https://www.linkedin.com/in/virubane/details/certifications/1766411347168/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
-  description: 'Completed a Cyber Security training program under the Atos Prayas Foundation Youth Empowerment Initiative. Acquired foundational knowledge of cyber threats, network security, ethical practices, and security risk mitigation. Awarded Grade B for successful completion of assessments and hands-on learning.'
-}
-
+    id: 7,
+    type: 'Participation',
+    title: '20th Aavishkar Research Convention',
+    issuer: 'University of Mumbai',
+    date: 'December 2025',
+    image: '/1736625196035-85498598-694d-4993-84b7-52d395f215da__community_file_page-0001.jpg',
+    linkedIn: 'https://www.linkedin.com/in/virubane/overlay/1766411447717/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
+    description: 'Presented "Eyes.AI – A Multimodal AI Framework for Assistive Cross-Application Workflow and Desktop Interaction" at the 20th Aavishkar Inter-Collegiate Research Convention (Zonal Round).',
+  },
+  {
+    id: 8,
+    type: 'Professional',
+    title: 'Deep Learning Certification',
+    issuer: 'IIT Ropar (NPTEL)',
+    date: 'July 2025 – October 2025',
+    image: '/Deep Learning - IIT Ropar_page-0001.jpg',
+    linkedIn: 'https://www.linkedin.com/in/virubane/overlay/1766411186006/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
+    description: '12-week NPTEL-certified Deep Learning course by IIT Ropar. Earned Elite certification covering neural networks, CNNs, RNNs, and deep learning optimization techniques.',
+  },
+  {
+    id: 9,
+    type: 'Professional',
+    title: 'Cyber Security Certification',
+    issuer: 'Atos Prayas Foundation',
+    date: 'July 2025 – August 2025',
+    image: '/G4570-VIVA_Institute_of_Technology[1] (1)_page-0001.jpg',
+    linkedIn: 'https://www.linkedin.com/in/virubane/details/certifications/1766411347168/single-media-viewer/?profileId=ACoAAEobIrwBYQh7-Qwepo8FPAwbXxdDR3GRm-Q',
+    description: 'Cyber Security training under Atos Prayas Foundation Youth Empowerment Initiative. Awarded Grade B for successful completion of assessments and hands-on learning.',
+  },
 ];
 
-export default function Achievements() {
-  const [filter, setFilter] = useState('all');
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [showFullImage, setShowFullImage] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [animationState, setAnimationState] = useState('idle');
-
-  // Filter certificates based on selected type
-  const filteredCertificates = certificates.filter(cert => 
-    filter === 'all' ? true : cert.type.toLowerCase() === filter.toLowerCase()
-  );
-  
-  // Handle image click to show full view
-  const handleImageClick = (imgSrc) => {
-    setSelectedImage(imgSrc);
-    setShowFullImage(true);
-  };
-
-  // Auto rotate certificates every 4 seconds
-  useEffect(() => {
-    if (filteredCertificates.length <= 1 || showFullImage) return;
-    
-    const interval = setInterval(() => {
-      setAnimationState('transitioning');
-      setTimeout(() => {
-        setActiveIndex(prev => (prev + 1) % filteredCertificates.length);
-        setTimeout(() => {
-          setAnimationState('idle');
-        }, 100);
-      }, 500);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [filteredCertificates.length, showFullImage]);
-
-  // Background animation variants
-  const backgroundVariants = {
-    animate: {
-      backgroundPosition: ['0% 0%', '100% 100%'],
-      transition: {
-        duration: 20,
-        ease: "linear",
-        repeat: Infinity,
-        repeatType: "reverse"
-      }
-    }
-  };
-
+// ── Card ──────────────────────────────────────────────────────────────────
+function CertCard({ cert, translate, onSelect }) {
   return (
-    <div className="w-full bg-transparent mt-15 text-white py-16">
-      <motion.div 
-        className="absolute inset-0 opacity-10 z-0"
-        initial={{ opacity: 0.05 }}
-        animate="animate"
-        variants={backgroundVariants}
-        style={{
-          backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(255,255,255,0.1) 0%, transparent 30%), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.08) 0%, transparent 20%)',
-          backgroundSize: '100% 100%',
-          pointerEvents: 'none'
-        }}
+    <motion.div
+      style={{ x: translate }}
+      whileHover={{ y: -20 }}
+      className="group/card h-80 w-96 relative shrink-0 cursor-pointer rounded-2xl overflow-hidden"
+      onClick={() => onSelect(cert)}
+    >
+      <img
+        src={cert.image}
+        alt={cert.title}
+        className="object-cover object-center absolute h-full w-full inset-0"
       />
-      
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold mb-2">Achievements</h2>
-          <motion.div 
-            initial={{ width: 0 }}
-            animate={{ width: 96 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="h-1 bg-white mx-auto mb-6"
-          />
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="text-gray-300 max-w-2xl mx-auto"
-          >
-            A showcase of my professional certifications and participation in various tech events
-          </motion.p>
-        </motion.div>
 
-        {/* Filter Buttons - Made more mobile friendly */}
-        <div className="flex justify-center flex-wrap gap-3 mb-10">
-          <FilterButton active={filter === 'all'} onClick={() => setFilter('all')}>
-            All
-          </FilterButton>
-          <FilterButton active={filter === 'professional'} onClick={() => setFilter('professional')}>
-            Winners
-          </FilterButton>
-          <FilterButton active={filter === 'participation'} onClick={() => setFilter('participation')}>
-            Participation
-          </FilterButton>
-        </div>
+      {/* dark overlay on hover */}
+      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/card:opacity-80 bg-black pointer-events-none transition-opacity duration-300" />
 
-        {/* Certificates Showcase - Improved mobile responsiveness */}
-        <div className="relative bg-black rounded-lg border border-gray-800 overflow-hidden" style={{minHeight: '32rem'}}>
-          <motion.div 
-            className="absolute inset-0 bg-black"
-            initial={{ background: "radial-gradient(circle at 50% 50%, #111 0%, #000 100%)" }}
-            animate={{ 
-              background: animationState === 'transitioning'
-                ? "radial-gradient(circle at 50% 50%, #222 0%, #000 100%)"
-                : "radial-gradient(circle at 50% 50%, #111 0%, #000 100%)"
-            }}
-            transition={{ duration: 0.5 }}
-          />
-          
-          {filteredCertificates.map((certificate, index) => (
-            <motion.div
-              key={certificate.id}
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ 
-                opacity: index === activeIndex ? 1 : 0,
-                scale: index === activeIndex ? 1 : 0.8,
-                zIndex: index === activeIndex ? 10 : 0
-              }}
-              transition={{ duration: 0.5 }}
-            >
-              {/* Make card scrollable on mobile */}
-              <div className="w-full h-full max-w-6xl flex flex-col md:flex-row p-4 md:p-6 overflow-y-auto">
-                <motion.div 
-                  className="w-full md:w-1/2 flex items-center justify-center min-h-64 md:h-full mb-6 md:mb-0"
-                  whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(255,255,255,0.1)" }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <motion.div 
-                    className="w-full max-w-md h-64 md:h-96 overflow-hidden rounded-md shadow-2xl cursor-pointer relative"
-                    onClick={() => handleImageClick(certificate.image)}
-                    whileHover="hover"
-                  >
-                    <motion.img 
-                      src={certificate.image} 
-                      alt={certificate.title} 
-                      className="w-full h-full object-contain md:object-cover object-center bg-black"
-                    />
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 flex items-end justify-center pb-4"
-                      variants={{
-                        hover: {
-                          opacity: 1,
-                        }
-                      }}
-                    >
-                      <span className="text-white font-medium px-4 py-2 bg-black bg-opacity-60 rounded-full text-sm">
-                        Click to view full image
-                      </span>
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-                
-                <div className="w-full md:w-1/2 flex flex-col justify-center md:pl-8">
-                  <motion.div
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="pb-6 md:pb-0" /* Add padding at bottom for mobile */
-                  >
-                    <motion.span 
-                      className="inline-block px-3 py-1 text-xs font-semibold bg-white text-black rounded-full mb-4"
-                      whileHover={{ scale: 1.05, backgroundColor: "#f8f8f8" }}
-                    >
-                      {certificate.type}
-                    </motion.span>
-                    
-                    <motion.h3 
-                      className="text-2xl md:text-3xl font-bold mb-2"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3, duration: 0.5 }}
-                    >
-                      {certificate.title}
-                    </motion.h3>
-                    
-                    <motion.p 
-                      className="text-gray-400 mb-4 text-sm md:text-base"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.4, duration: 0.5 }}
-                    >
-                      Issued by {certificate.issuer} • {certificate.date}
-                    </motion.p>
-                    
-                    <motion.div 
-                      className="h-px w-full bg-gradient-to-r from-gray-800 via-white to-gray-800 my-4 md:my-6"
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ delay: 0.5, duration: 0.7 }}
-                    />
-                    
-                    <motion.p 
-                      className="text-gray-300 mb-6 md:mb-8 text-sm md:text-base"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.6, duration: 0.5 }}
-                    >
-                      {certificate.description}
-                    </motion.p>
-                    
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7, duration: 0.5 }}
-                    >
-                      <LinkedInButton url={certificate.linkedIn} />
-                    </motion.div>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          
-          {/* Navigation Dots - Made more touchable for mobile */}
-          <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
-            {filteredCertificates.map((_, index) => (
-              <motion.button
-                key={index}
-                onClick={() => {
-                  setAnimationState('transitioning');
-                  setTimeout(() => {
-                    setActiveIndex(index);
-                    setTimeout(() => {
-                      setAnimationState('idle');
-                    }, 100);
-                  }, 300);
-                }}
-                className={`w-4 h-4 rounded-full relative ${
-                  index === activeIndex ? 'bg-white' : 'bg-gray-600'
-                } overflow-hidden transition-colors duration-300`}
-                whileHover={{ scale: 1.3 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label={`View certificate ${index + 1}`}
-              >
-                {index === activeIndex && (
-                  <motion.div 
-                    className="absolute inset-0 bg-white opacity-70"
-                    animate={{
-                      scale: [1, 1.8],
-                      opacity: [0.7, 0]
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      repeatType: "loop"
-                    }}
-                  />
-                )}
-              </motion.button>
-            ))}
-          </div>
-        </div>
+      {/* info revealed on hover */}
+      <div className="absolute inset-0 flex flex-col justify-end p-5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full w-fit mb-2 ${
+          cert.type === 'Professional'
+            ? 'bg-indigo-500 text-white'
+            : 'bg-white/20 text-white'
+        }`}>
+          {cert.type === 'Professional' ? '🏆 Winner' : '🎯 Participation'}
+        </span>
+        <h3 className="text-white font-bold text-base leading-snug">{cert.title}</h3>
+        <p className="text-gray-300 text-xs mt-1">{cert.issuer} · {cert.date}</p>
       </div>
-      
-      {/* Fullscreen Image Modal - Improved for mobile */}
-      <AnimatePresence>
-        {showFullImage && (
-          <motion.div 
-            className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowFullImage(false)}
-          >
-            <motion.div
-              className="relative w-full max-w-4xl max-h-screen"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 20 }}
-            >
-              <img 
-                src={selectedImage} 
-                alt="Certificate Full View" 
-                className="w-full h-full object-contain"
-              />
-              
-              <motion.button
-                className="absolute top-4 right-4 text-white bg-black bg-opacity-70 w-10 h-10 rounded-full flex items-center justify-center"
-                whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.2)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowFullImage(false);
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </motion.button>
-              
-              <motion.div
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-black bg-opacity-70 px-4 py-2 rounded-full text-sm"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
-                Click anywhere to close
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// ── Header ────────────────────────────────────────────────────────────────
+function Header() {
+  return (
+    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
+      <motion.p
+        initial={{ opacity: 0, letterSpacing: '0.3em' }}
+        animate={{ opacity: 1, letterSpacing: '0.15em' }}
+        transition={{ duration: 0.7 }}
+        className="text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-4"
+      >
+        Credentials & Recognition
+      </motion.p>
+      <h1 className="text-3xl md:text-6xl font-bold text-white">
+        My <br /> Achievements
+      </h1>
+      <p className="max-w-2xl text-sm md:text-lg mt-6 text-gray-300">
+        A collection of certifications, hackathon wins, and competition results
+        that mark my journey through AI, development, and research.
+      </p>
     </div>
   );
 }
 
-// LinkedIn Button component with animated gradient
-const LinkedInButton = ({ url }) => {
-  const [hover, setHover] = useState(false);
-  
-  return (
-    <motion.a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center justify-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-md relative overflow-hidden"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255,255,255,0.2)" }}
-      whileTap={{ scale: 0.98 }}
-    >
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-900"
-        initial={{ opacity: 0.8 }}
-        animate={{ 
-          opacity: hover ? 1 : 0.8,
-        }}
-      />
-      
-      {/* Animated gradient overlay */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-gray-700  via-gray-700 to-gray-700"
-        animate={{ 
-          backgroundPosition: hover ? ["0% 0%", "100% 0%"] : "0% 0%",
-        }}
-        transition={{ 
-          duration: 1.5, 
-          repeat: hover ? Infinity : 0,
-          repeatType: "mirror"
-        }}
-        style={{ opacity: 0.4, backgroundSize: "200% 100%" }}
-      />
-      
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="16" 
-        height="16" 
-        viewBox="0 0 24 24" 
-        fill="white"
-        className="relative z-10"
-      >
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-      </svg>
-      
-      <span className="font-medium text-white relative z-10 text-sm md:text-base">View on LinkedIn</span>
-      
-      {/* Shine effect */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent" 
-        initial={{ x: "-100%", opacity: 0.3 }}
-        animate={{ 
-          x: hover ? "100%" : "-100%",
-        }}
-        transition={{ 
-          duration: 0.8, 
-          ease: "easeInOut"
-        }}
-        style={{ mixBlendMode: "overlay" }}
-      />
-      
-      {/* Border glow effect */}
-      {hover && (
-        <motion.div 
-          className="absolute inset-0 rounded-md"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          style={{ 
-            boxShadow: "0 0 10px rgba(255,255,255,0.5), inset 0 0 5px rgba(255,255,255,0.5)",
-            pointerEvents: "none"
-          }}
-        />
-      )}
-    </motion.a>
-  );
-};
+// ── Parallax container ────────────────────────────────────────────────────
+function CertParallax({ onSelect }) {
+  const ref = useRef(null);
 
-// Filter button component - Made more mobile friendly
-const FilterButton = ({ active, onClick, children }) => (
-  <motion.button
-    whileHover={{ y: -2, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)" }}
-    whileTap={{ scale: 0.95 }}
-    onClick={onClick}
-    className={`px-4 py-1 md:px-6 md:py-2 rounded-full border text-sm md:text-base relative overflow-hidden ${
-      active 
-        ? 'border-white' 
-        : 'border-gray-700 hover:border-gray-400'
-    } transition-all duration-300`}
-  >
-    {active && (
-      <motion.div 
-        className="absolute inset-0 bg-white"
-        layoutId="activeFilterBackground"
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      />
-    )}
-    <span className={`relative z-10 font-medium ${active ? 'text-black' : 'text-white'}`}>
-      {children}
-    </span>
-    
-    {!active && (
-      <motion.div 
-        className="absolute inset-0 bg-white opacity-0"
-        initial={false}
-        whileHover={{ opacity: 0.1 }}
-      />
-    )}
-  </motion.button>
-);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+
+  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+
+  const translateX = useSpring(
+    useTransform(scrollYProgress, [0, 1], [-200, 800]),
+    springConfig
+  );
+  const translateXReverse = useSpring(
+    useTransform(scrollYProgress, [0, 1], [200, -800]),
+    springConfig
+  );
+  const rotateX = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    springConfig
+  );
+  const opacity = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    springConfig
+  );
+  const rotateZ = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    springConfig
+  );
+  const translateY = useSpring(
+    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+    springConfig
+  );
+
+  const row1 = certificates.slice(0, 3);
+  const row2 = certificates.slice(3, 6);
+  const row3 = certificates.slice(6, 9);
+
+  return (
+    <div
+      ref={ref}
+      className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto"
+      style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
+    >
+      <Header />
+
+      <motion.div style={{ rotateX, rotateZ, translateY, opacity }}>
+        {/* Row 1 — moves right */}
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
+          {row1.map(cert => (
+            <CertCard key={cert.id} cert={cert} translate={translateX} onSelect={onSelect} />
+          ))}
+        </motion.div>
+
+        {/* Row 2 — moves left */}
+        <motion.div className="flex flex-row space-x-20 mb-20">
+          {row2.map(cert => (
+            <CertCard key={cert.id} cert={cert} translate={translateXReverse} onSelect={onSelect} />
+          ))}
+        </motion.div>
+
+        {/* Row 3 — moves right */}
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+          {row3.map(cert => (
+            <CertCard key={cert.id} cert={cert} translate={translateX} onSelect={onSelect} />
+          ))}
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────
+function CertModal({ cert, onClose }) {
+  if (!cert) return null;
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
+
+      <motion.div
+        className="relative z-10 w-full max-w-3xl bg-[#0d0d14] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+        initial={{ scale: 0.92, y: 30, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.92, y: 30, opacity: 0 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex flex-col md:flex-row">
+          {/* image */}
+          <div className="md:w-1/2 bg-black flex items-center justify-center p-4 min-h-56">
+            <img
+              src={cert.image}
+              alt={cert.title}
+              className="max-h-72 w-full object-contain rounded-lg"
+            />
+          </div>
+
+          {/* info */}
+          <div className="md:w-1/2 p-6 flex flex-col justify-between">
+            <div>
+              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full mb-3 inline-block ${
+                cert.type === 'Professional'
+                  ? 'bg-indigo-500/30 text-indigo-300'
+                  : 'bg-white/10 text-gray-300'
+              }`}>
+                {cert.type}
+              </span>
+              <h3 className="text-white font-bold text-xl leading-tight mb-2">{cert.title}</h3>
+              <p className="text-gray-400 text-sm mb-4">{cert.issuer} · {cert.date}</p>
+              <div className="h-px bg-white/10 mb-4" />
+              <p className="text-gray-300 text-sm leading-relaxed">{cert.description}</p>
+            </div>
+            <div className="mt-6 flex items-center gap-3 flex-wrap">
+              <a
+                href={cert.linkedIn}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="white">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                View on LinkedIn
+              </a>
+              <button
+                onClick={onClose}
+                className="px-4 py-2 rounded-lg border border-white/10 text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// ── Mobile grid ───────────────────────────────────────────────────────────
+function MobileGrid({ onSelect }) {
+  return (
+    <div className="px-4 py-16">
+      <div className="text-center mb-10">
+        <p className="text-indigo-400 text-xs font-semibold uppercase tracking-widest mb-3">
+          Credentials & Recognition
+        </p>
+        <h2 className="text-3xl font-bold text-white mb-4">My Achievements</h2>
+        <div
+          className="h-px w-16 mx-auto"
+          style={{ background: 'linear-gradient(to right, transparent, #818cf8, transparent)' }}
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-5">
+        {certificates.map((cert, i) => (
+          <motion.div
+            key={cert.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+            onClick={() => onSelect(cert)}
+            className="group cursor-pointer relative rounded-2xl overflow-hidden border border-white/10"
+            style={{ aspectRatio: '16/9' }}
+          >
+            <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-4">
+              <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full mb-2 inline-block ${
+                cert.type === 'Professional' ? 'bg-indigo-500 text-white' : 'bg-white/20 text-white'
+              }`}>
+                {cert.type === 'Professional' ? '🏆 Winner' : '🎯 Participation'}
+              </span>
+              <h3 className="text-white font-semibold text-sm leading-tight">{cert.title}</h3>
+              <p className="text-gray-400 text-xs mt-0.5">{cert.date}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Root export ───────────────────────────────────────────────────────────
+export default function Achievements() {
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <section className="w-full text-white relative">
+      <div className="hidden md:block">
+        <CertParallax onSelect={setSelected} />
+      </div>
+      <div className="block md:hidden">
+        <MobileGrid onSelect={setSelected} />
+      </div>
+
+      <AnimatePresence>
+        {selected && <CertModal cert={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
+    </section>
+  );
+}
