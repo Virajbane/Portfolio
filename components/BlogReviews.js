@@ -84,9 +84,9 @@ export default function BlogReviews() {
     <div className="min-h-screen bg-transparent text-white overflow-hidden relative">
       {/* Abstract background elements */}
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-gradient-to-r from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse"></div>
+        <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-linear-to-r from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse"></div>
         <div
-          className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-gradient-to-l from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse"
+          className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-linear-to-l from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse"
           style={{ animationDelay: "2s" }}
         ></div>
       </div>
@@ -96,7 +96,7 @@ export default function BlogReviews() {
         <h1 className="text-7xl font-bold mb-3 tracking-tighter glitch-text">
           <span className="">Reader Reviews</span>
         </h1>
-        <div className="w-24 h-1 mx-auto bg-gradient-to-r from-white via-gray-500 to-black mb-6"></div>
+        <div className="w-24 h-1 mx-auto bg-linear-to-r from-white via-gray-500 to-black mb-6"></div>
         <p className="text-gray-300 text-lg max-w-2xl mx-auto">
           Community feedback and impressions on articles and insights
         </p>
@@ -108,7 +108,7 @@ export default function BlogReviews() {
           <h2 className="text-3xl font-bold">Latest Feedback</h2>
           <button
             onClick={() => setShowReviewForm(true)}
-            className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-black to-gray-900 rounded-full border-x border-white border-opacity-10 hover:shadow-white hover:shadow-inner transition-all duration-300 group"
+            className="flex items-center space-x-2 px-6 py-3 bg-linear-to-r from-black to-gray-900 rounded-full border-x border-white border-opacity-10 hover:shadow-white hover:shadow-inner transition-all duration-300 group"
           >
             <Plus
               size={18}
@@ -266,7 +266,7 @@ function ReviewCard({ review, index }) {
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center mr-3 border border-gray-800">
+            <div className="w-10 h-10 rounded-full bg-linear-to-br from-gray-700 to-gray-900 flex items-center justify-center mr-3 border border-gray-800">
               <span className="font-bold text-white">{review.avatar}</span>
             </div>
             <div>
@@ -331,7 +331,7 @@ function ReviewCard({ review, index }) {
         }`}
       >
         <div
-          className={`absolute -inset-1 bg-gradient-to-r from-white via-gray-500 to-black opacity-10 blur-sm rounded-lg`}
+          className={`absolute -inset-1 bg-linear-to-r from-white via-gray-500 to-black opacity-10 blur-sm rounded-lg`}
         ></div>
       </div>
 
@@ -402,8 +402,8 @@ function ReviewForm({
         <div className="absolute inset-0 border border-white border-opacity-10"></div>
 
         {/* Animated background elements */}
-        <div className="absolute -right-20 -top-20 w-40 h-40 bg-gradient-to-r from-white to-transparent opacity-5 blur-3xl rounded-full"></div>
-        <div className="absolute -left-20 -bottom-20 w-40 h-40 bg-gradient-to-l from-white to-transparent opacity-5 blur-3xl rounded-full"></div>
+        <div className="absolute -right-20 -top-20 w-40 h-40 bg-linear-to-r from-white to-transparent opacity-5 blur-3xl rounded-full"></div>
+        <div className="absolute -left-20 -bottom-20 w-40 h-40 bg-linear-to-l from-white to-transparent opacity-5 blur-3xl rounded-full"></div>
 
         <div className="relative z-10">
           <div className="flex justify-between items-center mb-8">
@@ -477,7 +477,7 @@ function ReviewForm({
                 type="button"
                 onClick={onSubmit}
                 disabled={!name || !comment || rating === 0}
-                className="px-6 py-3 bg-gradient-to-r from-white to-gray-300 text-black rounded-full hover:opacity-90 transition-all duration-300 flex items-center group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-linear-to-r from-white to-gray-300 text-black rounded-full hover:opacity-90 transition-all duration-300 flex items-center group disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>Submit Review</span>
                 <ChevronRight

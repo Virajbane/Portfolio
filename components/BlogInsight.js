@@ -55,8 +55,8 @@ export default function BlogInsights({ isHomePage = false }) {
     <div className="min-h-screen bg-transparent mt-15 text-white overflow-hidden relative">
       {/* Abstract background elements */}
       <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-gradient-to-r from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-gradient-to-l from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-linear-to-r from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-linear-to-l from-white to-transparent opacity-5 blur-3xl rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
       </div>
       
       {/* Header with Glitch Animation */}
@@ -64,7 +64,7 @@ export default function BlogInsights({ isHomePage = false }) {
         <h1 className="text-7xl font-bold mb-3 tracking-tighter glitch-text">
           <span className="">Blog & Insights</span>
         </h1>
-        <div className="w-24 h-1 mx-auto bg-gradient-to-r from-white via-gray-500 to-black mb-6"></div>
+        <div className="w-24 h-1 mx-auto bg-linear-to-r from-white via-gray-500 to-black mb-6"></div>
         <p className="text-gray-300 text-lg max-w-2xl mx-auto">Thoughts on design, development, and project reflections with real-world feedback</p>
       </header>
 
@@ -84,7 +84,7 @@ export default function BlogInsights({ isHomePage = false }) {
           <div className="flex justify-center mb-24">
             <button 
               onClick={handleViewAllBlogs}
-              className="px-8 py-4 bg-gradient-to-r from-black to-gray-900 rounded-full transition-all duration-500 group flex items-center border-x border-white border-opacity-10 hover:shadow-white hover:shadow-inner electric-btn"
+              className="px-8 py-4 bg-linear-to-r from-black to-gray-900 rounded-full transition-all duration-500 group flex items-center border-x border-white border-opacity-10 hover:shadow-white hover:shadow-inner electric-btn"
             >
               <span className="mr-3">View all articles</span>
               <ArrowRight size={16} className="transition-all duration-300 group-hover:translate-x-1" />
@@ -205,7 +205,7 @@ function BlogPostCard({ post, index }) {
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-4">
           <span className="text-sm text-gray-400 font-mono tracking-wider">{post.date}</span>
-          <span className="bg-gradient-to-r from-black to-gray-900 px-4 py-1 text-xs rounded-full border border-gray-800">{post.category}</span>
+          <span className="bg-linear-to-r from-black to-gray-900 px-4 py-1 text-xs rounded-full border border-gray-800">{post.category}</span>
         </div>
         
         <h3 className="text-2xl font-bold mb-3 transition-all duration-300"
@@ -236,7 +236,7 @@ function BlogPostCard({ post, index }) {
 
       {/* Gradient glow effect on hover */}
       <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-        <div className={`absolute -inset-1 bg-gradient-to-r from-white via-gray-500 to-black opacity-10 blur-sm rounded-lg`}></div>
+        <div className={`absolute -inset-1 bg-linear-to-r from-white via-gray-500 to-black opacity-10 blur-sm rounded-lg`}></div>
       </div>
 
       <style jsx>{`

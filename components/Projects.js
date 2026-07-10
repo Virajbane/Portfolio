@@ -7,6 +7,36 @@ import { useRouter } from "next/navigation";
 /* ─── Project Data ─────────────────────────────────────────── */
 const projects = [
   {
+    title: "Adaptive RAG 2.0",
+    subtitle: "Agentic AI document assistant",
+    category: "AI / Generative AI",
+    accentColor: "#ff6b6b",
+    glowColor: "rgba(255, 107, 107, 0.15)",
+    glowRGB: "255, 107, 107",
+    gradientBg: "radial-gradient(ellipse at 30% 60%, rgba(255,107,107,0.12) 0%, transparent 65%)",
+    image: "/AdaptiveRAG.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7z" />
+      </svg>
+    ),
+    problem: "Users struggle to extract accurate information from large document collections, often wasting time manually searching through PDFs and scattered knowledge sources.",
+    solution: "An adaptive Retrieval-Augmented Generation (RAG) system that intelligently routes queries, retrieves relevant context from uploaded PDFs, and generates accurate, source-backed responses using local LLMs.",
+    technologies: [
+      "Next.js",
+      "FastAPI",
+      "LangChain",
+      "LangGraph",
+      "Ollama",
+      "Qdrant",
+      "Redis",
+      "MongoDB",
+      "Docker"
+    ],
+    link: "https://github.com/Virajbane/AdaptiveRAG-v2",
+    featured: true,
+  },
+  {
     title: "AI DB Agent",
     subtitle: "Natural language database interface",
     category: "AI / Dev Tool",
@@ -26,6 +56,73 @@ const projects = [
     solution: "A multi-DB agent that translates plain English, Hindi, or Marathi into queries across MongoDB, PostgreSQL, MySQL, Redis, and Supabase.",
     technologies: ["Next.js", "Ollama", "Python", "Multi-DB"],
     link: "https://github.com/Virajbane/ai-db-agent",
+    featured: true,
+  },
+  {
+    title: "Flow Forge",
+    subtitle: "Visual AI workflow automation platform",
+    category: "AI / Automation",
+    accentColor: "#7c5cff",
+    glowColor: "rgba(124, 92, 255, 0.15)",
+    glowRGB: "124, 92, 255",
+    gradientBg: "radial-gradient(ellipse at 30% 60%, rgba(124,92,255,0.12) 0%, transparent 65%)",
+    image: "/flow-forge.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="6" cy="6" r="2" />
+        <circle cx="18" cy="6" r="2" />
+        <circle cx="12" cy="18" r="2" />
+        <path d="M8 6h8" />
+        <path d="M7.5 7.5l3 8" />
+        <path d="M16.5 7.5l-3 8" />
+      </svg>
+    ),
+    problem:
+      "Building AI workflows often requires writing custom backend logic and manually integrating multiple AI models, APIs, and services, making automation complex and time-consuming.",
+    solution:
+      "A visual drag-and-drop workflow builder that enables users to create, connect, and execute AI pipelines with LLMs, APIs, databases, and automation tools without extensive coding.",
+    technologies: [
+      "Next.js",
+      "React Flow",
+      "FastAPI",
+      "Python",
+      "Ollama",
+      "MongoDB"
+    ],
+    link: "https://github.com/Virajbane/Flow-Forge",
+    featured: true,
+  },
+  {
+    title: "Multi PDF RAG",
+    subtitle: "AI-powered document question answering",
+    category: "Generative AI",
+    accentColor: "#ff6b6b",
+    glowColor: "rgba(255, 107, 107, 0.15)",
+    glowRGB: "255, 107, 107",
+    gradientBg: "radial-gradient(ellipse at 70% 40%, rgba(255,107,107,0.12) 0%, transparent 65%)",
+    image: "/multi-pdf-rag.png",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" />
+        <path d="M14 2v6h6" />
+        <path d="M8 13h8" />
+        <path d="M8 17h6" />
+      </svg>
+    ),
+    problem:
+      "Searching for relevant information across multiple PDF documents is slow and inefficient, requiring users to manually browse large volumes of content.",
+    solution:
+      "A Retrieval-Augmented Generation (RAG) system that indexes multiple PDF documents, performs semantic search, and generates accurate answers with source citations using local AI models.",
+    technologies: [
+      "Next.js",
+      "FastAPI",
+      "LangChain",
+      "LangGraph",
+      "Ollama",
+      "ChromaDB",
+      "Python"
+    ],
+    link: "https://github.com/Virajbane/Multi-PDF-RAG",
     featured: true,
   },
   {

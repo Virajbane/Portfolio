@@ -55,7 +55,7 @@ export default function ResumeTimeline() {
     <div className="w-full md:w-5/12 relative">
       <div className="absolute top-10 left-0 w-full h-1 bg-gray-800"></div>
       <div
-        className="absolute top-10 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-500"
+        className="absolute top-10 left-0 h-1 bg-linear-to-r from-blue-500 to-purple-500"
         style={{
           width: activeSection >= index ? "100%" : "0%",
           transition: "width 0.8s ease-out",
@@ -70,7 +70,7 @@ export default function ResumeTimeline() {
       {!isLast && <>
         <div className="absolute top-10 right-0 transform translate-x-1/2 w-1 h-full bg-gray-800"></div>
         <div
-          className="absolute top-10 right-0 transform translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
+          className="absolute top-10 right-0 transform translate-x-1/2 w-1 bg-linear-to-b from-blue-500 to-purple-500"
           style={{
             height: activeSection >= index ? "100%" : "0%",
             transition: "height 0.8s ease-out",
@@ -87,7 +87,7 @@ export default function ResumeTimeline() {
     <div className="w-full md:w-5/12 relative">
       <div className="absolute top-10 right-0 w-full h-1 bg-gray-800"></div>
       <div
-        className="absolute top-10 right-0 h-1 bg-gradient-to-l from-blue-500 to-purple-500"
+        className="absolute top-10 right-0 h-1 bg-linear-to-l from-blue-500 to-purple-500"
         style={{
           width: activeSection >= index ? "100%" : "0%",
           transition: "width 0.8s ease-out",
@@ -102,7 +102,7 @@ export default function ResumeTimeline() {
       {!isLast && <>
         <div className="absolute top-10 left-0 transform -translate-x-1/2 w-1 h-full bg-gray-800"></div>
         <div
-          className="absolute top-10 left-0 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-500 to-purple-500"
+          className="absolute top-10 left-0 transform -translate-x-1/2 w-1 bg-linear-to-b from-blue-500 to-purple-500"
           style={{
             height: activeSection >= index ? "100%" : "0%",
             transition: "height 0.8s ease-out",
