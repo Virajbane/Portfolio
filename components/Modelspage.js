@@ -1,6 +1,50 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
+/* ============================================================
+   TILT HELPER
+   Cursor position -> small rotateX/rotateY lean + a glare that
+   follows the mouse, springs back flat with a CSS transition on
+   leave. Disabled on touch devices via a hover-capability check.
+   ============================================================ */
+function useHoverCapable() {
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setCanHover(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
+  return canHover;
+}
+
+function useTilt(max = 8) {
+  const canHover = useHoverCapable();
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 50 });
+  const [springBack, setSpringBack] = useState(false);
+
+  const onMove = (e) => {
+    if (!canHover) return;
+    setSpringBack(false);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    setTilt({ rx: (0.5 - py) * max, ry: (px - 0.5) * max, gx: px * 100, gy: py * 100 });
+  };
+
+  const onLeave = () => {
+    setSpringBack(true);
+    setTilt(t => ({ ...t, rx: 0, ry: 0 }));
+  };
+
+  return { canHover, tilt, springBack, onMove, onLeave };
+}
+
+/* ============================================================
+   HUGGING FACE MODELS DATA
+   ============================================================ */
 const models = [
   {
     id: "twitter-sentiment",
@@ -46,6 +90,7 @@ result = classifier("I love this project!")
       { text: "Worst day ever 😞", label: "NEGATIVE", score: 0.96, pos: false },
       { text: "This is absolutely amazing!", label: "POSITIVE", score: 0.88, pos: true },
     ],
+    highlight: "Runs real-time on CPU with sub-100ms inference — light enough to embed directly in a product feature, not just a notebook demo.",
   },
   {
     id: "resume-bert",
@@ -91,9 +136,13 @@ result = matcher(resume + " [SEP] " + jd)
       { text: "Data Analyst → React JD", label: "NO MATCH", score: 0.36, pos: false },
       { text: "AI Engineer Resume → AI JD", label: "MATCH", score: 0.87, pos: true },
     ],
+    highlight: "Trained to catch semantic overlap keyword matching misses — cuts manual resume screening time before a human ever opens the file.",
   },
 ];
 
+/* ============================================================
+   ARCHITECTURE FLOW
+   ============================================================ */
 function ArchFlow({ steps, accent }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" }}>
@@ -111,7 +160,7 @@ function ArchFlow({ steps, accent }) {
               background: i === 0 || i === steps.length - 1
                 ? `${accent}18`
                 : "#ffffff08",
-              color: i === 0 || i === steps.length - 1 ? accent : "#94a3b8",
+              color: i === 0 || i === steps.length - 1 ? accent : "#d4d4d8",
               letterSpacing: "0.02em",
               whiteSpace: "nowrap",
             }}
@@ -119,7 +168,7 @@ function ArchFlow({ steps, accent }) {
             {step}
           </div>
           {i < steps.length - 1 && (
-            <div style={{ color: "#334155", fontSize: "12px", lineHeight: 1, padding: "1px 0" }}>↓</div>
+            <div style={{ color: "#262626", fontSize: "12px", lineHeight: 1, padding: "1px 0" }}>↓</div>
           )}
         </div>
       ))}
@@ -127,10 +176,91 @@ function ArchFlow({ steps, accent }) {
   );
 }
 
+/* ============================================================
+   IMPACT TOGGLE (expandable highlight, interactive accent)
+   ============================================================ */
+function ImpactToggle({ label = "Highlight", content, accent }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #181818" }}>
+      <div
+        onClick={() => setOpen(o => !o)}
+        style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          cursor: "pointer", userSelect: "none",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <span style={{
+            width: "22px", height: "22px", borderRadius: "50%",
+            border: `1px solid ${accent}55`, display: "flex",
+            alignItems: "center", justifyContent: "center",
+            color: accent, fontSize: "13px", fontWeight: 700, lineHeight: 1,
+            transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease",
+            transform: open ? "rotate(45deg)" : "rotate(0deg)",
+            background: open ? `${accent}18` : "transparent",
+          }}>+</span>
+          <span style={{ color: "#f5f5f5", fontSize: "13px", fontWeight: 600 }}>{label}</span>
+        </div>
+        <span style={{
+          width: "9px", height: "9px", borderRadius: "50%",
+          background: open ? accent : "#262626",
+          boxShadow: open ? `0 0 10px ${accent}aa` : "none",
+          transition: "all 0.3s ease",
+        }} />
+      </div>
+      <div style={{
+        maxHeight: open ? "160px" : "0px",
+        opacity: open ? 1 : 0,
+        overflow: "hidden",
+        transition: "max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease",
+        marginTop: open ? "12px" : "0px",
+      }}>
+        <p style={{ color: "#d4d4d8", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
+          {content}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   CARD CONNECTOR (decorative diagonal line between stacked cards)
+   ============================================================ */
+function CardConnector({ accent, flip }) {
+  return (
+    <div style={{ position: "relative", height: "26px", margin: "-2px 0", pointerEvents: "none" }}>
+      <svg width="100%" height="26" style={{ position: "absolute", top: 0, left: 0, overflow: "visible" }}>
+        <line
+          x1={flip ? "72%" : "8%"}
+          y1="0"
+          x2={flip ? "38%" : "42%"}
+          y2="26"
+          stroke={accent}
+          strokeWidth="1.5"
+          strokeDasharray="3 5"
+          strokeLinecap="round"
+          opacity="0.45"
+        />
+        <circle
+          cx={flip ? "38%" : "42%"}
+          cy="26"
+          r="2.5"
+          fill={accent}
+          opacity="0.6"
+        />
+      </svg>
+    </div>
+  );
+}
+
+
 function ModelCard({ model, index }) {
   const [tab, setTab] = useState("overview");
   const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const ref = useRef(null);
+  const { canHover, tilt, springBack, onMove, onLeave } = useTilt(6);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -144,25 +274,50 @@ function ModelCard({ model, index }) {
   return (
     <div
       ref={ref}
+      onMouseEnter={() => setHovered(true)}
+      onMouseMove={onMove}
+      onMouseLeave={() => { setHovered(false); onLeave(); }}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(40px)",
         transition: `opacity 0.7s ease ${index * 0.2}s, transform 0.7s ease ${index * 0.2}s`,
-        background: "linear-gradient(135deg, #0f172a 0%, #111827 100%)",
-        border: "1px solid #1e293b",
-        borderRadius: "20px",
-        overflow: "hidden",
-        position: "relative",
+        perspective: "1200px",
       }}
     >
-      {/* Accent glow top */}
+      <div
+        style={{
+          transform: `translateY(${hovered ? -4 : 0}px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
+          transformStyle: "preserve-3d",
+          transition: springBack
+            ? "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease"
+            : "transform 0.1s linear, border-color 0.3s ease, box-shadow 0.3s ease",
+          background: "linear-gradient(135deg, #000000 0%, #050505 100%)",
+          border: `1px solid ${hovered ? model.accent + "55" : "#181818"}`,
+          borderRadius: "20px",
+          overflow: "hidden",
+          position: "relative",
+          boxShadow: hovered ? `0 12px 32px -12px ${model.accent}33` : "none",
+        }}
+      >
       <div style={{
         position: "absolute", top: 0, left: "20%", right: "20%", height: "1px",
         background: `linear-gradient(90deg, transparent, ${model.accent}88, transparent)`,
       }} />
+      {canHover && (
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            opacity: hovered ? 0.06 : 0,
+            background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, #ffffff, transparent 55%)`,
+            transition: springBack ? "opacity 0.6s ease" : "opacity 0.2s ease",
+          }}
+        />
+      )}
 
-      {/* Header */}
-      <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #1e293b" }}>
+      <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #181818" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
@@ -176,13 +331,13 @@ function ModelCard({ model, index }) {
                 fontFamily: "'JetBrains Mono', monospace",
                 letterSpacing: "0.05em",
               }}>{model.badge}</span>
-              <span style={{ color: "#475569", fontSize: "12px" }}>{model.type}</span>
+              <span style={{ color: "#71717a", fontSize: "12px" }}>{model.type}</span>
             </div>
             <h2 style={{
-              fontSize: "22px", fontWeight: 700, color: "#f1f5f9",
+              fontSize: "22px", fontWeight: 700, color: "#fafafa",
               fontFamily: "'Syne', sans-serif", margin: 0, marginBottom: "4px",
             }}>{model.title}</h2>
-            <p style={{ color: "#64748b", fontSize: "13px", margin: 0 }}>{model.subtitle}</p>
+            <p style={{ color: "#a1a1aa", fontSize: "13px", margin: 0 }}>{model.subtitle}</p>
           </div>
           <a
             href={model.hfUrl}
@@ -190,9 +345,9 @@ function ModelCard({ model, index }) {
             rel="noopener noreferrer"
             style={{
               display: "flex", alignItems: "center", gap: "6px",
-              background: "#1e293b", border: "1px solid #334155",
+              background: "#181818", border: "1px solid #262626",
               borderRadius: "8px", padding: "8px 14px",
-              color: "#94a3b8", fontSize: "12px", textDecoration: "none",
+              color: "#d4d4d8", fontSize: "12px", textDecoration: "none",
               fontFamily: "'JetBrains Mono', monospace",
               transition: "all 0.2s",
             }}
@@ -201,15 +356,14 @@ function ModelCard({ model, index }) {
               e.currentTarget.style.color = model.accent;
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.borderColor = "#334155";
-              e.currentTarget.style.color = "#94a3b8";
+              e.currentTarget.style.borderColor = "#262626";
+              e.currentTarget.style.color = "#d4d4d8";
             }}
           >
             🤗 {model.hfId}
           </a>
         </div>
 
-        {/* Tabs */}
         <div style={{ display: "flex", gap: "4px", marginTop: "20px" }}>
           {["overview", "architecture", "code", "demo"].map(t => (
             <button
@@ -218,7 +372,7 @@ function ModelCard({ model, index }) {
               style={{
                 padding: "6px 14px", borderRadius: "8px", border: "none",
                 background: tab === t ? `${model.accent}22` : "transparent",
-                color: tab === t ? model.accent : "#475569",
+                color: tab === t ? model.accent : "#71717a",
                 fontSize: "12px", cursor: "pointer", fontFamily: "inherit",
                 borderBottom: tab === t ? `2px solid ${model.accent}` : "2px solid transparent",
                 transition: "all 0.2s",
@@ -230,20 +384,19 @@ function ModelCard({ model, index }) {
         </div>
       </div>
 
-      {/* Tab content */}
       <div style={{ padding: "24px 32px" }}>
         {tab === "overview" && (
           <div>
-            <p style={{ color: "#94a3b8", fontSize: "14px", lineHeight: 1.7, marginBottom: "20px" }}>
+            <p style={{ color: "#d4d4d8", fontSize: "14px", lineHeight: 1.7, marginBottom: "20px" }}>
               {model.description}
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px", marginBottom: "20px" }}>
               {model.metrics.map((m, i) => (
                 <div key={i} style={{
-                  background: "#0f172a", border: "1px solid #1e293b",
+                  background: "#000000", border: "1px solid #181818",
                   borderRadius: "10px", padding: "12px 14px",
                 }}>
-                  <div style={{ color: "#475569", fontSize: "11px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>{m.label}</div>
+                  <div style={{ color: "#71717a", fontSize: "11px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>{m.label}</div>
                   <div style={{ color: model.accent, fontSize: "15px", fontWeight: 700 }}>{m.value}</div>
                 </div>
               ))}
@@ -251,13 +404,16 @@ function ModelCard({ model, index }) {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
               {model.tags.map((tag, i) => (
                 <span key={i} style={{
-                  background: "#1e293b", border: "1px solid #334155",
+                  background: "#181818", border: "1px solid #262626",
                   borderRadius: "6px", padding: "4px 10px",
-                  color: "#64748b", fontSize: "11px",
+                  color: "#a1a1aa", fontSize: "11px",
                   fontFamily: "'JetBrains Mono', monospace",
                 }}>{tag}</span>
               ))}
             </div>
+            {model.highlight && (
+              <ImpactToggle label="Why it matters" content={model.highlight} accent={model.accent} />
+            )}
           </div>
         )}
 
@@ -270,35 +426,35 @@ function ModelCard({ model, index }) {
         {tab === "code" && (
           <div>
             <pre style={{
-              background: "#080d16",
-              border: "1px solid #1e293b",
+              background: "#000000",
+              border: "1px solid #181818",
               borderRadius: "12px",
               padding: "20px",
               fontSize: "12px",
               fontFamily: "'JetBrains Mono', monospace",
-              color: "#94a3b8",
+              color: "#d4d4d8",
               overflowX: "auto",
               lineHeight: 1.7,
               margin: 0,
             }}>
-              <code style={{ color: "#e2e8f0" }}>{model.codeSnippet}</code>
+              <code style={{ color: "#f5f5f5" }}>{model.codeSnippet}</code>
             </pre>
           </div>
         )}
 
         {tab === "demo" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <p style={{ color: "#475569", fontSize: "12px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>
+            <p style={{ color: "#71717a", fontSize: "12px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>
               Sample inference outputs (illustrative):
             </p>
             {model.demo.map((d, i) => (
               <div key={i} style={{
                 display: "flex", justifyContent: "space-between", alignItems: "center",
-                background: "#0f172a", border: "1px solid #1e293b",
+                background: "#000000", border: "1px solid #181818",
                 borderRadius: "10px", padding: "12px 16px",
                 flexWrap: "wrap", gap: "8px",
               }}>
-                <span style={{ color: "#94a3b8", fontSize: "13px", fontStyle: "italic" }}>"{d.text}"</span>
+                <span style={{ color: "#d4d4d8", fontSize: "13px", fontStyle: "italic" }}>"{d.text}"</span>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   <span style={{
                     background: d.pos ? "#16a34a22" : "#dc262622",
@@ -316,10 +472,14 @@ function ModelCard({ model, index }) {
           </div>
         )}
       </div>
+      </div>
     </div>
   );
 }
 
+/* ============================================================
+   MAIN COMPONENT (no internal hero header — parent page provides it)
+   ============================================================ */
 export default function ModelsPage() {
   const [headerVisible, setHeaderVisible] = useState(false);
   useEffect(() => { setTimeout(() => setHeaderVisible(true), 100); }, []);
@@ -330,33 +490,15 @@ export default function ModelsPage() {
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
         * { box-sizing: border-box; }
         .models-page {
-          min-height: 100vh;
+          min-height: auto;
           background: transparent;
-          padding: 60px 24px 80px;
           font-family: 'Syne', sans-serif;
           position: relative;
-          overflow: hidden;
         }
         .inner {
-          max-width: 860px;
-          margin: 0 auto;
           position: relative;
           z-index: 1;
         }
-        .hf-strip {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background: #0f172a;
-          border: 1px solid #1e293b;
-          border-radius: 12px;
-          padding: 10px 18px;
-          width: fit-content;
-          margin-bottom: 32px;
-          text-decoration: none;
-          transition: border-color 0.2s;
-        }
-        .hf-strip:hover { border-color: #ff9d0044; }
         .skills-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -364,14 +506,14 @@ export default function ModelsPage() {
           margin-top: 16px;
         }
         .skill-pill {
-          background: #0f172a;
-          border: 1px solid #1e293b;
+          background: #000000;
+          border: 1px solid #181818;
           border-radius: 10px;
           padding: 12px 16px;
           transition: border-color 0.2s, transform 0.2s;
         }
         .skill-pill:hover {
-          border-color: #334155;
+          border-color: #262626;
           transform: translateY(-2px);
         }
       `}</style>
@@ -380,9 +522,14 @@ export default function ModelsPage() {
         <div className="inner">
 
           {/* Model Cards */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginBottom: "64px" }}>
+          <div style={{ display: "flex", flexDirection: "column", marginBottom: "64px" }}>
             {models.map((model, i) => (
-              <ModelCard key={model.id} model={model} index={i} />
+              <Fragment key={model.id}>
+                <ModelCard model={model} index={i} />
+                {i < models.length - 1 && (
+                  <CardConnector accent={model.accent} flip={i % 2 === 1} />
+                )}
+              </Fragment>
             ))}
           </div>
 
@@ -393,15 +540,15 @@ export default function ModelsPage() {
           }}>
             <div style={{ marginBottom: "8px" }}>
               <span style={{
-                color: "#475569", fontSize: "11px",
+                color: "#71717a", fontSize: "11px",
                 fontFamily: "'JetBrains Mono', monospace",
                 letterSpacing: "0.08em", textTransform: "uppercase",
               }}>AI &amp; ML Skills</span>
             </div>
-            <h3 style={{ color: "#e2e8f0", fontSize: "20px", fontWeight: 700, marginBottom: "4px" }}>
+            <h3 style={{ color: "#f5f5f5", fontSize: "20px", fontWeight: 700, marginBottom: "4px" }}>
               Technical Stack
             </h3>
-            <p style={{ color: "#475569", fontSize: "13px", marginBottom: "16px" }}>
+            <p style={{ color: "#71717a", fontSize: "13px", marginBottom: "16px" }}>
               Tools and frameworks used across these projects
             </p>
             <div className="skills-grid">
@@ -417,10 +564,10 @@ export default function ModelsPage() {
               ].map((skill, i) => (
                 <div key={i} className="skill-pill">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                    <span style={{ color: "#94a3b8", fontSize: "12px" }}>{skill.name}</span>
+                    <span style={{ color: "#d4d4d8", fontSize: "12px" }}>{skill.name}</span>
                     <span style={{ color: skill.color, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace" }}>{skill.level}%</span>
                   </div>
-                  <div style={{ height: "2px", background: "#1e293b", borderRadius: "2px", overflow: "hidden" }}>
+                  <div style={{ height: "2px", background: "#181818", borderRadius: "2px", overflow: "hidden" }}>
                     <div style={{
                       width: headerVisible ? `${skill.level}%` : "0%",
                       height: "100%",

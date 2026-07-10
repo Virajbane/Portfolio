@@ -30,7 +30,7 @@ export function NavbarDemo() {
       link: "/MyWork",
     },
     {
-      name: "Models",
+      name: "AI/ML",
       link: "/Models",
       
     },

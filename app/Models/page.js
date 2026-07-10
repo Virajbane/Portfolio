@@ -65,14 +65,14 @@ function page() {
               style={{
                 fontSize: "clamp(36px, 6vw, 40px)",
                 fontWeight: 800,
-                color: "#f1f5f9",
+                color: "#fafafa",
                 margin: 0,
                 marginBottom: "12px",
                 lineHeight: 1.1,
                 fontFamily: "'Syne', sans-serif",
               }}
             >
-              AI / ML Models
+              ML Models
             </motion.h1>
 
             {/* Description */}
@@ -81,7 +81,7 @@ function page() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 1 }}
               style={{
-                color: "#64748b",
+                color: "#a1a1aa",
                 fontSize: "16px",
                 lineHeight: 1.7,
                 maxWidth: "520px",
@@ -104,8 +104,8 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
-                background: "#0f172a",
-                border: "1px solid #1e293b",
+                background: "#000000",
+                border: "1px solid #181818",
                 borderRadius: "12px",
                 padding: "10px 18px",
                 marginTop: "20px",
@@ -113,17 +113,17 @@ function page() {
                 transition: "border-color 0.2s",
               }}
               onMouseEnter={e => e.currentTarget.style.borderColor = "#ff9d0044"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#1e293b"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#181818"}
             >
               <span style={{ fontSize: "18px" }}>🤗</span>
-              <span style={{ color: "#94a3b8", fontSize: "13px" }}>huggingface.co/</span>
+              <span style={{ color: "#d4d4d8", fontSize: "13px" }}>huggingface.co/</span>
               <span style={{
                 color: "#ff9d00",
                 fontSize: "13px",
                 fontFamily: "'JetBrains Mono', monospace",
                 fontWeight: 600,
               }}>Virajbane</span>
-              <span style={{ color: "#475569", fontSize: "11px", marginLeft: "4px" }}>↗</span>
+              <span style={{ color: "#71717a", fontSize: "11px", marginLeft: "4px" }}>↗</span>
             </motion.a>
           </motion.div>
         </section>
@@ -137,7 +137,7 @@ function page() {
         <div
           style={{
             height: "1px",
-            background: "linear-gradient(90deg, transparent, #1e293b, transparent)",
+            background: "linear-gradient(90deg, transparent, #181818, transparent)",
             margin: "72px 0 56px",
           }}
         />
@@ -185,7 +185,7 @@ function page() {
               style={{
                 fontSize: "clamp(36px, 6vw, 40px)",
                 fontWeight: 800,
-                color: "#f1f5f9",
+                color: "#fafafa",
                 margin: 0,
                 marginBottom: "12px",
                 lineHeight: 1.1,
@@ -202,7 +202,7 @@ function page() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.6, duration: 1 }}
               style={{
-                color: "#64748b",
+                color: "#a1a1aa",
                 fontSize: "16px",
                 lineHeight: 1.7,
                 maxWidth: "560px",
@@ -224,15 +224,15 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
-                background: "#0f172a",
-                border: "1px solid #1e293b",
+                background: "#000000",
+                border: "1px solid #181818",
                 borderRadius: "12px",
                 padding: "10px 18px",
                 marginTop: "20px",
               }}
             >
               <span style={{ fontSize: "18px" }}>⚡</span>
-              <span style={{ color: "#94a3b8", fontSize: "13px" }}>built with</span>
+              <span style={{ color: "#d4d4d8", fontSize: "13px" }}>built with</span>
               <span style={{
                 color: "#ff6d5a",
                 fontSize: "13px",
