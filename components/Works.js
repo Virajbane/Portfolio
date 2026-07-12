@@ -136,7 +136,7 @@ const ProjectCard = ({ project }) => {
       />
 
       {/* Gradient overlay */}
-      <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-500 ${
+      <div className={`absolute inset-0 bg-linear-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-500 ${
         isHovered ? 'opacity-90' : 'opacity-70'
       }`} />
 

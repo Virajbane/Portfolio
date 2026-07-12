@@ -148,14 +148,14 @@ export default function ContactMeComponent() {
 
         {/* Animated mesh gradient background */}
         <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/30 to-transparent animate-float" />
-          <div className="absolute bottom-0 right-0 w-full h-full bg-gradient-to-tl from-blue-500/30 to-transparent animate-float-delayed" />
+          <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-purple-500/30 to-transparent animate-float" />
+          <div className="absolute bottom-0 right-0 w-full h-full bg-linear-to-tl from-blue-500/30 to-transparent animate-float-delayed" />
         </div>
 
         <div className="relative z-10">
           {/* Title */}
           <h2 className={`text-4xl font-bold text-white mb-3 transition-all duration-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <span className="inline-block animate-shimmer bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+            <span className="inline-block animate-shimmer bg-linear-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
               Contact me
             </span>
           </h2>

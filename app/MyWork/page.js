@@ -48,7 +48,7 @@ function page() {
               transition={{ delay: 0.3, duration: 0.7 }}
             >
               <h1 className="text-4xl font-bold mb-4 text-white">
-                <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent">
                   My Work
                 </span>
               </h1>
