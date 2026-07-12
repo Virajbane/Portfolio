@@ -34,6 +34,24 @@ const row3 = [
   { name: 'Ollama',    src: 'https://ollama.com/public/ollama.png' },
 ];
 
+/* New row — tools from the resume that weren't in the marquee yet:
+   FastAPI, LangChain, LangGraph, Redis, Qdrant, ChromaDB, Docker, n8n, PostgreSQL, Google Colab.
+   Note: LangGraph, Qdrant, and ChromaDB don't have widely-mirrored CDN logos, so if any of
+   those three icons don't load in your browser, swap the src for a locally-hosted /public
+   asset — the label/name will still render correctly either way. */
+const row4 = [
+  { name: 'FastAPI',      src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+  { name: 'LangChain',    src: 'https://cdn.simpleicons.org/langchain' },
+  { name: 'LangGraph',    src: 'https://cdn.simpleicons.org/langgraph' },
+  { name: 'Redis',        src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg' },
+  { name: 'Qdrant',       src: 'https://cdn.simpleicons.org/qdrant' },
+  { name: 'ChromaDB',     src: 'https://cdn.simpleicons.org/chromadb' },
+  { name: 'Docker',       src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+  { name: 'n8n',          src: 'https://cdn.simpleicons.org/n8n' },
+  { name: 'PostgreSQL',   src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'Google Colab', src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecolab/googlecolab-original.svg' },
+];
+
 const SMOOTH_TAU = 0.18;
 const BG = 'transparent';
 
@@ -230,6 +248,7 @@ export default function TechStackSlideshow() {
       <LoopRow items={row1} speed={55} direction="left" />
       <LoopRow items={row2} speed={45} direction="right" />
       <LoopRow items={row3} speed={60} direction="left" />
+      <LoopRow items={row4} speed={50} direction="right" />
     </div>
   );
 }

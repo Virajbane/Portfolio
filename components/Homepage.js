@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 // Icons
-import { FaGithub, FaEnvelope, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaEnvelope, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { NavbarDemo } from "./responsive-navbar";
 import TechStackSlideshow from "./Slideshow";
 import ExperienceTimeline from "./experienceTimeline";
@@ -75,9 +75,9 @@ export default function Start() {
   const experiences = [
     {
       company: "Branding Catalyst",
-      role: "Python development internship",
-      period: "July, 2022 - August, 2022",
-      description: "Various activities in Python development",
+      role: "Python Developer Intern",
+      period: "July 2022 - August 2022",
+      description: "Wrote Python automation scripts to streamline routine tasks and improve workflow efficiency; debugged, tested, and optimized Python applications to improve reliability and performance.",
     },
   ];
   const SectionHeader = () => {
@@ -131,10 +131,10 @@ export default function Start() {
   return (
     <div className="min-h-screen text-white bg-transparent">
       <Head>
-        <title>viraj bane | Full-Stack Web Developer</title>
+        <title>Viraj Bane | AI/ML Engineer</title>
         <meta
           name="description"
-          content="Portfolio of Viraj Bane, a Full-Stack Web Developer"
+          content="Portfolio of Viraj Bane, an AI/ML Engineer specializing in LLMs, RAG systems, and full-stack AI application development"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -178,20 +178,22 @@ export default function Start() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                Virar, Maharashtra
+                Mumbai, Maharashtra, India
               </span>
             </p>
             <p className="text-base sm:text-lg mb-6">
-              Motivated and fast-learning AI Engineer eager to apply and
-              continuously grow skills in machine learning, full-stack
-              development, and problem solving to build impactful, real-world AI
-              solutions
+              AI/ML Engineer with a strong foundation in Python, Machine Learning,
+              Deep Learning, LLMs, and Retrieval-Augmented Generation (RAG) —
+              skilled in building AI-powered applications with FastAPI, Next.js,
+              and modern AI frameworks. Built 5+ AI applications, including a
+              multi-agent RAG platform and a multilingual NL-to-SQL interface,
+              with full-stack development experience.
             </p>
             <div className="flex space-x-4">
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                href="mailto:your-virajbane2004@gmail.com"
+                href="mailto:virajbane2004@gmail.com"
                 className="bg-zinc-800 p-2 rounded-full"
               >
                 <FaEnvelope className="w-5 h-5 text-white" />
@@ -205,6 +207,16 @@ export default function Start() {
                 className="bg-zinc-800 p-2 rounded-full"
               >
                 <FaGithub className="w-5 h-5 text-white" />
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://linkedin.com/in/virubane"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-zinc-800 p-2 rounded-full"
+              >
+                <FaLinkedin className="w-5 h-5 text-white" />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}

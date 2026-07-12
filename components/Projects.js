@@ -35,6 +35,7 @@ const projects = [
     ],
     link: "https://github.com/Virajbane/AdaptiveRAG-v2",
     featured: true,
+    highlight: "Adaptive routing cuts irrelevant retrievals significantly compared to naive RAG — answers stay grounded even across messy, real-world PDFs.",
   },
   {
     title: "AI DB Agent",
@@ -57,6 +58,7 @@ const projects = [
     technologies: ["Next.js", "Ollama", "Python", "Multi-DB"],
     link: "https://github.com/Virajbane/ai-db-agent",
     featured: true,
+    highlight: "One agent replaces five separate DB clients — query in plain English regardless of which database actually backs the app.",
   },
   {
     title: "Flow Forge",
@@ -91,6 +93,7 @@ const projects = [
     ],
     link: "https://github.com/Virajbane/Flow-Forge",
     featured: true,
+    highlight: "Turns a multi-day integration effort into a five-minute drag-and-drop pipeline — no backend code required to wire up a new automation.",
   },
   {
     title: "Multi PDF RAG",
@@ -124,6 +127,7 @@ const projects = [
     ],
     link: "https://github.com/Virajbane/Multi-PDF-RAG",
     featured: true,
+    highlight: "Cross-references dozens of PDFs at once and cites exactly which document backs each answer — no more manually re-reading source files.",
   },
   {
     title: "Move On",
@@ -145,6 +149,7 @@ const projects = [
     technologies: ["Next.js", "TypeScript", "Tailwind"],
     link: "https://github.com/Virajbane/Move-on",
     featured: false,
+    highlight: "Coordinates real-time travel plans in one place instead of juggling five disconnected transit apps.",
   },
   {
     title: "To-Do List App",
@@ -166,6 +171,7 @@ const projects = [
     technologies: ["React", "Firebase", "Tailwind"],
     link: "https://github.com/Virajbane/To-do-list",
     featured: false,
+    highlight: "Real-time sync means no more 'wait, did you see my update?' across devices or teammates.",
   },
   {
     title: "Agro-Farm",
@@ -189,6 +195,7 @@ const projects = [
     technologies: ["HTML", "CSS", "JavaScript"],
     link: "https://github.com/Virajbane/Agro-Farm",
     featured: false,
+    highlight: "Cuts out the middleman entirely — farmers list and sell crops directly to buyers through the platform.",
   },
   {
     title: "VIRRMART",
@@ -211,6 +218,7 @@ const projects = [
     technologies: ["HTML", "CSS", "JavaScript"],
     link: "https://github.com/Virajbane/VIRRMART.com",
     featured: false,
+    highlight: "A ground-up rebuild of e-commerce UX patterns in vanilla JS — no framework shortcuts, every interaction hand-built.",
   },
 ];
 
@@ -321,7 +329,74 @@ const GlobalSpotlight = ({ sectionRef }) => {
   return null;
 };
 
-/* ─── Single Project Card ──────────────────────────────────── */
+/* ─── Impact Toggle (expandable highlight, matches Models/Agents cards) ─── */
+const ImpactToggle = ({ label = "Why it matters", content, accent }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setOpen((o) => !o);
+  };
+
+  return (
+    <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div
+        onClick={handleToggle}
+        style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          cursor: "pointer", userSelect: "none", position: "relative", zIndex: 2,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+          <span style={{
+            width: "20px", height: "20px", borderRadius: "50%",
+            border: `1px solid ${accent}55`, display: "flex",
+            alignItems: "center", justifyContent: "center",
+            color: accent, fontSize: "12px", fontWeight: 700, lineHeight: 1,
+            transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease",
+            transform: open ? "rotate(45deg)" : "rotate(0deg)",
+            background: open ? `${accent}18` : "transparent",
+          }}>+</span>
+          <span style={{ color: "#e2e8f0", fontSize: "12px", fontWeight: 600 }}>{label}</span>
+        </div>
+        <span style={{
+          width: "8px", height: "8px", borderRadius: "50%",
+          background: open ? accent : "#333",
+          boxShadow: open ? `0 0 8px ${accent}aa` : "none",
+          transition: "all 0.3s ease",
+        }} />
+      </div>
+      <div style={{
+        maxHeight: open ? "160px" : "0px",
+        opacity: open ? 1 : 0,
+        overflow: "hidden",
+        transition: "max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease",
+        marginTop: open ? "10px" : "0px",
+      }}>
+        <p style={{ color: "#999", fontSize: "12px", lineHeight: 1.65, margin: 0 }}>
+          {content}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Connector (decorative diagonal accent between featured card and grid) ─── */
+const SectionConnector = ({ accent }) => (
+  <div style={{ position: "relative", height: "32px", margin: "-6px 0 0", pointerEvents: "none" }}>
+    <svg width="100%" height="32" style={{ position: "absolute", top: 0, left: 0, overflow: "visible" }}>
+      <line
+        x1="6%" y1="0" x2="22%" y2="32"
+        stroke={accent} strokeWidth="1.5" strokeDasharray="3 5"
+        strokeLinecap="round" opacity="0.4"
+      />
+      <circle cx="22%" cy="32" r="2.5" fill={accent} opacity="0.55" />
+    </svg>
+  </div>
+);
+
+
 const ProjectCard = ({ project, index, delay = 0 }) => {
   const [hovered, setHovered] = useState(false);
   const [cardRef, visible] = useInView(0.1);
@@ -620,6 +695,10 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
           ))}
         </div>
 
+        {project.highlight && (
+          <ImpactToggle content={project.highlight} accent={project.accentColor} />
+        )}
+
         <div style={{
           display: "flex",
           alignItems: "center",
@@ -710,6 +789,10 @@ export default function ProjectsSection({ showAll = false }) {
           <div style={{ marginBottom: "16px" }}>
             <ProjectCard project={featuredProject} index={0} delay={0} />
           </div>
+        )}
+
+        {restProjects.length > 0 && (
+          <SectionConnector accent={featuredProject?.accentColor || "#4a9eff"} />
         )}
 
         <div style={{

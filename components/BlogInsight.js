@@ -11,11 +11,11 @@ export default function BlogInsights({ isHomePage = false }) {
   const blogPosts = [
     {
       id: 1,
-      title: "Building Modern Portfolio Websites",
-      description: "My approach to creating responsive, performant portfolio sites with Next.js",
-      date: "April 28, 2025",
-      category: "Web Development",
-      impact: "Clients reported 35% increase in engagement after implementing these techniques"
+      title: "Building Adaptive-RAG: A 6-Agent Enterprise RAG Platform",
+      description: "How I architected a multi-agent retrieval pipeline with LangGraph — hybrid dense + keyword search, a reranker, and a self-correcting evaluation harness",
+      date: "June 2026",
+      category: "AI / RAG",
+      impact: "Boosted Recall@6 from 33% to 100% and MRR from 0.111 to 0.778 on a golden-set benchmark, while cutting repeat-query latency by 93% (28s → 2s) with Redis caching"
     },
     {
       id: 2,
