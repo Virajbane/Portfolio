@@ -93,15 +93,15 @@ const ClipPathLinks = () => (
 
 // ... (keep LinkBox, ClipPathLinks, CONTACT_EMAIL, clip-path constants exactly as before) ...
 
-// ─── Accent-colored underline input ─────────────────────────────────────────
+// ─── Underline input, monochrome focus state ────────────────────────────────
 const UnderlineField = ({ label, ...props }) => (
   <div className="group relative w-full">
-    <label className="block text-[11px] font-mono tracking-[0.2em] text-white/45 mb-2 group-focus-within:text-[#4a9eff] transition-colors">
+    <label className="block text-[11px] font-mono tracking-[0.2em] text-white/45 mb-2 group-focus-within:text-white transition-colors">
       {label}
     </label>
     <input
       {...props}
-      className="w-full bg-transparent border-b border-white/15 py-3 text-base text-white placeholder:text-white/25 focus:outline-none focus:border-[#4a9eff] transition-colors"
+      className="w-full bg-transparent border-b border-white/15 py-3 text-base text-white placeholder:text-white/25 focus:outline-none focus:border-white transition-colors"
     />
   </div>
 );
@@ -159,35 +159,35 @@ export function ContactFormOnly({ title = "Have a project in mind?" }) {
           <p className="text-white/40 text-xs mb-2"># {title}</p>
 
           <div>
-            <label className="text-[#4a9eff] text-xs">
+            <label className="text-white/70 text-xs">
               <span className="text-white/30">$</span> name <span className="text-white/30">--input</span>
             </label>
             <input
               type="text" name="name" value={formData.name} onChange={handleChange}
               placeholder="type here..." required
-              className="w-full mt-1.5 bg-transparent border border-white/10 rounded px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#4a9eff]/60 transition-colors"
+              className="w-full mt-1.5 bg-transparent border border-white/10 rounded px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-white/60 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-[#4a9eff] text-xs">
+            <label className="text-white/70 text-xs">
               <span className="text-white/30">$</span> email <span className="text-white/30">--input</span>
             </label>
             <input
               type="email" name="email" value={formData.email} onChange={handleChange}
               placeholder="you@somewhere.com" required
-              className="w-full mt-1.5 bg-transparent border border-white/10 rounded px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#4a9eff]/60 transition-colors"
+              className="w-full mt-1.5 bg-transparent border border-white/10 rounded px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-white/60 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-[#4a9eff] text-xs">
+            <label className="text-white/70 text-xs">
               <span className="text-white/30">$</span> message <span className="text-white/30">--input</span>
             </label>
             <textarea
               name="message" rows={3} value={formData.message} onChange={handleChange}
               placeholder="what are we building..." required
-              className="w-full mt-1.5 bg-transparent border border-white/10 rounded px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#4a9eff]/60 transition-colors resize-none"
+              className="w-full mt-1.5 bg-transparent border border-white/10 rounded px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-white/60 transition-colors resize-none"
             />
           </div>
 
@@ -196,15 +196,15 @@ export function ContactFormOnly({ title = "Have a project in mind?" }) {
             disabled={status === 'sending'}
             className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 disabled:opacity-50 text-white text-xs py-3 rounded transition-colors"
           >
-            <span className="text-[#4a9eff]">$</span>
+            <span className="text-white/70">$</span>
             {status === 'sending' ? 'sending...' : 'send --message'}
           </button>
 
           {status === 'sent' && (
-            <p className="text-green-400 text-xs">✓ 200 OK — message delivered, talk soon.</p>
+            <p className="text-zinc-300 text-xs">✓ 200 OK — message delivered, talk soon.</p>
           )}
           {status === 'error' && (
-            <p className="text-red-400 text-xs">✗ 500 — email me directly at {CONTACT_EMAIL} instead.</p>
+            <p className="text-zinc-400 text-xs">✗ 500 — email me directly at {CONTACT_EMAIL} instead.</p>
           )}
         </form>
       </div>
@@ -226,8 +226,8 @@ export default function ContactMeComponent() {
       <div className="flex justify-center mb-8">
         <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
           </span>
           <span className="text-[11px] font-mono tracking-wider text-white/60">
             AVAILABLE FOR WORK
@@ -282,12 +282,12 @@ export default function ContactMeComponent() {
         </button>
 
         {status === 'sent' && (
-          <p className="flex items-center gap-2 text-green-400 text-sm font-mono">
+          <p className="flex items-center gap-2 text-zinc-300 text-sm font-mono">
             <CheckCircle2 className="w-4 h-4" /> sent — talk soon.
           </p>
         )}
         {status === 'error' && (
-          <p className="text-red-400 text-sm font-mono">
+          <p className="text-zinc-400 text-sm font-mono">
             didn't go through — email me directly at {CONTACT_EMAIL}
           </p>
         )}

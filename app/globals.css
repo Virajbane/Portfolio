@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #171717;
+  /* Monochrome tokens — black primary, white/gray text */
+  --background: #000000;      /* primary black */
+  --surface: #0a0a0a;         /* raised black surface */
+  --border: #1f1f1f;          /* black-variant border */
+  --foreground: #ededed;      /* primary white text */
+  --foreground-muted: #a1a1aa; /* white-variant / secondary text */
 }
 
 @theme inline {
@@ -12,12 +16,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Site is intentionally always-dark, so we no longer flip
+   foreground based on OS color-scheme — that was causing
+   near-black text (#171717) on a black background in light mode. */
 
 body {
   background: var(--background);

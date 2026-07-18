@@ -6,12 +6,14 @@ import React from 'react'
 function page() {
   return (
     <div>
-      <ContactMeComponent 
+      <ContactMeComponent
         eyebrow="GET IN TOUCH"
         heading={
           <>
             Let's build something{' '}
-            <span className="text-orange-500 underline">extraordinary</span>{' '}
+            <span className="text-white underline decoration-2 decoration-zinc-500 underline-offset-4">
+              extraordinary
+            </span>{' '}
             together.
           </>
         }

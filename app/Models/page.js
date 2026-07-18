@@ -41,15 +41,15 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "#6366f111",
-                border: "1px solid #6366f133",
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.14)",
                 borderRadius: "8px",
                 padding: "5px 14px",
                 marginBottom: "16px",
               }}
             >
               <span style={{
-                color: "#818cf8",
+                color: "#d4d4d8",
                 fontSize: "12px",
                 fontFamily: "'JetBrains Mono', monospace",
               }}>
@@ -105,20 +105,20 @@ function page() {
                 alignItems: "center",
                 gap: "10px",
                 background: "#000000",
-                border: "1px solid #181818",
+                border: "1px solid #1f1f1f",
                 borderRadius: "12px",
                 padding: "10px 18px",
                 marginTop: "20px",
                 textDecoration: "none",
                 transition: "border-color 0.2s",
               }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "#ff9d0044"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#181818"}
+              onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#1f1f1f"}
             >
               <span style={{ fontSize: "18px" }}>🤗</span>
               <span style={{ color: "#d4d4d8", fontSize: "13px" }}>huggingface.co/</span>
               <span style={{
-                color: "#ff9d00",
+                color: "#f4f4f5",
                 fontSize: "13px",
                 fontFamily: "'JetBrains Mono', monospace",
                 fontWeight: 600,
@@ -137,7 +137,7 @@ function page() {
         <div
           style={{
             height: "1px",
-            background: "linear-gradient(90deg, transparent, #181818, transparent)",
+            background: "linear-gradient(90deg, transparent, #1f1f1f, transparent)",
             margin: "72px 0 56px",
           }}
         />
@@ -150,7 +150,7 @@ function page() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            {/* Badge */}
+            {/* Badge — slightly brighter tone to distinguish from Models badge, still monochrome */}
             <motion.div
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -160,15 +160,15 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "#ff6d5a11",
-                border: "1px solid #ff6d5a33",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.2)",
                 borderRadius: "8px",
                 padding: "5px 14px",
                 marginBottom: "16px",
               }}
             >
               <span style={{
-                color: "#ff8a75",
+                color: "#e4e4e7",
                 fontSize: "12px",
                 fontFamily: "'JetBrains Mono', monospace",
               }}>
@@ -225,7 +225,7 @@ function page() {
                 alignItems: "center",
                 gap: "10px",
                 background: "#000000",
-                border: "1px solid #181818",
+                border: "1px solid #1f1f1f",
                 borderRadius: "12px",
                 padding: "10px 18px",
                 marginTop: "20px",
@@ -234,7 +234,7 @@ function page() {
               <span style={{ fontSize: "18px" }}>⚡</span>
               <span style={{ color: "#d4d4d8", fontSize: "13px" }}>built with</span>
               <span style={{
-                color: "#ff6d5a",
+                color: "#f4f4f5",
                 fontSize: "13px",
                 fontFamily: "'JetBrains Mono', monospace",
                 fontWeight: 600,

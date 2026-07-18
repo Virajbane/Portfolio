@@ -7,7 +7,7 @@ const highlight = {
     title: "Twitter Sentiment Analysis",
     subtitle: "DistilBERT fine-tuned on Sentiment140",
     badge: "NLP · Hugging Face",
-    accent: "#818cf8",
+    accent: "#ffffff",
     metric: { label: "Accuracy", value: "89%" },
     tags: ["PyTorch", "Transformers", "DistilBERT"],
     emoji: "🤗",
@@ -16,7 +16,7 @@ const highlight = {
     title: "JD → Resume Generator",
     subtitle: "Auto-tailors your resume to any job description",
     badge: "Automation · n8n",
-    accent: "#ff8a75",
+    accent: "#a1a1aa",
     metric: { label: "Output", value: "PDF in <30s" },
     tags: ["n8n", "Groq", "Llama 3.3 70B"],
     emoji: "⚡",
@@ -123,7 +123,7 @@ export default function AIMLHighlights() {
         }}
       >
         <p style={{
-          fontSize: "11px", fontWeight: 600, color: "#4a9eff",
+          fontSize: "11px", fontWeight: 600, color: "#a1a1aa",
           textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "12px",
         }}>
           AI / ML
@@ -156,8 +156,8 @@ export default function AIMLHighlights() {
             fontFamily: "'JetBrains Mono', monospace",
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.borderColor = "#4a9eff";
-            e.currentTarget.style.color = "#4a9eff";
+            e.currentTarget.style.borderColor = "#ffffff";
+            e.currentTarget.style.color = "#ffffff";
           }}
           onMouseLeave={e => {
             e.currentTarget.style.borderColor = "#262626";

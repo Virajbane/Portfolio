@@ -44,6 +44,9 @@ function useTilt(max = 8) {
 
 /* ============================================================
    N8N AGENTS DATA
+   Accents are now grayscale — each agent keeps a distinct shade
+   of white so the two cards still read as separate, without
+   introducing hue.
    ============================================================ */
 const agents = [
   {
@@ -51,8 +54,8 @@ const agents = [
     title: "JD → Resume Generator",
     subtitle: "Auto-tailors your resume to any job description and exports a PDF",
     badge: "Automation · n8n",
-    badgeColor: "#ff6d5a",
-    accent: "#ff8a75",
+    badgeColor: "#ffffff",
+    accent: "#ffffff",
     type: "Form → LLM → PDF",
     description:
       "An n8n agent that takes a job description and your existing resume (PDF upload), extracts the resume text, and prompts an LLM to rewrite a tailored version matched to the JD — restructured summary, reordered skills, and rewritten bullet points. The tailored JSON is rendered into a styled HTML resume, then converted to a downloadable PDF via a headless Chromium service.",
@@ -105,8 +108,8 @@ return [{ json: { body: JSON.stringify(body) } }];`,
     title: "JD Application Tracker",
     subtitle: "Analyzes job fit with Gemini and logs it straight to Google Sheets",
     badge: "Automation · n8n",
-    badgeColor: "#f97316",
-    accent: "#fb923c",
+    badgeColor: "#a1a1aa",
+    accent: "#a1a1aa",
     type: "Form → LLM Analysis → Sheets",
     description:
       "An n8n agent that turns pasting a job description into a fully logged application. It sends the JD alongside your resume to Gemini, which extracts company, role, compensation, location, and a 0–100 match score, plus missing keywords and key requirements. The parsed result is appended as a new row to a Google Sheet — a self-updating job application tracker with AI-scored fit for every role.",

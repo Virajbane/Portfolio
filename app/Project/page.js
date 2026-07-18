@@ -40,7 +40,7 @@ const SectionHeader = () => {
       <p style={{
         fontSize: "11px",
         fontWeight: 600,
-        color: "#4a9eff",
+        color: "#a1a1aa",
         textTransform: "uppercase",
         letterSpacing: "0.15em",
         marginBottom: "12px",
@@ -59,7 +59,7 @@ const SectionHeader = () => {
       </h2>
       <p style={{
         fontSize: "15px",
-        color: "#555",
+        color: "#a1a1aa",
         maxWidth: "400px",
         margin: "0 auto",
         lineHeight: 1.6,

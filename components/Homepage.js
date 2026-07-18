@@ -18,6 +18,43 @@ import { ContactFormOnly } from "./ContactSection";
 import AIMLHighlights from "./AIMLHighlights";
 import FeaturedCertificate from "./FeaturedCertificate";
 
+/* ---------------------------------------------------------------------
+   DESIGN TOKENS
+   Ported from "Core Systems Landing Page" design spec.
+   Palette overridden per brief: black (+ transparent variants) as the
+   only primary/surface color, white as the only text/foreground color.
+   Everything else (type scale, spacing, radii, motion language) follows
+   the source design file.
+--------------------------------------------------------------------- */
+const tokens = {
+  color: {
+    primary: "#000000",
+    primaryTransparent: "rgba(0, 0, 0, 0.6)",
+    surface: "rgba(0, 0, 0, 0.4)",
+    surfaceSolid: "#000000",
+    background: "transparent",
+    textPrimary: "#FFFFFF",
+    textSecondary: "rgba(255, 255, 255, 0.6)",
+    border: "rgba(255, 255, 255, 0.12)",
+  },
+  font: {
+    display: "'Inter', sans-serif",
+    body: "'Inter', sans-serif",
+    label: "'JetBrains Mono', monospace",
+  },
+  radius: {
+    card: "8px",
+    control: "8px",
+    pill: "9999px",
+  },
+  space: {
+    base: "8px",
+    gap: "16px",
+    cardPadding: "24px",
+    sectionPadding: "80px",
+  },
+};
+
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -93,28 +130,33 @@ export default function Start() {
         }}
       >
         <p style={{
-          fontSize: "11px",
+          fontFamily: tokens.font.label,
+          fontSize: "12px",
           fontWeight: 600,
-          color: "#4a9eff",
+          color: tokens.color.textSecondary,
           textTransform: "uppercase",
           letterSpacing: "0.15em",
+          lineHeight: "1.2",
           marginBottom: "12px",
         }}>
           Featured Work
         </p>
         <h2 style={{
+          fontFamily: tokens.font.display,
           fontSize: "clamp(32px, 5vw, 52px)",
-          fontWeight: 700,
-          color: "#fff",
+          fontWeight: 500,
+          color: tokens.color.textPrimary,
           margin: "0 0 16px",
-          letterSpacing: "-1.5px",
+          letterSpacing: "0",
           lineHeight: 1.05,
         }}>
           My Personal Projects
         </h2>
         <p style={{
-          fontSize: "15px",
-          color: "#555",
+          fontFamily: tokens.font.body,
+          fontSize: "16px",
+          fontWeight: 400,
+          color: tokens.color.textSecondary,
           maxWidth: "400px",
           margin: "0 auto",
           lineHeight: 1.6,
@@ -126,32 +168,77 @@ export default function Start() {
   };
 
   return (
-    <div className="min-h-screen text-white bg-transparent">
+    <div
+      className="min-h-screen"
+      style={{
+        color: tokens.color.textPrimary,
+        background: tokens.color.background,
+        fontFamily: tokens.font.body,
+      }}
+    >
       <Head>
         <title>Viraj Bane | AI/ML Engineer</title>
         <meta
           name="description"
           content="Portfolio of Viraj Bane, an AI/ML Engineer specializing in LLMs, RAG systems, and full-stack AI application development"
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600&display=swap"
+          rel="stylesheet"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <main
+        className="container mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ paddingBottom: tokens.space.sectionPadding }}
+      >
         {/* Hero Section */}
         <section
           id="about"
-          className="py-8 sm:py-12 md:py-16 mt-16 sm:mt-20 max-w-4xl mx-auto"
+          className="mt-16 sm:mt-20 max-w-4xl mx-auto"
+          style={{
+            paddingTop: `calc(${tokens.space.sectionPadding} / 2)`,
+            paddingBottom: `calc(${tokens.space.sectionPadding} / 2)`,
+          }}
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="bg-transparent border border-zinc-800 rounded-lg p-4 sm:p-6 md:p-8"
+            style={{
+              background: tokens.color.surface,
+              backdropFilter: "blur(6px)",
+              border: `1px solid ${tokens.color.border}`,
+              borderRadius: tokens.radius.card,
+              padding: tokens.space.cardPadding,
+            }}
           >
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
+            <h1
+              style={{
+                fontFamily: tokens.font.display,
+                fontSize: "clamp(36px, 6vw, 64px)",
+                fontWeight: 500,
+                lineHeight: "1.04",
+                letterSpacing: "0",
+                color: tokens.color.textPrimary,
+                marginBottom: tokens.space.gap,
+              }}
+            >
               Viraj Bane
             </h1>
-            <p className="text-zinc-400 mb-4">
+            <p
+              style={{
+                color: tokens.color.textSecondary,
+                marginBottom: tokens.space.gap,
+                fontFamily: tokens.font.label,
+                fontSize: "12px",
+                fontWeight: 600,
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+              }}
+            >
               <span className="inline-flex items-center">
                 <svg
                   className="w-4 h-4 mr-2"
@@ -176,7 +263,16 @@ export default function Start() {
                 Mumbai, Maharashtra, India
               </span>
             </p>
-            <p className="text-base sm:text-lg mb-6">
+            <p
+              style={{
+                fontFamily: tokens.font.body,
+                fontSize: "16px",
+                fontWeight: 400,
+                lineHeight: 1.6,
+                color: tokens.color.textPrimary,
+                marginBottom: tokens.space.gap,
+              }}
+            >
               AI/ML Engineer with a strong foundation in Python, Machine Learning,
               Deep Learning, LLMs, and Retrieval-Augmented Generation (RAG) —
               skilled in building AI-powered applications with FastAPI, Next.js,
@@ -184,14 +280,19 @@ export default function Start() {
               multi-agent RAG platform and a multilingual NL-to-SQL interface,
               with full-stack development experience.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex" style={{ gap: tokens.space.gap }}>
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 href="mailto:virajbane2004@gmail.com"
-                className="bg-zinc-800 p-2 rounded-full"
+                style={{
+                  background: tokens.color.primaryTransparent,
+                  border: `1px solid ${tokens.color.border}`,
+                  borderRadius: tokens.radius.pill,
+                  padding: "8px",
+                }}
               >
-                <FaEnvelope className="w-5 h-5 text-white" />
+                <FaEnvelope className="w-5 h-5" style={{ color: tokens.color.textPrimary }} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
@@ -199,9 +300,14 @@ export default function Start() {
                 href="https://github.com/Virajbane"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-zinc-800 p-2 rounded-full"
+                style={{
+                  background: tokens.color.primaryTransparent,
+                  border: `1px solid ${tokens.color.border}`,
+                  borderRadius: tokens.radius.pill,
+                  padding: "8px",
+                }}
               >
-                <FaGithub className="w-5 h-5 text-white" />
+                <FaGithub className="w-5 h-5" style={{ color: tokens.color.textPrimary }} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
@@ -209,9 +315,14 @@ export default function Start() {
                 href="https://linkedin.com/in/virubane"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-zinc-800 p-2 rounded-full"
+                style={{
+                  background: tokens.color.primaryTransparent,
+                  border: `1px solid ${tokens.color.border}`,
+                  borderRadius: tokens.radius.pill,
+                  padding: "8px",
+                }}
               >
-                <FaLinkedin className="w-5 h-5 text-white" />
+                <FaLinkedin className="w-5 h-5" style={{ color: tokens.color.textPrimary }} />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.1 }}
@@ -219,9 +330,14 @@ export default function Start() {
                 href="https://www.instagram.com/_.virajbane._/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-zinc-800 p-2 rounded-full"
+                style={{
+                  background: tokens.color.primaryTransparent,
+                  border: `1px solid ${tokens.color.border}`,
+                  borderRadius: tokens.radius.pill,
+                  padding: "8px",
+                }}
               >
-                <FaInstagram className="w-5 h-5 text-white" />
+                <FaInstagram className="w-5 h-5" style={{ color: tokens.color.textPrimary }} />
               </motion.a>
             </div>
           </motion.div>
@@ -234,13 +350,26 @@ export default function Start() {
         <ExperienceTimeline />
 
         {/* My work section */}
-        <section id="projects" className="py-8 sm:py-12">
+        <section
+          id="projects"
+          style={{
+            paddingTop: `calc(${tokens.space.sectionPadding} / 2)`,
+            paddingBottom: `calc(${tokens.space.sectionPadding} / 2)`,
+          }}
+        >
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center"
+            style={{
+              fontFamily: tokens.font.display,
+              fontSize: "clamp(28px, 4vw, 40px)",
+              fontWeight: 500,
+              textAlign: "center",
+              color: tokens.color.textPrimary,
+              marginBottom: tokens.space.gap,
+            }}
           >
             My work
           </motion.h2>
@@ -249,13 +378,19 @@ export default function Start() {
         </section>
 
         {/* My personal projects */}
-        <section className="py-4 sm:py-1">
+        <section style={{ paddingTop: tokens.space.base, paddingBottom: tokens.space.base }}>
           <SectionHeader />
           <ProjectsSection showAll={false} />
         </section>
 
         {/* AI/ML highlights — top model + top agent, links to /Models */}
-        <section id="ai-ml" className="py-8 sm:py-12">
+        <section
+          id="ai-ml"
+          style={{
+            paddingTop: `calc(${tokens.space.sectionPadding} / 2)`,
+            paddingBottom: `calc(${tokens.space.sectionPadding} / 2)`,
+          }}
+        >
           <AIMLHighlights />
         </section>
 
@@ -263,7 +398,7 @@ export default function Start() {
         <FeaturedCertificate />
 
         {/* Quick contact form */}
-        <section id="contact-quick" className="py-1">
+        <section id="contact-quick" style={{ paddingTop: tokens.space.base }}>
           <ContactFormOnly title="Have a project in mind?" />
         </section>
       </main>
