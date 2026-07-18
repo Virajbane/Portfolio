@@ -44,7 +44,7 @@ function useTilt(max = 8) {
 
 /* ============================================================
    N8N AGENTS DATA
-   Accents are now grayscale — each agent keeps a distinct shade
+   Accents are grayscale — each agent keeps a distinct shade
    of white so the two cards still read as separate, without
    introducing hue.
    ============================================================ */
@@ -54,8 +54,8 @@ const agents = [
     title: "JD → Resume Generator",
     subtitle: "Auto-tailors your resume to any job description and exports a PDF",
     badge: "Automation · n8n",
-    badgeColor: "#ffffff",
-    accent: "#ffffff",
+    badgeColor: "#FFFFFF",
+    accent: "#FFFFFF",
     type: "Form → LLM → PDF",
     description:
       "An n8n agent that takes a job description and your existing resume (PDF upload), extracts the resume text, and prompts an LLM to rewrite a tailored version matched to the JD — restructured summary, reordered skills, and rewritten bullet points. The tailored JSON is rendered into a styled HTML resume, then converted to a downloadable PDF via a headless Chromium service.",
@@ -108,8 +108,8 @@ return [{ json: { body: JSON.stringify(body) } }];`,
     title: "JD Application Tracker",
     subtitle: "Analyzes job fit with Gemini and logs it straight to Google Sheets",
     badge: "Automation · n8n",
-    badgeColor: "#a1a1aa",
-    accent: "#a1a1aa",
+    badgeColor: "#A1A1AA",
+    accent: "#A1A1AA",
     type: "Form → LLM Analysis → Sheets",
     description:
       "An n8n agent that turns pasting a job description into a fully logged application. It sends the JD alongside your resume to Gemini, which extracts company, role, compensation, location, and a 0–100 match score, plus missing keywords and key requirements. The parsed result is appended as a new row to a Google Sheet — a self-updating job application tracker with AI-scored fit for every role.",
@@ -176,7 +176,7 @@ function AgentNodeFlow({ nodes, accent }) {
               display: "flex",
               alignItems: "center",
               gap: "10px",
-              background: "#000000",
+              background: "transparent",
               border: `1px solid ${accent}33`,
               borderLeft: `3px solid ${accent}`,
               borderRadius: "8px",
@@ -186,14 +186,14 @@ function AgentNodeFlow({ nodes, accent }) {
           >
             <span style={{ fontSize: "18px", lineHeight: 1 }}>{n.icon}</span>
             <div>
-              <div style={{ color: "#f5f5f5", fontSize: "12px", fontWeight: 700, whiteSpace: "nowrap" }}>
+              <div style={{ color: "#FFFFFF", fontSize: "12px", fontWeight: 700, whiteSpace: "nowrap" }}>
                 {n.name}
               </div>
               <div
                 style={{
-                  color: "#a1a1aa",
+                  color: "#A1A1AA",
                   fontSize: "10px",
-                  fontFamily: "'JetBrains Mono', monospace",
+                  fontFamily: "'Space Mono', monospace",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -202,7 +202,7 @@ function AgentNodeFlow({ nodes, accent }) {
             </div>
           </div>
           {i < nodes.length - 1 && (
-            <span style={{ color: "#262626", fontSize: "16px" }}>→</span>
+            <span style={{ color: "#666666", fontSize: "16px" }}>→</span>
           )}
         </div>
       ))}
@@ -216,7 +216,7 @@ function AgentNodeFlow({ nodes, accent }) {
 function ImpactToggle({ label = "Highlight", content, accent }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #181818" }}>
+    <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #666666" }}>
       <div
         onClick={() => setOpen(o => !o)}
         style={{
@@ -234,11 +234,11 @@ function ImpactToggle({ label = "Highlight", content, accent }) {
             transform: open ? "rotate(45deg)" : "rotate(0deg)",
             background: open ? `${accent}18` : "transparent",
           }}>+</span>
-          <span style={{ color: "#f5f5f5", fontSize: "13px", fontWeight: 600 }}>{label}</span>
+          <span style={{ color: "#FFFFFF", fontSize: "13px", fontWeight: 600 }}>{label}</span>
         </div>
         <span style={{
           width: "9px", height: "9px", borderRadius: "50%",
-          background: open ? accent : "#262626",
+          background: open ? accent : "#666666",
           boxShadow: open ? `0 0 10px ${accent}aa` : "none",
           transition: "all 0.3s ease",
         }} />
@@ -250,7 +250,7 @@ function ImpactToggle({ label = "Highlight", content, accent }) {
         transition: "max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease",
         marginTop: open ? "12px" : "0px",
       }}>
-        <p style={{ color: "#d4d4d8", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
+        <p style={{ color: "#D4D4D8", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
           {content}
         </p>
       </div>
@@ -327,9 +327,9 @@ function AgentCard({ agent, index }) {
           transition: springBack
             ? "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease"
             : "transform 0.1s linear, border-color 0.3s ease, box-shadow 0.3s ease",
-          background: "linear-gradient(135deg, #000000 0%, #050505 100%)",
-          border: `1px solid ${hovered ? agent.accent + "55" : "#181818"}`,
-          borderRadius: "20px",
+          background: "transparent",
+          border: `1px solid ${hovered ? agent.accent + "55" : "#666666"}`,
+          borderRadius: "8px",
           overflow: "hidden",
           position: "relative",
           boxShadow: hovered ? `0 12px 32px -12px ${agent.accent}33` : "none",
@@ -347,13 +347,13 @@ function AgentCard({ agent, index }) {
             inset: 0,
             pointerEvents: "none",
             opacity: hovered ? 0.06 : 0,
-            background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, #ffffff, transparent 55%)`,
+            background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, #FFFFFF, transparent 55%)`,
             transition: springBack ? "opacity 0.6s ease" : "opacity 0.2s ease",
           }}
         />
       )}
 
-      <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #181818" }}>
+      <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #666666" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
@@ -361,27 +361,27 @@ function AgentCard({ agent, index }) {
                 background: `${agent.badgeColor}22`,
                 color: agent.accent,
                 border: `1px solid ${agent.accent}44`,
-                borderRadius: "6px",
+                borderRadius: "8px",
                 padding: "3px 10px",
                 fontSize: "11px",
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Space Mono', monospace",
                 letterSpacing: "0.05em",
               }}>{agent.badge}</span>
-              <span style={{ color: "#71717a", fontSize: "12px" }}>{agent.type}</span>
+              <span style={{ color: "#A1A1AA", fontSize: "12px", fontFamily: "'Space Mono', monospace" }}>{agent.type}</span>
             </div>
             <h2 style={{
-              fontSize: "22px", fontWeight: 700, color: "#fafafa",
-              fontFamily: "'Syne', sans-serif", margin: 0, marginBottom: "4px",
+              fontSize: "22px", fontWeight: 500, color: "#FFFFFF",
+              fontFamily: "'Playfair Display', serif", margin: 0, marginBottom: "4px",
             }}>{agent.title}</h2>
-            <p style={{ color: "#a1a1aa", fontSize: "13px", margin: 0 }}>{agent.subtitle}</p>
+            <p style={{ color: "#A1A1AA", fontSize: "13px", margin: 0 }}>{agent.subtitle}</p>
           </div>
           <span
             style={{
               display: "flex", alignItems: "center", gap: "6px",
-              background: "#181818", border: "1px solid #262626",
+              background: "transparent", border: "1px solid #666666",
               borderRadius: "8px", padding: "8px 14px",
-              color: "#d4d4d8", fontSize: "12px",
-              fontFamily: "'JetBrains Mono', monospace",
+              color: "#D4D4D8", fontSize: "12px",
+              fontFamily: "'Space Mono', monospace",
             }}
           >
             ⚡ n8n workflow
@@ -396,8 +396,8 @@ function AgentCard({ agent, index }) {
               style={{
                 padding: "6px 14px", borderRadius: "8px", border: "none",
                 background: tab === t ? `${agent.accent}22` : "transparent",
-                color: tab === t ? agent.accent : "#71717a",
-                fontSize: "12px", cursor: "pointer", fontFamily: "inherit",
+                color: tab === t ? agent.accent : "#A1A1AA",
+                fontSize: "12px", cursor: "pointer", fontFamily: "'Space Mono', monospace",
                 borderBottom: tab === t ? `2px solid ${agent.accent}` : "2px solid transparent",
                 transition: "all 0.2s",
               }}
@@ -411,16 +411,16 @@ function AgentCard({ agent, index }) {
       <div style={{ padding: "24px 32px" }}>
         {tab === "overview" && (
           <div>
-            <p style={{ color: "#d4d4d8", fontSize: "14px", lineHeight: 1.7, marginBottom: "20px" }}>
+            <p style={{ color: "#D4D4D8", fontSize: "14px", lineHeight: 1.7, marginBottom: "20px" }}>
               {agent.description}
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px", marginBottom: "20px" }}>
               {agent.stats.map((m, i) => (
                 <div key={i} style={{
-                  background: "#000000", border: "1px solid #181818",
-                  borderRadius: "10px", padding: "12px 14px",
+                  background: "transparent", border: "1px solid #666666",
+                  borderRadius: "8px", padding: "12px 14px",
                 }}>
-                  <div style={{ color: "#71717a", fontSize: "11px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>{m.label}</div>
+                  <div style={{ color: "#A1A1AA", fontSize: "11px", marginBottom: "4px", fontFamily: "'Space Mono', monospace" }}>{m.label}</div>
                   <div style={{ color: agent.accent, fontSize: "15px", fontWeight: 700 }}>{m.value}</div>
                 </div>
               ))}
@@ -428,10 +428,10 @@ function AgentCard({ agent, index }) {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
               {agent.tags.map((tag, i) => (
                 <span key={i} style={{
-                  background: "#181818", border: "1px solid #262626",
-                  borderRadius: "6px", padding: "4px 10px",
-                  color: "#a1a1aa", fontSize: "11px",
-                  fontFamily: "'JetBrains Mono', monospace",
+                  background: "transparent", border: "1px solid #666666",
+                  borderRadius: "8px", padding: "4px 10px",
+                  color: "#A1A1AA", fontSize: "11px",
+                  fontFamily: "'Space Mono', monospace",
                 }}>{tag}</span>
               ))}
             </div>
@@ -450,35 +450,35 @@ function AgentCard({ agent, index }) {
         {tab === "code" && (
           <div>
             <pre style={{
-              background: "#000000",
-              border: "1px solid #181818",
-              borderRadius: "12px",
+              background: "transparent",
+              border: "1px solid #666666",
+              borderRadius: "8px",
               padding: "20px",
               fontSize: "12px",
-              fontFamily: "'JetBrains Mono', monospace",
-              color: "#d4d4d8",
+              fontFamily: "'Space Mono', monospace",
+              color: "#D4D4D8",
               overflowX: "auto",
               lineHeight: 1.7,
               margin: 0,
             }}>
-              <code style={{ color: "#f5f5f5" }}>{agent.codeSnippet}</code>
+              <code style={{ color: "#FFFFFF" }}>{agent.codeSnippet}</code>
             </pre>
           </div>
         )}
 
         {tab === "demo" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <p style={{ color: "#71717a", fontSize: "12px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>
+            <p style={{ color: "#A1A1AA", fontSize: "12px", marginBottom: "4px", fontFamily: "'Space Mono', monospace" }}>
               Sample run output (illustrative):
             </p>
             {agent.demo.map((d, i) => (
               <div key={i} style={{
                 display: "flex", justifyContent: "space-between", alignItems: "center",
-                background: "#000000", border: "1px solid #181818",
-                borderRadius: "10px", padding: "12px 16px",
+                background: "transparent", border: "1px solid #666666",
+                borderRadius: "8px", padding: "12px 16px",
                 flexWrap: "wrap", gap: "8px",
               }}>
-                <span style={{ color: "#a1a1aa", fontSize: "12px", fontFamily: "'JetBrains Mono', monospace" }}>{d.label}</span>
+                <span style={{ color: "#A1A1AA", fontSize: "12px", fontFamily: "'Space Mono', monospace" }}>{d.label}</span>
                 <span style={{ color: agent.accent, fontSize: "13px", fontWeight: 700 }}>{d.value}</span>
               </div>
             ))}
@@ -497,12 +497,12 @@ export default function AgentsPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; }
         .agents-page {
           min-height: auto;
           background: transparent;
-          font-family: 'Syne', sans-serif;
+          font-family: 'Space Mono', monospace;
           position: relative;
         }
         .inner {

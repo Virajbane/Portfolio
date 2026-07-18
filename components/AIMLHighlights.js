@@ -2,24 +2,44 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
+function ModelIcon({ color }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7">
+      <rect x="4" y="8" width="16" height="11" rx="2" />
+      <path d="M8 8V6a4 4 0 0 1 8 0v2" />
+      <circle cx="9" cy="13.5" r="1.2" fill={color} stroke="none" />
+      <circle cx="15" cy="13.5" r="1.2" fill={color} stroke="none" />
+      <path d="M10 17h4" />
+    </svg>
+  );
+}
+
+function AgentIcon({ color }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7">
+      <path d="M13 3 5 13.5h6.2L11 21l8-10.5h-6.2L13 3z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const highlight = {
   model: {
     title: "Twitter Sentiment Analysis",
     subtitle: "DistilBERT fine-tuned on Sentiment140",
     badge: "NLP · Hugging Face",
-    accent: "#ffffff",
+    accent: "#FFFFFF",
     metric: { label: "Accuracy", value: "89%" },
     tags: ["PyTorch", "Transformers", "DistilBERT"],
-    emoji: "🤗",
+    Icon: ModelIcon,
   },
   agent: {
     title: "JD → Resume Generator",
     subtitle: "Auto-tailors your resume to any job description",
     badge: "Automation · n8n",
-    accent: "#a1a1aa",
+    accent: "#A1A1AA",
     metric: { label: "Output", value: "PDF in <30s" },
     tags: ["n8n", "Groq", "Llama 3.3 70B"],
-    emoji: "⚡",
+    Icon: AgentIcon,
   },
 };
 
@@ -40,6 +60,7 @@ function useInView(threshold = 0.1) {
 function MiniCard({ item, index }) {
   const [ref, visible] = useInView(0.2);
   const [hovered, setHovered] = useState(false);
+  const Icon = item.Icon;
 
   return (
     <div
@@ -50,9 +71,9 @@ function MiniCard({ item, index }) {
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(24px)",
         transition: `opacity 0.6s ease ${index * 0.15}s, transform 0.6s ease ${index * 0.15}s, border-color 0.3s ease, box-shadow 0.3s ease`,
-        background: "linear-gradient(135deg, #000000 0%, #050505 100%)",
-        border: `1px solid ${hovered ? item.accent + "55" : "#181818"}`,
-        borderRadius: "16px",
+        background: "transparent",
+        border: `1px solid ${hovered ? item.accent + "55" : "#666666"}`,
+        borderRadius: "8px",
         padding: "24px",
         boxShadow: hovered ? `0 12px 32px -12px ${item.accent}33` : "none",
         flex: "1 1 300px",
@@ -60,32 +81,35 @@ function MiniCard({ item, index }) {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
-        <span style={{ fontSize: "16px" }}>{item.emoji}</span>
+        <span style={{ display: "flex", alignItems: "center" }}>
+          <Icon color={item.accent} />
+        </span>
         <span style={{
           background: `${item.accent}22`,
           color: item.accent,
           border: `1px solid ${item.accent}44`,
-          borderRadius: "6px",
+          borderRadius: "8px",
           padding: "3px 10px",
           fontSize: "11px",
-          fontFamily: "'JetBrains Mono', monospace",
+          fontFamily: "'Space Mono', monospace",
           letterSpacing: "0.05em",
         }}>{item.badge}</span>
       </div>
 
       <h3 style={{
-        fontSize: "18px", fontWeight: 700, color: "#fafafa",
+        fontSize: "18px", fontWeight: 500, color: "#FFFFFF",
+        fontFamily: "'Playfair Display', serif",
         margin: 0, marginBottom: "6px",
       }}>{item.title}</h3>
-      <p style={{ color: "#a1a1aa", fontSize: "13px", margin: 0, marginBottom: "16px", lineHeight: 1.5 }}>
+      <p style={{ color: "#A1A1AA", fontSize: "13px", margin: 0, marginBottom: "16px", lineHeight: 1.5 }}>
         {item.subtitle}
       </p>
 
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "center",
-        marginBottom: "16px", paddingTop: "14px", borderTop: "1px solid #181818",
+        marginBottom: "16px", paddingTop: "14px", borderTop: "1px solid #666666",
       }}>
-        <span style={{ color: "#71717a", fontSize: "11px", fontFamily: "'JetBrains Mono', monospace" }}>
+        <span style={{ color: "#A1A1AA", fontSize: "11px", fontFamily: "'Space Mono', monospace" }}>
           {item.metric.label}
         </span>
         <span style={{ color: item.accent, fontSize: "14px", fontWeight: 700 }}>
@@ -96,10 +120,10 @@ function MiniCard({ item, index }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
         {item.tags.map((tag, i) => (
           <span key={i} style={{
-            background: "#181818", border: "1px solid #262626",
-            borderRadius: "6px", padding: "3px 9px",
-            color: "#a1a1aa", fontSize: "10px",
-            fontFamily: "'JetBrains Mono', monospace",
+            background: "transparent", border: "1px solid #666666",
+            borderRadius: "8px", padding: "3px 9px",
+            color: "#A1A1AA", fontSize: "10px",
+            fontFamily: "'Space Mono', monospace",
           }}>{tag}</span>
         ))}
       </div>
@@ -111,7 +135,7 @@ export default function AIMLHighlights() {
   const [headerRef, headerVisible] = useInView(0.2);
 
   return (
-    <div style={{ maxWidth: "1024px", margin: "0 auto" }}>
+    <div style={{ maxWidth: "1024px", margin: "0 auto", background: "transparent" }}>
       <div
         ref={headerRef}
         style={{
@@ -123,18 +147,20 @@ export default function AIMLHighlights() {
         }}
       >
         <p style={{
-          fontSize: "11px", fontWeight: 600, color: "#a1a1aa",
+          fontSize: "11px", fontWeight: 600, color: "#A1A1AA",
+          fontFamily: "'Space Mono', monospace",
           textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "12px",
         }}>
           AI / ML
         </p>
         <h2 style={{
-          fontSize: "clamp(28px, 4.5vw, 44px)", fontWeight: 700, color: "#fff",
-          margin: "0 0 16px", letterSpacing: "-1px", lineHeight: 1.1,
+          fontSize: "clamp(28px, 4.5vw, 44px)", fontWeight: 500, color: "#FFFFFF",
+          fontFamily: "'Playfair Display', serif",
+          margin: "0 0 16px", letterSpacing: "0", lineHeight: 1.04,
         }}>
           Models & Agents
         </h2>
-        <p style={{ fontSize: "15px", color: "#71717a", maxWidth: "440px", margin: "0 auto", lineHeight: 1.6 }}>
+        <p style={{ fontSize: "15px", color: "#A1A1AA", maxWidth: "440px", margin: "0 auto", lineHeight: 1.6 }}>
           Fine-tuned transformer models on Hugging Face and multi-step automation agents built with n8n.
         </p>
       </div>
@@ -149,19 +175,19 @@ export default function AIMLHighlights() {
           href="/Models"
           style={{
             display: "inline-flex", alignItems: "center", gap: "8px",
-            background: "#181818", border: "1px solid #262626",
-            borderRadius: "10px", padding: "10px 20px",
-            color: "#f5f5f5", fontSize: "13px", fontWeight: 600,
+            background: "transparent", border: "1px solid #666666",
+            borderRadius: "8px", padding: "10px 20px",
+            color: "#FFFFFF", fontSize: "13px", fontWeight: 600,
             textDecoration: "none", transition: "all 0.2s",
-            fontFamily: "'JetBrains Mono', monospace",
+            fontFamily: "'Space Mono', monospace",
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.borderColor = "#ffffff";
-            e.currentTarget.style.color = "#ffffff";
+            e.currentTarget.style.borderColor = "#FFFFFF";
+            e.currentTarget.style.color = "#FFFFFF";
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.borderColor = "#262626";
-            e.currentTarget.style.color = "#f5f5f5";
+            e.currentTarget.style.borderColor = "#666666";
+            e.currentTarget.style.color = "#FFFFFF";
           }}
         >
           See More Models & Agents
