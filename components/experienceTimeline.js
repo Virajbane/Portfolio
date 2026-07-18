@@ -69,7 +69,7 @@ export default function ExperienceTimeline() {
           className={`absolute ${isMobile ? "left-4 sm:left-8" : "left-1/2 transform -translate-x-1/2"} h-full w-0.5 bg-gray-700`}
         >
           <div
-            className="absolute w-full bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"
+            className="absolute w-full bg-linear-to-b from-blue-500 via-purple-500 to-pink-500"
             style={{
               height: `${scrollProgress * 100}%`,
               transition: "height 0.1s ease-out",
