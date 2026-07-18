@@ -14,7 +14,9 @@ import { ShootingStarsAndStarsBackgroundDemo } from "./StarBackground";
 import WorksSection from "./Works";
 import ProjectsSection from "./Projects";
 import AnimatedFooter from "./Footer";
-import BlogInsights from "./BlogInsight";
+import { ContactFormOnly } from "./ContactSection";
+import AIMLHighlights from "./AIMLHighlights";
+import FeaturedCertificate from "./FeaturedCertificate";
 
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
@@ -31,11 +33,10 @@ function useInView(threshold = 0.1) {
 
   return [ref, visible];
 }
+
 export default function Start() {
-  // State for animation of stars
   const [stars, setStars] = useState([]);
 
-  // Generate random stars for the background
   useEffect(() => {
     const generateStars = () => {
       const newStars = [];
@@ -50,11 +51,9 @@ export default function Start() {
       }
       setStars(newStars);
     };
-
     generateStars();
   }, []);
 
-  // Technology icons data with monochrome logo styles
   const technologies = [
     { name: "HTML", logo: "html5" },
     { name: "CSS", logo: "css3" },
@@ -71,7 +70,6 @@ export default function Start() {
     { name: "Spring", logo: "spring" },
   ];
 
-  // Experience data
   const experiences = [
     {
       company: "Branding Catalyst",
@@ -80,53 +78,52 @@ export default function Start() {
       description: "Wrote Python automation scripts to streamline routine tasks and improve workflow efficiency; debugged, tested, and optimized Python applications to improve reliability and performance.",
     },
   ];
-  const SectionHeader = () => {
-  const [ref, visible] = useInView(0.2);
-  return (
-    <div
-      ref={ref}
-      style={{
-        textAlign: "center",
-        marginBottom: "56px",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: "opacity 0.7s ease, transform 0.7s ease",
-      }}
-    >
-      <p style={{
-        fontSize: "11px",
-        fontWeight: 600,
-        color: "#4a9eff",
-        textTransform: "uppercase",
-        letterSpacing: "0.15em",
-        marginBottom: "12px",
-      }}>
-        Featured Work
-      </p>
-      <h2 style={{
-        fontSize: "clamp(32px, 5vw, 52px)",
-        fontWeight: 700,
-        color: "#fff",
-        margin: "0 0 16px",
-        letterSpacing: "-1.5px",
-        lineHeight: 1.05,
-      }}>
-        My Personal Projects
-      </h2>
-      <p style={{
-        fontSize: "15px",
-        color: "#555",
-        maxWidth: "400px",
-        margin: "0 auto",
-        lineHeight: 1.6,
-      }}>
-        These are my projects on which I try to work actively.
-      </p>
-    </div>
-  );
-};
 
-  // Blog posts data
+  const SectionHeader = () => {
+    const [ref, visible] = useInView(0.2);
+    return (
+      <div
+        ref={ref}
+        style={{
+          textAlign: "center",
+          marginBottom: "56px",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(24px)",
+          transition: "opacity 0.7s ease, transform 0.7s ease",
+        }}
+      >
+        <p style={{
+          fontSize: "11px",
+          fontWeight: 600,
+          color: "#4a9eff",
+          textTransform: "uppercase",
+          letterSpacing: "0.15em",
+          marginBottom: "12px",
+        }}>
+          Featured Work
+        </p>
+        <h2 style={{
+          fontSize: "clamp(32px, 5vw, 52px)",
+          fontWeight: 700,
+          color: "#fff",
+          margin: "0 0 16px",
+          letterSpacing: "-1.5px",
+          lineHeight: 1.05,
+        }}>
+          My Personal Projects
+        </h2>
+        <p style={{
+          fontSize: "15px",
+          color: "#555",
+          maxWidth: "400px",
+          margin: "0 auto",
+          lineHeight: 1.6,
+        }}>
+          These are my projects on which I try to work actively.
+        </p>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen text-white bg-transparent">
@@ -139,10 +136,8 @@ export default function Start() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Animated stars background stays as is */}
-
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        {/* Hero Section - Made responsive with padding adjustments */}
+        {/* Hero Section */}
         <section
           id="about"
           className="py-8 sm:py-12 md:py-16 mt-16 sm:mt-20 max-w-4xl mx-auto"
@@ -238,7 +233,7 @@ export default function Start() {
         {/* Experience section */}
         <ExperienceTimeline />
 
-        {/* My work section - Adjusted spacing */}
+        {/* My work section */}
         <section id="projects" className="py-8 sm:py-12">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
@@ -253,16 +248,23 @@ export default function Start() {
           <WorksSection />
         </section>
 
-        {/* My personal projects - Adjusted spacing */}
+        {/* My personal projects */}
         <section className="py-4 sm:py-1">
           <SectionHeader />
-
           <ProjectsSection showAll={false} />
         </section>
 
-        {/* Latest blog posts - Adjusted spacing */}
-        <section id="posts" className="py-2 sm:py-1">
-          <BlogInsights isHomePage={true} />
+        {/* AI/ML highlights — top model + top agent, links to /Models */}
+        <section id="ai-ml" className="py-8 sm:py-12">
+          <AIMLHighlights />
+        </section>
+
+        {/* Most relevant credential to the AI/ML role, links to /Achievements */}
+        <FeaturedCertificate />
+
+        {/* Quick contact form */}
+        <section id="contact-quick" className="py-1">
+          <ContactFormOnly title="Have a project in mind?" />
         </section>
       </main>
 

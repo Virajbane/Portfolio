@@ -42,10 +42,7 @@ export function NavbarDemo() {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleBlogClick = () => {
-    router.push('/Blog');
-    setIsMobileMenuOpen(false);
-  };
+  
 
   const handleContactClick = () => {
     router.push('/ContactMe');
@@ -60,7 +57,7 @@ export function NavbarDemo() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="dark" onClick={handleBlogClick}>Blog</NavbarButton>
+            
             <NavbarButton variant="primary" onClick={handleContactClick}>Contact</NavbarButton>
           </div>
         </NavBody>
@@ -85,12 +82,7 @@ export function NavbarDemo() {
               </Link>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton
-                onClick={handleBlogClick}
-                variant="primary"
-                className="w-full">
-                Blog
-              </NavbarButton>
+              
               <NavbarButton
                 onClick={handleContactClick}
                 variant="primary"
