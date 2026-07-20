@@ -40,7 +40,8 @@ const SectionHeader = () => {
       <p style={{
         fontSize: "11px",
         fontWeight: 600,
-        color: "#a1a1aa",
+        fontFamily: "'Space Mono', monospace",
+        color: "#A1A1AA",
         textTransform: "uppercase",
         letterSpacing: "0.15em",
         marginBottom: "12px",
@@ -49,17 +50,18 @@ const SectionHeader = () => {
       </p>
       <h2 style={{
         fontSize: "clamp(32px, 5vw, 52px)",
-        fontWeight: 700,
-        color: "#fff",
+        fontWeight: 500,
+        fontFamily: "'Playfair Display', serif",
+        color: "#FFFFFF",
         margin: "0 0 16px",
-        letterSpacing: "-1.5px",
+        letterSpacing: "0",
         lineHeight: 1.05,
       }}>
         Projects
       </h2>
       <p style={{
         fontSize: "15px",
-        color: "#a1a1aa",
+        color: "#A1A1AA",
         maxWidth: "400px",
         margin: "0 auto",
         lineHeight: 1.6,
@@ -88,7 +90,7 @@ function page() {
   }, [index]);
 
   return (
-    <div className="min-h-screen text-white bg-transparent">
+    <div className="min-h-screen text-white bg-transparent" style={{ fontFamily: "'Space Mono', monospace" }}>
       <Head>
         <title>Viraj Bane | Full-Stack Web Developer</title>
         <meta

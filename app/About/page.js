@@ -25,7 +25,7 @@ function page() {
   }, [index]);
 
   return (
-    <div>
+    <div style={{ fontFamily: "'Space Mono', monospace" }}>
       <div className="min-h-screen text-white bg-transparent">
         <Head>
           <title>Viraj Bane | Full-Stack Web Developer</title>
@@ -50,8 +50,11 @@ function page() {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.7 }}
               >
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-white">
-                  <span className="bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                <h1
+                  className="text-3xl sm:text-4xl md:text-5xl mb-4 sm:mb-6 text-white"
+                  style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
+                >
+                  <span className="bg-linear-to-r from-white to-[#A1A1AA] bg-clip-text text-transparent">
                     About me
                   </span>
                 </h1>
@@ -62,6 +65,7 @@ function page() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7, duration: 1 }}
                 className="space-y-4 sm:space-y-5 text-sm sm:text-base md:text-lg"
+                style={{ color: "#D4D4D8" }}
               >
                 {/* Paragraph 1 — Intro */}
                 <p className="leading-relaxed">
@@ -167,7 +171,7 @@ function page() {
                     href="https://github.com/Virajbane"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white text-black px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium flex items-center space-x-2 hover:bg-gray-200 transition-colors"
+                    className="bg-white text-black px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium flex items-center space-x-2 hover:bg-[#D4D4D8] transition-colors"
                   >
                     <svg
                       className="w-4 h-4 sm:w-5 sm:h-5"
@@ -190,7 +194,7 @@ function page() {
                     href="https://www.linkedin.com/in/virubane/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white text-black px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium flex items-center space-x-2 hover:bg-gray-200 transition-colors"
+                    className="bg-white text-black px-3 sm:px-4 py-2 rounded-full text-sm sm:text-base font-medium flex items-center space-x-2 hover:bg-[#D4D4D8] transition-colors"
                   >
                     <svg
                       className="w-4 h-4 sm:w-5 sm:h-5"
@@ -215,6 +219,8 @@ function page() {
       </div>
 
       <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Space+Mono:wght@400;700&display=swap');
+
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }

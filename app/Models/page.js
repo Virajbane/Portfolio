@@ -6,6 +6,25 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import AnimatedFooter from "@/components/Footer";
 
+function HFBadgeIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4D4D8" strokeWidth="1.7">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9 10.5c.4-.6.9-1 1.6-1s1.2.4 1.6 1" strokeLinecap="round" />
+      <path d="M11.8 10.5c.4-.6.9-1 1.6-1s1.2.4 1.6 1" strokeLinecap="round" />
+      <path d="M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function BoltIcon({ color = "#E4E4E7" }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7">
+      <path d="M13 3 5 13.5h6.2L11 21l8-10.5h-6.2L13 3z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function page() {
   const [headerVisible, setHeaderVisible] = useState(false);
 
@@ -41,19 +60,20 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.14)",
+                background: "transparent",
+                border: "1px solid #666666",
                 borderRadius: "8px",
                 padding: "5px 14px",
                 marginBottom: "16px",
               }}
             >
+              <HFBadgeIcon />
               <span style={{
-                color: "#d4d4d8",
+                color: "#D4D4D8",
                 fontSize: "12px",
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Space Mono', monospace",
               }}>
-                🤖 open-source · hugging face
+                open-source · hugging face
               </span>
             </motion.div>
 
@@ -64,12 +84,12 @@ function page() {
               transition={{ delay: 0.3, duration: 0.7 }}
               style={{
                 fontSize: "clamp(36px, 6vw, 40px)",
-                fontWeight: 800,
-                color: "#fafafa",
+                fontWeight: 500,
+                color: "#FFFFFF",
                 margin: 0,
                 marginBottom: "12px",
                 lineHeight: 1.1,
-                fontFamily: "'Syne', sans-serif",
+                fontFamily: "'Playfair Display', serif",
               }}
             >
               ML Models
@@ -81,7 +101,7 @@ function page() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 1 }}
               style={{
-                color: "#a1a1aa",
+                color: "#A1A1AA",
                 fontSize: "16px",
                 lineHeight: 1.7,
                 maxWidth: "520px",
@@ -104,26 +124,26 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
-                background: "#000000",
-                border: "1px solid #1f1f1f",
-                borderRadius: "12px",
+                background: "transparent",
+                border: "1px solid #666666",
+                borderRadius: "8px",
                 padding: "10px 18px",
                 marginTop: "20px",
                 textDecoration: "none",
                 transition: "border-color 0.2s",
               }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#1f1f1f"}
+              onMouseEnter={e => e.currentTarget.style.borderColor = "#FFFFFF"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#666666"}
             >
-              <span style={{ fontSize: "18px" }}>🤗</span>
-              <span style={{ color: "#d4d4d8", fontSize: "13px" }}>huggingface.co/</span>
+              <HFBadgeIcon />
+              <span style={{ color: "#D4D4D8", fontSize: "13px", fontFamily: "'Space Mono', monospace" }}>huggingface.co/</span>
               <span style={{
-                color: "#f4f4f5",
+                color: "#FFFFFF",
                 fontSize: "13px",
-                fontFamily: "'JetBrains Mono', monospace",
-                fontWeight: 600,
+                fontFamily: "'Space Mono', monospace",
+                fontWeight: 700,
               }}>Virajbane</span>
-              <span style={{ color: "#71717a", fontSize: "11px", marginLeft: "4px" }}>↗</span>
+              <span style={{ color: "#A1A1AA", fontSize: "11px", marginLeft: "4px" }}>↗</span>
             </motion.a>
           </motion.div>
         </section>
@@ -137,7 +157,7 @@ function page() {
         <div
           style={{
             height: "1px",
-            background: "linear-gradient(90deg, transparent, #1f1f1f, transparent)",
+            background: "linear-gradient(90deg, transparent, #666666, transparent)",
             margin: "72px 0 56px",
           }}
         />
@@ -160,19 +180,20 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.2)",
+                background: "transparent",
+                border: "1px solid #A1A1AA",
                 borderRadius: "8px",
                 padding: "5px 14px",
                 marginBottom: "16px",
               }}
             >
+              <BoltIcon />
               <span style={{
-                color: "#e4e4e7",
+                color: "#E4E4E7",
                 fontSize: "12px",
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Space Mono', monospace",
               }}>
-                ⚡ automation · n8n
+                automation · n8n
               </span>
             </motion.div>
 
@@ -184,12 +205,12 @@ function page() {
               transition={{ delay: 0.3, duration: 0.7 }}
               style={{
                 fontSize: "clamp(36px, 6vw, 40px)",
-                fontWeight: 800,
-                color: "#fafafa",
+                fontWeight: 500,
+                color: "#FFFFFF",
                 margin: 0,
                 marginBottom: "12px",
                 lineHeight: 1.1,
-                fontFamily: "'Syne', sans-serif",
+                fontFamily: "'Playfair Display', serif",
               }}
             >
               AI Agents
@@ -202,7 +223,7 @@ function page() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.6, duration: 1 }}
               style={{
-                color: "#a1a1aa",
+                color: "#A1A1AA",
                 fontSize: "16px",
                 lineHeight: 1.7,
                 maxWidth: "560px",
@@ -224,20 +245,20 @@ function page() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
-                background: "#000000",
-                border: "1px solid #1f1f1f",
-                borderRadius: "12px",
+                background: "transparent",
+                border: "1px solid #666666",
+                borderRadius: "8px",
                 padding: "10px 18px",
                 marginTop: "20px",
               }}
             >
-              <span style={{ fontSize: "18px" }}>⚡</span>
-              <span style={{ color: "#d4d4d8", fontSize: "13px" }}>built with</span>
+              <BoltIcon />
+              <span style={{ color: "#D4D4D8", fontSize: "13px", fontFamily: "'Space Mono', monospace" }}>built with</span>
               <span style={{
-                color: "#f4f4f5",
+                color: "#FFFFFF",
                 fontSize: "13px",
-                fontFamily: "'JetBrains Mono', monospace",
-                fontWeight: 600,
+                fontFamily: "'Space Mono', monospace",
+                fontWeight: 700,
               }}>n8n</span>
             </motion.span>
           </motion.div>

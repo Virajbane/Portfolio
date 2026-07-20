@@ -27,7 +27,7 @@ function page() {
   }, [index]);
 
   return (
-    <div>
+    <div style={{ fontFamily: "'Space Mono', monospace" }}>
       <div className="min-h-screen text-white bg-transparent">
         {/* Space background with stars */}
         

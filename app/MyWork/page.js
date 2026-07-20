@@ -23,7 +23,7 @@ function page() {
   }, [index]);
 
   return (
-    <div className="min-h-screen text-white bg-transparent">
+    <div className="min-h-screen text-white bg-transparent" style={{ fontFamily: "'Space Mono', monospace" }}>
       <Head>
         <title>Viraj Bane | Full-Stack Web Developer</title>
         <meta
@@ -47,8 +47,11 @@ function page() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.7 }}
             >
-              <h1 className="text-4xl font-bold mb-4 text-white">
-                <span className="bg-linear-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              <h1
+                className="text-4xl mb-4 text-white"
+                style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500 }}
+              >
+                <span className="bg-linear-to-r from-white to-[#A1A1AA] bg-clip-text text-transparent">
                   My Work
                 </span>
               </h1>
@@ -59,6 +62,7 @@ function page() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 1 }}
               className="text-base"
+              style={{ color: "#D4D4D8" }}
             >
               <p className="leading-relaxed">
                 Some websites that I've worked on.
