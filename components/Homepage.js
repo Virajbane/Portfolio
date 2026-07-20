@@ -337,6 +337,47 @@ export default function Start() {
               >
                 <FaInstagram className="w-5 h-5" style={{ color: tokens.color.textPrimary }} />
               </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                href="/Viraj_Bane_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: tokens.color.primaryTransparent,
+                  border: `1px solid ${tokens.color.border}`,
+                  borderRadius: tokens.radius.pill,
+                  padding: "8px 18px",
+                  color: tokens.color.textPrimary,
+                  fontFamily: tokens.font.label,
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                }}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 2h9l5 5v15a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"
+                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 2v6h6" />
+                </svg>
+                View Resume
+              </motion.a>
             </div>
           </motion.div>
         </section>
