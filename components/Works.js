@@ -2,7 +2,18 @@
 import { useState } from 'react';
 
 const TechBadge = ({ name }) => (
-  <span className="px-3 py-1 text-sm font-medium bg-black/70 text-white border border-gray-700 rounded-full transition-all duration-300 hover:bg-white/10 hover:border-white/30">
+  <span
+    className="px-3 py-1 text-sm font-medium transition-all duration-300"
+    style={{
+      background: 'transparent',
+      color: '#FFFFFF',
+      border: '1px solid #666666',
+      borderRadius: '9999px',
+      fontFamily: "'Space Mono', monospace",
+    }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = '#FFFFFF'; }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = '#666666'; }}
+  >
     {name}
   </span>
 );
@@ -20,7 +31,7 @@ const ImpactToggle = ({ label = 'Why it matters', content, accent }) => {
   return (
     <div
       className="mt-4 pt-4"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}
+      style={{ borderTop: '1px solid #666666' }}
     >
       <div
         onClick={handleToggle}
@@ -50,20 +61,20 @@ const ImpactToggle = ({ label = 'Why it matters', content, accent }) => {
               lineHeight: 1,
               transition: 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease',
               transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
-              background: open ? `${accent}22` : 'rgba(0,0,0,0.4)',
+              background: open ? `${accent}22` : 'transparent',
               flexShrink: 0,
             }}
           >
             +
           </span>
-          <span className="text-white text-sm font-medium">{label}</span>
+          <span className="text-sm font-medium" style={{ color: '#FFFFFF', fontFamily: "'Space Mono', monospace" }}>{label}</span>
         </div>
         <span
           style={{
             width: '8px',
             height: '8px',
             borderRadius: '50%',
-            background: open ? accent : '#555',
+            background: open ? accent : '#666666',
             boxShadow: open ? `0 0 8px ${accent}aa` : 'none',
             transition: 'all 0.3s ease',
             flexShrink: 0,
@@ -79,7 +90,7 @@ const ImpactToggle = ({ label = 'Why it matters', content, accent }) => {
           marginTop: open ? '10px' : '0px',
         }}
       >
-        <p className="text-gray-300 text-sm font-light leading-relaxed m-0">
+        <p className="text-sm font-light leading-relaxed m-0" style={{ color: '#A1A1AA' }}>
           {content}
         </p>
       </div>
@@ -119,7 +130,8 @@ const ProjectCard = ({ project }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        border: `1px solid ${isHovered ? project.accentColor + '55' : 'rgba(255,255,255,0.08)'}`,
+        borderRadius: '8px',
+        border: `1px solid ${isHovered ? project.accentColor + '55' : '#666666'}`,
         boxShadow: isHovered ? `0 12px 32px -12px ${project.accentColor}55` : 'none',
         transition: 'border-color 0.4s ease, box-shadow 0.4s ease',
       }}
@@ -154,12 +166,15 @@ const ProjectCard = ({ project }) => {
       {/* Content container */}
       <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
         {/* Title */}
-        <h3 className="text-2xl font-bold text-white mb-2 font-sans line-clamp-2">
+        <h3
+          className="text-2xl mb-2 line-clamp-2"
+          style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, color: '#FFFFFF' }}
+        >
           {project.title}
         </h3>
 
         {/* Description - always visible */}
-        <p className="text-gray-300 mb-4 font-light text-base line-clamp-3">
+        <p className="mb-4 font-light text-base line-clamp-3" style={{ color: '#D4D4D8' }}>
           {project.description}
         </p>
 
@@ -180,7 +195,8 @@ const ProjectCard = ({ project }) => {
           isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}>
           <span
-            className="inline-flex items-center text-white hover:text-gray-300 pb-1 transition-all font-medium text-base"
+            className="inline-flex items-center pb-1 transition-all font-medium text-base"
+            style={{ color: '#FFFFFF', fontFamily: "'Space Mono', monospace" }}
             aria-label={`View ${project.title} project`}
           >
             View Project
@@ -202,7 +218,7 @@ export default function WorksSection() {
       description: 'AI to personalize learning. It offers tools for students to get tailored content and study plans, while teachers manage classes, quizzes, and track student performance.',
       image: '/App11.png',
       link: 'https://github.com/Mohammed6903/mumbaihacks',
-      accentColor: '#4a9eff',
+      accentColor: '#FFFFFF',
       highlight: 'Built at a hackathon to replace one-size-fits-all coursework with study plans that adapt to how each student is actually performing.',
     },
     {
@@ -211,7 +227,7 @@ export default function WorksSection() {
       description: 'Let AI analyze and rank your resume based on job descriptions, skills, and experience requirements to maximize your chances of getting noticed.',
       image: '/app2.png',
       link: 'https://github.com/MohammedYaseenRon/COHERENCE-25_CodeWizard_AIML',
-      accentColor: '#ff6b6b',
+      accentColor: '#A1A1AA',
       highlight: 'Scores a resume against a real job description the same way an ATS filter would — surfacing gaps before a recruiter ever sees them.',
     },
   ];

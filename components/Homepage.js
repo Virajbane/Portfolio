@@ -20,27 +20,25 @@ import FeaturedCertificate from "./FeaturedCertificate";
 
 /* ---------------------------------------------------------------------
    DESIGN TOKENS
-   Ported from "Core Systems Landing Page" design spec.
-   Palette overridden per brief: black (+ transparent variants) as the
-   only primary/surface color, white as the only text/foreground color.
-   Everything else (type scale, spacing, radii, motion language) follows
-   the source design file.
+   Aligned to the shared design system: Playfair Display for display
+   moments, Space Mono for body copy and labels, grayscale-only palette,
+   transparent backgrounds, 8px radii throughout.
 --------------------------------------------------------------------- */
 const tokens = {
   color: {
-    primary: "#000000",
-    primaryTransparent: "rgba(0, 0, 0, 0.6)",
-    surface: "rgba(0, 0, 0, 0.4)",
-    surfaceSolid: "#000000",
+    primary: "#111111",
+    primaryTransparent: "rgba(17, 17, 17, 0.6)",
+    surface: "rgba(102, 102, 102, 0.15)",
+    surfaceSolid: "#111111",
     background: "transparent",
     textPrimary: "#FFFFFF",
-    textSecondary: "rgba(255, 255, 255, 0.6)",
-    border: "rgba(255, 255, 255, 0.12)",
+    textSecondary: "#A1A1AA",
+    border: "#666666",
   },
   font: {
-    display: "'Inter', sans-serif",
-    body: "'Inter', sans-serif",
-    label: "'JetBrains Mono', monospace",
+    display: "'Playfair Display', serif",
+    body: "'Space Mono', monospace",
+    label: "'Space Mono', monospace",
   },
   radius: {
     card: "8px",
@@ -154,7 +152,7 @@ export default function Start() {
         </h2>
         <p style={{
           fontFamily: tokens.font.body,
-          fontSize: "16px",
+          fontSize: "15px",
           fontWeight: 400,
           color: tokens.color.textSecondary,
           maxWidth: "400px",
@@ -184,7 +182,7 @@ export default function Start() {
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Space+Mono:wght@400;700&display=swap"
           rel="stylesheet"
         />
         <link rel="icon" href="/favicon.ico" />
@@ -266,9 +264,9 @@ export default function Start() {
             <p
               style={{
                 fontFamily: tokens.font.body,
-                fontSize: "16px",
+                fontSize: "14px",
                 fontWeight: 400,
-                lineHeight: 1.6,
+                lineHeight: 1.7,
                 color: tokens.color.textPrimary,
                 marginBottom: tokens.space.gap,
               }}

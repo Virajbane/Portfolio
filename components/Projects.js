@@ -4,19 +4,29 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+/* ─── Grayscale accent palette (cycled per project) ───────────
+   Replaces the previous per-project hue with tones from the
+   shared design system so every card stays in the same
+   grayscale family while still reading as visually distinct.
+   ──────────────────────────────────────────────────────────── */
+const TONES = [
+  { hex: "#FFFFFF", rgb: "255, 255, 255" },
+  { hex: "#D4D4D8", rgb: "212, 212, 216" },
+  { hex: "#A1A1AA", rgb: "161, 161, 170" },
+  { hex: "#71717A", rgb: "113, 113, 122" },
+  { hex: "#666666", rgb: "102, 102, 102" },
+];
+const toneFor = (i) => TONES[i % TONES.length];
+
 /* ─── Project Data ─────────────────────────────────────────── */
-const projects = [
+const rawProjects = [
   {
     title: "Adaptive RAG 2.0",
     subtitle: "Agentic AI document assistant",
     category: "AI / Generative AI",
-    accentColor: "#ff6b6b",
-    glowColor: "rgba(255, 107, 107, 0.15)",
-    glowRGB: "255, 107, 107",
-    gradientBg: "radial-gradient(ellipse at 30% 60%, rgba(255,107,107,0.12) 0%, transparent 65%)",
     image: "/AdaptiveRAG.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7l3-7z" />
       </svg>
     ),
@@ -41,13 +51,9 @@ const projects = [
     title: "AI DB Agent",
     subtitle: "Natural language database interface",
     category: "AI / Dev Tool",
-    accentColor: "#4a9eff",
-    glowColor: "rgba(74, 158, 255, 0.15)",
-    glowRGB: "74, 158, 255",
-    gradientBg: "radial-gradient(ellipse at 30% 60%, rgba(74,158,255,0.12) 0%, transparent 65%)",
     image: "/ai-db-agent.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4a9eff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <ellipse cx="12" cy="5" rx="9" ry="3" />
         <path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
         <path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6" />
@@ -64,13 +70,9 @@ const projects = [
     title: "Flow Forge",
     subtitle: "Visual AI workflow automation platform",
     category: "AI / Automation",
-    accentColor: "#7c5cff",
-    glowColor: "rgba(124, 92, 255, 0.15)",
-    glowRGB: "124, 92, 255",
-    gradientBg: "radial-gradient(ellipse at 30% 60%, rgba(124,92,255,0.12) 0%, transparent 65%)",
     image: "/flow-forge.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c5cff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="6" cy="6" r="2" />
         <circle cx="18" cy="6" r="2" />
         <circle cx="12" cy="18" r="2" />
@@ -99,13 +101,9 @@ const projects = [
     title: "Multi PDF RAG",
     subtitle: "AI-powered document question answering",
     category: "Generative AI",
-    accentColor: "#ff6b6b",
-    glowColor: "rgba(255, 107, 107, 0.15)",
-    glowRGB: "255, 107, 107",
-    gradientBg: "radial-gradient(ellipse at 70% 40%, rgba(255,107,107,0.12) 0%, transparent 65%)",
     image: "/multi-pdf-rag.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" />
         <path d="M14 2v6h6" />
         <path d="M8 13h8" />
@@ -133,13 +131,9 @@ const projects = [
     title: "Move On",
     subtitle: "Smart travel companion app",
     category: "Travel",
-    accentColor: "#5dcaa5",
-    glowColor: "rgba(93, 202, 165, 0.15)",
-    glowRGB: "93, 202, 165",
-    gradientBg: "radial-gradient(ellipse at 70% 30%, rgba(93,202,165,0.12) 0%, transparent 65%)",
     image: "/app6.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5dcaa5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
         <circle cx="12" cy="9" r="2.5" />
       </svg>
@@ -155,13 +149,9 @@ const projects = [
     title: "To-Do List App",
     subtitle: "Real-time collaboration tool",
     category: "Productivity",
-    accentColor: "#9f77dd",
-    glowColor: "rgba(159, 119, 221, 0.15)",
-    glowRGB: "159, 119, 221",
-    gradientBg: "radial-gradient(ellipse at 30% 70%, rgba(159,119,221,0.12) 0%, transparent 65%)",
     image: "/App7.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9f77dd" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 11l3 3L22 4" />
         <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
       </svg>
@@ -177,13 +167,9 @@ const projects = [
     title: "Agro-Farm",
     subtitle: "Digital platform for farmers",
     category: "AgriTech",
-    accentColor: "#97c459",
-    glowColor: "rgba(151, 196, 89, 0.15)",
-    glowRGB: "151, 196, 89",
-    gradientBg: "radial-gradient(ellipse at 60% 60%, rgba(151,196,89,0.12) 0%, transparent 65%)",
     image: "/App10.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#97c459" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22V12" />
         <path d="M12 12C12 12 7 10 5 6c4 0 7 2 7 6z" />
         <path d="M12 12C12 12 17 10 19 6c-4 0-7 2-7 6z" />
@@ -201,13 +187,9 @@ const projects = [
     title: "VIRRMART",
     subtitle: "Amazon-inspired storefront clone",
     category: "E-Commerce",
-    accentColor: "#ef9f27",
-    glowColor: "rgba(239, 159, 39, 0.15)",
-    glowRGB: "239, 159, 39",
-    gradientBg: "radial-gradient(ellipse at 70% 40%, rgba(239,159,39,0.12) 0%, transparent 65%)",
     image: "/App9.png",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef9f27" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    iconPath: (color) => (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="9" cy="21" r="1" />
         <circle cx="20" cy="21" r="1" />
         <path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.99-1.61L23 6H6" />
@@ -221,6 +203,20 @@ const projects = [
     highlight: "A ground-up rebuild of e-commerce UX patterns in vanilla JS — no framework shortcuts, every interaction hand-built.",
   },
 ];
+
+/* Derive the fields the rest of the component expects (accentColor,
+   glowColor, glowRGB, gradientBg, icon) from the grayscale palette. */
+const projects = rawProjects.map((p, i) => {
+  const tone = toneFor(i);
+  return {
+    ...p,
+    accentColor: tone.hex,
+    glowColor: `rgba(${tone.rgb}, 0.15)`,
+    glowRGB: tone.rgb,
+    gradientBg: `radial-gradient(ellipse at 30% 60%, rgba(${tone.rgb},0.12) 0%, transparent 65%)`,
+    icon: p.iconPath(tone.hex),
+  };
+});
 
 /* ─── Animated entrance hook ───────────────────────────────── */
 function useInView(threshold = 0.15) {
@@ -252,9 +248,9 @@ const GlobalSpotlight = ({ sectionRef }) => {
       border-radius: 50%;
       pointer-events: none;
       background: radial-gradient(circle,
-        rgba(120, 160, 255, 0.10) 0%,
-        rgba(120, 160, 255, 0.05) 20%,
-        rgba(120, 160, 255, 0.02) 40%,
+        rgba(255, 255, 255, 0.10) 0%,
+        rgba(255, 255, 255, 0.05) 20%,
+        rgba(255, 255, 255, 0.02) 40%,
         transparent 65%
       );
       z-index: 0;
@@ -340,7 +336,7 @@ const ImpactToggle = ({ label = "Why it matters", content, accent }) => {
   };
 
   return (
-    <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+    <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid #666666" }}>
       <div
         onClick={handleToggle}
         style={{
@@ -358,11 +354,11 @@ const ImpactToggle = ({ label = "Why it matters", content, accent }) => {
             transform: open ? "rotate(45deg)" : "rotate(0deg)",
             background: open ? `${accent}18` : "transparent",
           }}>+</span>
-          <span style={{ color: "#e2e8f0", fontSize: "12px", fontWeight: 600 }}>{label}</span>
+          <span style={{ color: "#FFFFFF", fontSize: "12px", fontWeight: 600, fontFamily: "'Space Mono', monospace" }}>{label}</span>
         </div>
         <span style={{
           width: "8px", height: "8px", borderRadius: "50%",
-          background: open ? accent : "#333",
+          background: open ? accent : "#666666",
           boxShadow: open ? `0 0 8px ${accent}aa` : "none",
           transition: "all 0.3s ease",
         }} />
@@ -374,7 +370,7 @@ const ImpactToggle = ({ label = "Why it matters", content, accent }) => {
         transition: "max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease",
         marginTop: open ? "10px" : "0px",
       }}>
-        <p style={{ color: "#999", fontSize: "12px", lineHeight: 1.65, margin: 0 }}>
+        <p style={{ color: "#A1A1AA", fontSize: "12px", lineHeight: 1.65, margin: 0 }}>
           {content}
         </p>
       </div>
@@ -404,10 +400,8 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
   const cardStyle = {
     position: "relative",
     display: "block",
-    background: hovered
-      ? "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)"
-      : "rgba(255,255,255,0.02)",
-    borderRadius: "16px",
+    background: "transparent",
+    borderRadius: "8px",
     overflow: "hidden",
     textDecoration: "none",
     cursor: "pointer",
@@ -422,7 +416,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
     "--glow-y": "50%",
     "--glow-intensity": "0",
     "--glow-color": project.glowRGB,
-    border: `1px solid ${hovered ? project.accentColor + "44" : "rgba(255,255,255,0.07)"}`,
+    border: `1px solid ${hovered ? project.accentColor + "44" : "#666666"}`,
   };
 
   return (
@@ -451,7 +445,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
             rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 35%,
             transparent 60%
           );
-          border-radius: 16px;
+          border-radius: 8px;
           -webkit-mask:
             linear-gradient(#fff 0 0) content-box,
             linear-gradient(#fff 0 0);
@@ -488,7 +482,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         width: "100%",
         height: project.featured ? "200px" : "150px",
         backgroundImage: project.image ? "none" : project.gradientBg,
-        backgroundColor: "#0a0a0a",
+        backgroundColor: "transparent",
         overflow: "hidden",
         transition: "height 0.4s ease",
       }}>
@@ -529,7 +523,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to bottom, transparent 40%, #080808)",
+          background: "linear-gradient(to bottom, transparent 40%, rgba(17,17,17,0.9))",
         }} />
 
         {/* Category tag */}
@@ -542,11 +536,12 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
           gap: "6px",
           padding: "5px 12px",
           borderRadius: "9999px",
-          background: "rgba(0,0,0,0.6)",
+          background: "rgba(17,17,17,0.6)",
           border: `1px solid ${project.accentColor}44`,
           fontSize: "11px",
           fontWeight: 500,
-          color: "#fff",
+          fontFamily: "'Space Mono', monospace",
+          color: "#FFFFFF",
           letterSpacing: "0.02em",
           zIndex: 2,
           backdropFilter: "blur(8px)",
@@ -570,8 +565,8 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
           right: "14px",
           width: "42px",
           height: "42px",
-          borderRadius: "10px",
-          background: "rgba(0,0,0,0.6)",
+          borderRadius: "8px",
+          background: "rgba(17,17,17,0.6)",
           border: `1px solid ${project.accentColor}33`,
           display: "flex",
           alignItems: "center",
@@ -591,6 +586,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
           right: "14px",
           fontSize: "48px",
           fontWeight: 700,
+          fontFamily: "'Playfair Display', serif",
           color: "rgba(255,255,255,0.04)",
           lineHeight: 1,
           letterSpacing: "-2px",
@@ -606,10 +602,11 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "4px" }}>
           <p style={{
             fontSize: project.featured ? "19px" : "16px",
-            fontWeight: 600,
-            color: "#fff",
+            fontWeight: 500,
+            fontFamily: "'Playfair Display', serif",
+            color: "#FFFFFF",
             margin: 0,
-            letterSpacing: "-0.3px",
+            letterSpacing: "0",
           }}>
             {project.title}
           </p>
@@ -626,7 +623,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
           />
         </div>
 
-        <p style={{ fontSize: "12px", color: "#555", marginBottom: "14px", margin: "0 0 14px" }}>
+        <p style={{ fontSize: "12px", color: "#666666", marginBottom: "14px", margin: "0 0 14px", fontFamily: "'Space Mono', monospace" }}>
           {project.subtitle}
         </p>
 
@@ -641,7 +638,8 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         <p style={{
           fontSize: "10px",
           fontWeight: 600,
-          color: "#444",
+          fontFamily: "'Space Mono', monospace",
+          color: "#666666",
           textTransform: "uppercase",
           letterSpacing: "0.1em",
           margin: "0 0 5px",
@@ -650,7 +648,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         </p>
         <p style={{
           fontSize: "12.5px",
-          color: "#777",
+          color: "#A1A1AA",
           lineHeight: 1.6,
           margin: "0 0 12px",
         }}>
@@ -660,6 +658,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         <p style={{
           fontSize: "10px",
           fontWeight: 600,
+          fontFamily: "'Space Mono', monospace",
           color: project.accentColor,
           textTransform: "uppercase",
           letterSpacing: "0.1em",
@@ -670,7 +669,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
         </p>
         <p style={{
           fontSize: "12.5px",
-          color: "#bbb",
+          color: "#D4D4D8",
           lineHeight: 1.6,
           margin: "0 0 14px",
         }}>
@@ -682,11 +681,12 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
             <span key={i} style={{
               fontSize: "10px",
               fontWeight: 500,
+              fontFamily: "'Space Mono', monospace",
               padding: "3px 9px",
               borderRadius: "9999px",
-              background: hovered ? `${project.accentColor}14` : "rgba(255,255,255,0.04)",
-              border: `1px solid ${hovered ? project.accentColor + "44" : "rgba(255,255,255,0.1)"}`,
-              color: hovered ? project.accentColor : "#666",
+              background: "transparent",
+              border: `1px solid ${hovered ? project.accentColor + "44" : "#666666"}`,
+              color: hovered ? project.accentColor : "#A1A1AA",
               transition: "all 0.3s ease",
               transitionDelay: `${i * 30}ms`,
             }}>
@@ -704,11 +704,12 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
           alignItems: "center",
           justifyContent: "space-between",
           paddingTop: "12px",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderTop: "1px solid #666666",
         }}>
           <span style={{
             fontSize: "12px",
-            color: hovered ? project.accentColor : "#555",
+            fontFamily: "'Space Mono', monospace",
+            color: hovered ? project.accentColor : "#A1A1AA",
             display: "flex",
             alignItems: "center",
             gap: "5px",
@@ -724,7 +725,7 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
               }}
             />
           </span>
-          <span style={{ fontSize: "11px", color: "#2a2a2a", fontWeight: 600 }}>
+          <span style={{ fontSize: "11px", fontFamily: "'Space Mono', monospace", color: "#666666", fontWeight: 600 }}>
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
@@ -732,9 +733,6 @@ const ProjectCard = ({ project, index, delay = 0 }) => {
     </a>
   );
 };
-
-/* ─── Section Header ───────────────────────────────────────── */
-
 
 /* ─── Main Export ──────────────────────────────────────────── */
 export default function ProjectsSection({ showAll = false }) {
@@ -760,7 +758,7 @@ export default function ProjectsSection({ showAll = false }) {
         width: "400px",
         height: "400px",
         borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(74,158,255,0.05) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%)",
         pointerEvents: "none",
         zIndex: 0,
       }} />
@@ -771,7 +769,7 @@ export default function ProjectsSection({ showAll = false }) {
         width: "300px",
         height: "300px",
         borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(159,119,221,0.05) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(161,161,170,0.05) 0%, transparent 70%)",
         pointerEvents: "none",
         zIndex: 0,
       }} />
@@ -792,7 +790,7 @@ export default function ProjectsSection({ showAll = false }) {
         )}
 
         {restProjects.length > 0 && (
-          <SectionConnector accent={featuredProject?.accentColor || "#4a9eff"} />
+          <SectionConnector accent={featuredProject?.accentColor || "#FFFFFF"} />
         )}
 
         <div style={{
@@ -813,21 +811,20 @@ export default function ProjectsSection({ showAll = false }) {
               onMouseLeave={() => setBtnHovered(false)}
               style={{
                 padding: "13px 32px",
-                background: btnHovered
-                  ? "rgba(74,158,255,0.1)"
-                  : "rgba(255,255,255,0.03)",
-                border: `1px solid ${btnHovered ? "rgba(74,158,255,0.5)" : "rgba(255,255,255,0.12)"}`,
+                background: "transparent",
+                border: `1px solid ${btnHovered ? "#FFFFFF" : "#666666"}`,
                 borderRadius: "9999px",
-                color: btnHovered ? "#4a9eff" : "#aaa",
+                color: btnHovered ? "#FFFFFF" : "#A1A1AA",
                 fontSize: "13px",
                 fontWeight: 500,
+                fontFamily: "'Space Mono', monospace",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 gap: "8px",
                 transition: "all 0.3s ease",
                 backdropFilter: "blur(8px)",
-                boxShadow: btnHovered ? "0 0 24px rgba(74,158,255,0.15)" : "none",
+                boxShadow: btnHovered ? "0 0 24px rgba(255,255,255,0.1)" : "none",
               }}
             >
               View More Projects

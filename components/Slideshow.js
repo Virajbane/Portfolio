@@ -61,13 +61,14 @@ const styles = {
     padding: '40px 24px',
     maxWidth: '1024px',
     margin: '0 auto',
-    fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+    fontFamily: "'Space Mono', monospace",
   },
   heading: {
     textAlign: 'center',
     fontSize: '2rem',
-    fontWeight: 700,
-    color: '#f1f5f9',
+    fontWeight: 500,
+    fontFamily: "'Playfair Display', serif",
+    color: '#FFFFFF',
     marginBottom: '28px',
   },
   rowWrap: {
@@ -138,8 +139,9 @@ function useLoopAnimation(trackRef, items, speed, direction) {
         Object.assign(box.style, {
           width: '52px',
           height: '52px',
-          borderRadius: '10px',
-          background: '#111827',
+          borderRadius: '8px',
+          background: 'transparent',
+          border: '1px solid #666666',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -161,10 +163,10 @@ function useLoopAnimation(trackRef, items, speed, direction) {
         const span = document.createElement('span');
         Object.assign(span.style, {
           fontSize: '13px',
-          color: '#cbd5e1',
+          color: '#A1A1AA',
           fontWeight: '500',
           whiteSpace: 'nowrap',
-          fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+          fontFamily: "'Space Mono', monospace",
         });
         span.textContent = t.name;
 

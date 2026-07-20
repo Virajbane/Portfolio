@@ -43,7 +43,23 @@ function useTilt(max = 8) {
 }
 
 /* ============================================================
+   HF ICON (monochrome, replaces colored emoji)
+   ============================================================ */
+function HFIcon({ color }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9 10.5c.4-.6.9-1 1.6-1s1.2.4 1.6 1" strokeLinecap="round" />
+      <path d="M11.8 10.5c.4-.6.9-1 1.6-1s1.2.4 1.6 1" strokeLinecap="round" />
+      <path d="M8.5 14c1 1 2.2 1.5 3.5 1.5s2.5-.5 3.5-1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ============================================================
    HUGGING FACE MODELS DATA
+   Accents are grayscale to match the two flagship models used
+   elsewhere in the portfolio.
    ============================================================ */
 const models = [
   {
@@ -55,8 +71,8 @@ const models = [
     type: "Text Classification",
     modelSize: "67M params",
     badge: "NLP",
-    badgeColor: "#6366f1",
-    accent: "#818cf8",
+    badgeColor: "#FFFFFF",
+    accent: "#FFFFFF",
     description:
       "End-to-end sentiment classifier fine-tuned on a subset of the Sentiment140 dataset (~10K tweets). Classifies any text as Positive or Negative with 89% accuracy. Supports real-time inference via Hugging Face pipeline.",
     pipeline: "text-classification",
@@ -87,7 +103,7 @@ result = classifier("I love this project!")
 # [{'label': 'POSITIVE', 'score': 0.91}]`,
     demo: [
       { text: "I love this project!", label: "POSITIVE", score: 0.91, pos: true },
-      { text: "Worst day ever 😞", label: "NEGATIVE", score: 0.96, pos: false },
+      { text: "Worst day ever", label: "NEGATIVE", score: 0.96, pos: false },
       { text: "This is absolutely amazing!", label: "POSITIVE", score: 0.88, pos: true },
     ],
     highlight: "Runs real-time on CPU with sub-100ms inference — light enough to embed directly in a product feature, not just a notebook demo.",
@@ -101,8 +117,8 @@ result = classifier("I love this project!")
     type: "Text Classification",
     modelSize: "110M params",
     badge: "NLP · Hiring AI",
-    badgeColor: "#0ea5e9",
-    accent: "#38bdf8",
+    badgeColor: "#A1A1AA",
+    accent: "#A1A1AA",
     description:
       "Fine-tuned BERT model that semantically compares a resume and job description, outputting a match probability. Goes beyond keyword matching — understands that 'REST APIs' means 'Backend Development'.",
     pipeline: "text-classification",
@@ -151,16 +167,16 @@ function ArchFlow({ steps, accent }) {
           <div
             style={{
               padding: "5px 18px",
-              borderRadius: "6px",
+              borderRadius: "8px",
               fontSize: "11px",
-              fontFamily: "'JetBrains Mono', monospace",
+              fontFamily: "'Space Mono', monospace",
               border: i === 0 || i === steps.length - 1
                 ? `1px solid ${accent}55`
-                : "1px solid #ffffff15",
+                : "1px solid #66666633",
               background: i === 0 || i === steps.length - 1
                 ? `${accent}18`
-                : "#ffffff08",
-              color: i === 0 || i === steps.length - 1 ? accent : "#d4d4d8",
+                : "transparent",
+              color: i === 0 || i === steps.length - 1 ? accent : "#D4D4D8",
               letterSpacing: "0.02em",
               whiteSpace: "nowrap",
             }}
@@ -168,7 +184,7 @@ function ArchFlow({ steps, accent }) {
             {step}
           </div>
           {i < steps.length - 1 && (
-            <div style={{ color: "#262626", fontSize: "12px", lineHeight: 1, padding: "1px 0" }}>↓</div>
+            <div style={{ color: "#666666", fontSize: "12px", lineHeight: 1, padding: "1px 0" }}>↓</div>
           )}
         </div>
       ))}
@@ -182,7 +198,7 @@ function ArchFlow({ steps, accent }) {
 function ImpactToggle({ label = "Highlight", content, accent }) {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #181818" }}>
+    <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid #666666" }}>
       <div
         onClick={() => setOpen(o => !o)}
         style={{
@@ -200,11 +216,11 @@ function ImpactToggle({ label = "Highlight", content, accent }) {
             transform: open ? "rotate(45deg)" : "rotate(0deg)",
             background: open ? `${accent}18` : "transparent",
           }}>+</span>
-          <span style={{ color: "#f5f5f5", fontSize: "13px", fontWeight: 600 }}>{label}</span>
+          <span style={{ color: "#FFFFFF", fontSize: "13px", fontWeight: 600 }}>{label}</span>
         </div>
         <span style={{
           width: "9px", height: "9px", borderRadius: "50%",
-          background: open ? accent : "#262626",
+          background: open ? accent : "#666666",
           boxShadow: open ? `0 0 10px ${accent}aa` : "none",
           transition: "all 0.3s ease",
         }} />
@@ -216,7 +232,7 @@ function ImpactToggle({ label = "Highlight", content, accent }) {
         transition: "max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease",
         marginTop: open ? "12px" : "0px",
       }}>
-        <p style={{ color: "#d4d4d8", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
+        <p style={{ color: "#D4D4D8", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
           {content}
         </p>
       </div>
@@ -291,9 +307,9 @@ function ModelCard({ model, index }) {
           transition: springBack
             ? "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease"
             : "transform 0.1s linear, border-color 0.3s ease, box-shadow 0.3s ease",
-          background: "linear-gradient(135deg, #000000 0%, #050505 100%)",
-          border: `1px solid ${hovered ? model.accent + "55" : "#181818"}`,
-          borderRadius: "20px",
+          background: "transparent",
+          border: `1px solid ${hovered ? model.accent + "55" : "#666666"}`,
+          borderRadius: "8px",
           overflow: "hidden",
           position: "relative",
           boxShadow: hovered ? `0 12px 32px -12px ${model.accent}33` : "none",
@@ -311,13 +327,13 @@ function ModelCard({ model, index }) {
             inset: 0,
             pointerEvents: "none",
             opacity: hovered ? 0.06 : 0,
-            background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, #ffffff, transparent 55%)`,
+            background: `radial-gradient(circle at ${tilt.gx}% ${tilt.gy}%, #FFFFFF, transparent 55%)`,
             transition: springBack ? "opacity 0.6s ease" : "opacity 0.2s ease",
           }}
         />
       )}
 
-      <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #181818" }}>
+      <div style={{ padding: "28px 32px 20px", borderBottom: "1px solid #666666" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
@@ -325,19 +341,19 @@ function ModelCard({ model, index }) {
                 background: `${model.badgeColor}22`,
                 color: model.accent,
                 border: `1px solid ${model.accent}44`,
-                borderRadius: "6px",
+                borderRadius: "8px",
                 padding: "3px 10px",
                 fontSize: "11px",
-                fontFamily: "'JetBrains Mono', monospace",
+                fontFamily: "'Space Mono', monospace",
                 letterSpacing: "0.05em",
               }}>{model.badge}</span>
-              <span style={{ color: "#71717a", fontSize: "12px" }}>{model.type}</span>
+              <span style={{ color: "#A1A1AA", fontSize: "12px", fontFamily: "'Space Mono', monospace" }}>{model.type}</span>
             </div>
             <h2 style={{
-              fontSize: "22px", fontWeight: 700, color: "#fafafa",
-              fontFamily: "'Syne', sans-serif", margin: 0, marginBottom: "4px",
+              fontSize: "22px", fontWeight: 500, color: "#FFFFFF",
+              fontFamily: "'Playfair Display', serif", margin: 0, marginBottom: "4px",
             }}>{model.title}</h2>
-            <p style={{ color: "#a1a1aa", fontSize: "13px", margin: 0 }}>{model.subtitle}</p>
+            <p style={{ color: "#A1A1AA", fontSize: "13px", margin: 0 }}>{model.subtitle}</p>
           </div>
           <a
             href={model.hfUrl}
@@ -345,10 +361,10 @@ function ModelCard({ model, index }) {
             rel="noopener noreferrer"
             style={{
               display: "flex", alignItems: "center", gap: "6px",
-              background: "#181818", border: "1px solid #262626",
+              background: "transparent", border: "1px solid #666666",
               borderRadius: "8px", padding: "8px 14px",
-              color: "#d4d4d8", fontSize: "12px", textDecoration: "none",
-              fontFamily: "'JetBrains Mono', monospace",
+              color: "#D4D4D8", fontSize: "12px", textDecoration: "none",
+              fontFamily: "'Space Mono', monospace",
               transition: "all 0.2s",
             }}
             onMouseEnter={e => {
@@ -356,11 +372,11 @@ function ModelCard({ model, index }) {
               e.currentTarget.style.color = model.accent;
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.borderColor = "#262626";
-              e.currentTarget.style.color = "#d4d4d8";
+              e.currentTarget.style.borderColor = "#666666";
+              e.currentTarget.style.color = "#D4D4D8";
             }}
           >
-            🤗 {model.hfId}
+            <HFIcon color="currentColor" /> {model.hfId}
           </a>
         </div>
 
@@ -372,8 +388,8 @@ function ModelCard({ model, index }) {
               style={{
                 padding: "6px 14px", borderRadius: "8px", border: "none",
                 background: tab === t ? `${model.accent}22` : "transparent",
-                color: tab === t ? model.accent : "#71717a",
-                fontSize: "12px", cursor: "pointer", fontFamily: "inherit",
+                color: tab === t ? model.accent : "#A1A1AA",
+                fontSize: "12px", cursor: "pointer", fontFamily: "'Space Mono', monospace",
                 borderBottom: tab === t ? `2px solid ${model.accent}` : "2px solid transparent",
                 transition: "all 0.2s",
               }}
@@ -387,16 +403,16 @@ function ModelCard({ model, index }) {
       <div style={{ padding: "24px 32px" }}>
         {tab === "overview" && (
           <div>
-            <p style={{ color: "#d4d4d8", fontSize: "14px", lineHeight: 1.7, marginBottom: "20px" }}>
+            <p style={{ color: "#D4D4D8", fontSize: "14px", lineHeight: 1.7, marginBottom: "20px" }}>
               {model.description}
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px", marginBottom: "20px" }}>
               {model.metrics.map((m, i) => (
                 <div key={i} style={{
-                  background: "#000000", border: "1px solid #181818",
-                  borderRadius: "10px", padding: "12px 14px",
+                  background: "transparent", border: "1px solid #666666",
+                  borderRadius: "8px", padding: "12px 14px",
                 }}>
-                  <div style={{ color: "#71717a", fontSize: "11px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>{m.label}</div>
+                  <div style={{ color: "#A1A1AA", fontSize: "11px", marginBottom: "4px", fontFamily: "'Space Mono', monospace" }}>{m.label}</div>
                   <div style={{ color: model.accent, fontSize: "15px", fontWeight: 700 }}>{m.value}</div>
                 </div>
               ))}
@@ -404,10 +420,10 @@ function ModelCard({ model, index }) {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
               {model.tags.map((tag, i) => (
                 <span key={i} style={{
-                  background: "#181818", border: "1px solid #262626",
-                  borderRadius: "6px", padding: "4px 10px",
-                  color: "#a1a1aa", fontSize: "11px",
-                  fontFamily: "'JetBrains Mono', monospace",
+                  background: "transparent", border: "1px solid #666666",
+                  borderRadius: "8px", padding: "4px 10px",
+                  color: "#A1A1AA", fontSize: "11px",
+                  fontFamily: "'Space Mono', monospace",
                 }}>{tag}</span>
               ))}
             </div>
@@ -426,44 +442,44 @@ function ModelCard({ model, index }) {
         {tab === "code" && (
           <div>
             <pre style={{
-              background: "#000000",
-              border: "1px solid #181818",
-              borderRadius: "12px",
+              background: "transparent",
+              border: "1px solid #666666",
+              borderRadius: "8px",
               padding: "20px",
               fontSize: "12px",
-              fontFamily: "'JetBrains Mono', monospace",
-              color: "#d4d4d8",
+              fontFamily: "'Space Mono', monospace",
+              color: "#D4D4D8",
               overflowX: "auto",
               lineHeight: 1.7,
               margin: 0,
             }}>
-              <code style={{ color: "#f5f5f5" }}>{model.codeSnippet}</code>
+              <code style={{ color: "#FFFFFF" }}>{model.codeSnippet}</code>
             </pre>
           </div>
         )}
 
         {tab === "demo" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <p style={{ color: "#71717a", fontSize: "12px", marginBottom: "4px", fontFamily: "'JetBrains Mono', monospace" }}>
+            <p style={{ color: "#A1A1AA", fontSize: "12px", marginBottom: "4px", fontFamily: "'Space Mono', monospace" }}>
               Sample inference outputs (illustrative):
             </p>
             {model.demo.map((d, i) => (
               <div key={i} style={{
                 display: "flex", justifyContent: "space-between", alignItems: "center",
-                background: "#000000", border: "1px solid #181818",
-                borderRadius: "10px", padding: "12px 16px",
+                background: "transparent", border: "1px solid #666666",
+                borderRadius: "8px", padding: "12px 16px",
                 flexWrap: "wrap", gap: "8px",
               }}>
-                <span style={{ color: "#d4d4d8", fontSize: "13px", fontStyle: "italic" }}>"{d.text}"</span>
+                <span style={{ color: "#D4D4D8", fontSize: "13px", fontStyle: "italic" }}>"{d.text}"</span>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                   <span style={{
-                    background: d.pos ? "#16a34a22" : "#dc262622",
-                    color: d.pos ? "#4ade80" : "#f87171",
-                    border: `1px solid ${d.pos ? "#16a34a44" : "#dc262644"}`,
-                    borderRadius: "6px", padding: "3px 10px", fontSize: "11px",
-                    fontFamily: "'JetBrains Mono', monospace", fontWeight: 700,
-                  }}>{d.label}</span>
-                  <span style={{ color: model.accent, fontSize: "12px", fontFamily: "'JetBrains Mono', monospace" }}>
+                    background: "transparent",
+                    color: d.pos ? "#FFFFFF" : "#A1A1AA",
+                    border: `1px solid ${d.pos ? "#FFFFFF66" : "#66666666"}`,
+                    borderRadius: "8px", padding: "3px 10px", fontSize: "11px",
+                    fontFamily: "'Space Mono', monospace", fontWeight: 700,
+                  }}>{d.pos ? "✓ " : "✗ "}{d.label}</span>
+                  <span style={{ color: model.accent, fontSize: "12px", fontFamily: "'Space Mono', monospace" }}>
                     {Math.round(d.score * 100)}%
                   </span>
                 </div>
@@ -484,15 +500,26 @@ export default function ModelsPage() {
   const [headerVisible, setHeaderVisible] = useState(false);
   useEffect(() => { setTimeout(() => setHeaderVisible(true), 100); }, []);
 
+  const skills = [
+    { name: "Python", level: 92 },
+    { name: "PyTorch", level: 80 },
+    { name: "Transformers (HF)", level: 85 },
+    { name: "BERT / DistilBERT", level: 82 },
+    { name: "NLP / Text Classification", level: 88 },
+    { name: "Fine-Tuning / MLOps", level: 78 },
+    { name: "Transfer Learning", level: 80 },
+    { name: "Hugging Face Hub", level: 85 },
+  ];
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Space+Mono:wght@400;700&display=swap');
         * { box-sizing: border-box; }
         .models-page {
           min-height: auto;
           background: transparent;
-          font-family: 'Syne', sans-serif;
+          font-family: 'Space Mono', monospace;
           position: relative;
         }
         .inner {
@@ -506,14 +533,14 @@ export default function ModelsPage() {
           margin-top: 16px;
         }
         .skill-pill {
-          background: #000000;
-          border: 1px solid #181818;
-          border-radius: 10px;
+          background: transparent;
+          border: 1px solid #666666;
+          border-radius: 8px;
           padding: 12px 16px;
           transition: border-color 0.2s, transform 0.2s;
         }
         .skill-pill:hover {
-          border-color: #262626;
+          border-color: #FFFFFF;
           transform: translateY(-2px);
         }
       `}</style>
@@ -540,38 +567,32 @@ export default function ModelsPage() {
           }}>
             <div style={{ marginBottom: "8px" }}>
               <span style={{
-                color: "#71717a", fontSize: "11px",
-                fontFamily: "'JetBrains Mono', monospace",
+                color: "#A1A1AA", fontSize: "11px",
+                fontFamily: "'Space Mono', monospace",
                 letterSpacing: "0.08em", textTransform: "uppercase",
               }}>AI &amp; ML Skills</span>
             </div>
-            <h3 style={{ color: "#f5f5f5", fontSize: "20px", fontWeight: 700, marginBottom: "4px" }}>
+            <h3 style={{
+              color: "#FFFFFF", fontSize: "20px", fontWeight: 500,
+              fontFamily: "'Playfair Display', serif", marginBottom: "4px",
+            }}>
               Technical Stack
             </h3>
-            <p style={{ color: "#71717a", fontSize: "13px", marginBottom: "16px" }}>
+            <p style={{ color: "#A1A1AA", fontSize: "13px", marginBottom: "16px" }}>
               Tools and frameworks used across these projects
             </p>
             <div className="skills-grid">
-              {[
-                { name: "Python", level: 92, color: "#818cf8" },
-                { name: "PyTorch", level: 80, color: "#f97316" },
-                { name: "Transformers (HF)", level: 85, color: "#38bdf8" },
-                { name: "BERT / DistilBERT", level: 82, color: "#34d399" },
-                { name: "NLP / Text Classification", level: 88, color: "#a78bfa" },
-                { name: "Fine-Tuning / MLOps", level: 78, color: "#fb7185" },
-                { name: "Transfer Learning", level: 80, color: "#fbbf24" },
-                { name: "Hugging Face Hub", level: 85, color: "#ff9d00" },
-              ].map((skill, i) => (
+              {skills.map((skill, i) => (
                 <div key={i} className="skill-pill">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                    <span style={{ color: "#d4d4d8", fontSize: "12px" }}>{skill.name}</span>
-                    <span style={{ color: skill.color, fontSize: "11px", fontFamily: "'JetBrains Mono', monospace" }}>{skill.level}%</span>
+                    <span style={{ color: "#D4D4D8", fontSize: "12px" }}>{skill.name}</span>
+                    <span style={{ color: "#FFFFFF", fontSize: "11px", fontFamily: "'Space Mono', monospace" }}>{skill.level}%</span>
                   </div>
-                  <div style={{ height: "2px", background: "#181818", borderRadius: "2px", overflow: "hidden" }}>
+                  <div style={{ height: "2px", background: "#666666", borderRadius: "2px", overflow: "hidden" }}>
                     <div style={{
                       width: headerVisible ? `${skill.level}%` : "0%",
                       height: "100%",
-                      background: skill.color,
+                      background: "#FFFFFF",
                       borderRadius: "2px",
                       transition: `width 1.2s ease ${0.5 + i * 0.07}s`,
                     }} />
